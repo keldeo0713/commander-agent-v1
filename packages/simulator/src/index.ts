@@ -1,2 +1,2 @@
-/** Deterministic seeded simulation boundary. */
-export const packageName = "simulator";
+export * from "./simulate.js";
+export * from "./types.js";

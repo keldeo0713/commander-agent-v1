@@ -8,8 +8,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-01 | Versioned card truth | COMPLETE | [Merged PR #2](https://github.com/keldeo0713/commander-agent-v1/pull/2), [live acceptance run 19](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32462509574) |
 | CP-02 | Commander legality engine | COMPLETE | [Merged pull request #3](https://github.com/keldeo0713/commander-agent-v1/pull/3), [CI run 24](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464046735) |
 | CP-03 | Structured deck specification | COMPLETE | [Merged PR #4](https://github.com/keldeo0713/commander-agent-v1/pull/4), [CI run 30](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464891525) |
-| CP-04 | Functional knowledge and candidate retrieval | READY_FOR_REVIEW | [PR #5](https://github.com/keldeo0713/commander-agent-v1/pull/5), [CI run 36](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466103238) |
-| CP-05 | Kenessos setup and commander-removal simulator | NOT_STARTED | — |
+| CP-04 | Functional knowledge and candidate retrieval | COMPLETE | [Merged PR #5](https://github.com/keldeo0713/commander-agent-v1/pull/5), [CI run 37](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466184536) |
+| CP-05 | Kenessos setup and commander-removal simulator | READY_FOR_REVIEW | [PR #6](https://github.com/keldeo0713/commander-agent-v1/pull/6), [CI run 43](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466585881) |
 | CP-06 | Baseline builder and optimizer | NOT_STARTED | — |
 | CP-07 | End-to-end AI adviser | NOT_STARTED | — |
 | CP-08 | User application and Archidekt export | NOT_STARTED | — |
@@ -67,3 +67,13 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Multi-role cards retain all deterministic roles.
 - [x] Frozen benchmark target is established at 100% recall and passes.
 - [x] Full CI passes ([run 36](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466103238)).
+
+## CP-05 exit checklist
+
+- [x] Versioned zone, turn, mana, mulligan, action-policy, commander-tax, removal-profile, and PRNG contracts exist.
+- [x] Required top-deck setup, activation, eligible-payoff, removal, and recast primitives exist.
+- [x] Success events, intervals, histograms, and exhaustive failure reasons are reported.
+- [x] Exact probability-zero/one fixtures and deterministic replay checks pass.
+- [x] Matched seeded goldfish/removal reports make assumptions and outcome changes visible.
+- [x] Unsupported mechanics remain visible in report identity.
+- [x] Full CI passes ([run 43](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466585881)).
