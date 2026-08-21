@@ -1,0 +1,26 @@
+{
+  "domain": [],
+  "card-data": ["domain"],
+  "card-knowledge": ["domain", "card-data"],
+  "commander-rules": ["domain", "card-knowledge"],
+  "deck-spec": ["domain", "card-knowledge"],
+  "deck-builder": ["domain", "card-knowledge", "commander-rules", "deck-spec"],
+  "simulator": ["domain", "card-knowledge", "commander-rules"],
+  "optimizer": ["domain", "deck-builder", "simulator"],
+  "reporting": ["domain"],
+  "integrations-archidekt": ["domain", "reporting"],
+  "llm": ["domain", "deck-spec"],
+  "evals": [
+    "domain",
+    "card-data",
+    "card-knowledge",
+    "commander-rules",
+    "deck-spec",
+    "deck-builder",
+    "simulator",
+    "optimizer",
+    "reporting",
+    "integrations-archidekt",
+    "llm"
+  ]
+}

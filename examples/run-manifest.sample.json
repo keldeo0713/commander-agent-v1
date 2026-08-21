@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "run-manifest/1",
+  "runId": "run_cp00_sample",
+  "createdAt": "2026-08-20T12:00:00.000Z",
+  "deckSpec": {
+    "id": "spec_kenessos_v1",
+    "schemaVersion": "deck-spec/1"
+  },
+  "deckVersion": {
+    "id": "deck_kenessos",
+    "version": 1
+  },
+  "components": {
+    "cardDataset": "scryfall-unavailable-cp00",
+    "formatSnapshot": "commander-unavailable-cp00",
+    "classification": "classification/0",
+    "simulator": "simulator/0",
+    "optimizer": "optimizer/0",
+    "actionPolicy": "action-policy/0",
+    "goalDefinition": "goal-definition/0",
+    "scenario": "scenario/0"
+  },
+  "randomness": {
+    "seedSetId": "seed-set-cp00",
+    "sampleCount": 1
+  },
+  "execution": {
+    "codeRevision": "cp00-foundation"
+  }
+}
