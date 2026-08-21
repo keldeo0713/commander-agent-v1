@@ -2,46 +2,49 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-00 — Foundation and governance |
+| Active checkpoint | CP-01 — Versioned card truth |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-01 — Versioned card truth |
+| Next checkpoint | CP-02 — Commander legality engine |
 
 ## Current objective
 
-Establish a reproducible TypeScript monorepo, versioned domain-contract foundation, governance documents, CI, and architectural boundary checks without implementing product behavior prematurely.
+Ingest Scryfall Oracle and printing snapshots into immutable, content-addressed datasets with explicit failures, reproducibility metadata, and deterministic lookup contracts.
 
 ## Scope completed
 
-- Approved HLD added as repository source of truth.
-- Monorepo and package-boundary design established.
-- Run-manifest v1 schema stub and sample defined.
-- Local and CI validation commands defined.
-- Agent, contribution, checkpoint, and ADR workflows documented.
-- pnpm 11 dependency build allowlist and frozen dependency lock committed.
-- Draft pull request opened for checkpoint review.
+- CP-00 merged through pull request #1 with every exit criterion satisfied.
+- Scryfall `oracle_cards` and `default_cards` metadata/download client added.
+- Provider JSON validation and explicit per-record rejection reports added.
+- Oracle-card and printing normalization separated into versioned contracts.
+- Immutable dataset manifests, source/normalized SHA-256 hashes, freshness, atomic persistence, and idempotent reimport added.
+- Lookup by normalized name, Oracle ID, Scryfall ID, and set/collector number added.
+- Kenessos fixtures and deterministic ingestion/catalog tests added.
+- Source attribution, refresh policy, command usage, and failure behavior documented.
 
 ## Validation evidence
 
-- GitHub Actions [CI run 5](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32457885590) passed on commit `418a3c84dd539e8f392977f0745f49734b384bf4` with Node.js 24.19.0 and pnpm 11.19.0.
-- `pnpm install --frozen-lockfile` passed from a fresh GitHub Actions checkout.
-- `pnpm check` passed: lint, typecheck, 3 unit tests, all 12 package boundaries, and the `run-manifest/1` sample validation.
-- `node scripts/offline-check.mjs` passed locally: 20 source files, 18 JSON files, and all 12 package boundaries validated.
+- CP-00 final branch [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) passed before merge.
+- `node scripts/offline-check.mjs` passed locally for CP-01: 32 source files, 20 JSON files, and all 12 package boundaries validated.
 - `git diff --check` passed.
+- CP-01 [CI run 19](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32462509574) passed the complete `pnpm check` chain and imported the same current Scryfall snapshot twice with identical IDs and hashes.
+- Acceptance dataset `scryfall-20260820210532-75809e87b469` contained 38,626 Oracle identities and 116,619 printings. All 81 rejected default-card records were retained as explicit `invalid_record` issues.
+- The normalized SHA-256 was `75809e87b46990767407ec4666979e75d36ab98d3881c01f12447ab8100e8aeb`; source hashes were `af0e7fe0657d5075d79ad1c97af820d6dfea7be0470e7d940cc17dbdd9a0bdb5` for 38,626 Oracle records and `60bafbc94807edc33e29346eff7103a25f698bbbb1809cf296bc090dd0727301` for 116,700 default-card records.
+- Provider freshness at acceptance was approximately 11.2 hours.
 
 ## Assumptions
 
-- Node.js 24+ and pnpm 11+ are the initial supported development environment.
-- The project begins as a local-first modular TypeScript monolith.
-- PostgreSQL, UI framework, job runner, and AI provider packages are intentionally deferred until their checkpoints need them.
+- Scryfall `oracle_cards` is authoritative for rules-level identities and `default_cards` supplies printing-level identities and attributes.
+- Scryfall bulk object timestamps plus source and normalized hashes define the immutable dataset version.
+- PostgreSQL remains deferred; CP-01 persists portable filesystem artifacts behind project contracts.
 
 ## Known limitations
 
-- No card ingestion, legality, deck building, simulation, optimization, or UI behavior exists in CP-00.
-- The run manifest is a foundation contract and will gain domain fields through versioned changes.
-- CP-00 remains `READY_FOR_REVIEW` until its draft pull request is reviewed and merged.
+- JSONL records are decoded incrementally after gzip decompression; normalized records remain in memory during snapshot construction. The selected live snapshot completed within the acceptance runner's 6 GiB heap allowance.
+- Format banned lists, Game Changers, and Commander legality remain CP-02 scope.
+- Prices and image fields are printing facts, but purchasing/market behavior remains out of scope.
 
 ## Recommended next action
 
-Review and merge draft pull request #1. After merge, mark CP-00 `COMPLETE` and begin CP-01 on a new feature branch.
+Review and merge draft pull request #2, then begin CP-02 from the merged checkpoint.

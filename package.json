@@ -16,6 +16,7 @@
     "test:watch": "vitest",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "check:offline": "node scripts/offline-check.mjs",
+    "ingest:scryfall": "tsx scripts/ingest-scryfall.ts",
     "validate:manifest": "tsx scripts/validate-sample-manifest.ts",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm check:boundaries && pnpm validate:manifest"
   },
