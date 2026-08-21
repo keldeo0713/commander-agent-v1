@@ -13,8 +13,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-06 | Baseline builder and optimizer | COMPLETE | [Merged PR #7](https://github.com/keldeo0713/commander-agent-v1/pull/7), [CI run 54](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496071932) |
 | CP-07 | End-to-end AI adviser | COMPLETE | [Merged PR #8](https://github.com/keldeo0713/commander-agent-v1/pull/8), [CI run 58](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496390649) |
 | CP-08 | User application and Archidekt export | COMPLETE | [Merged PR #9](https://github.com/keldeo0713/commander-agent-v1/pull/9), [CI run 65](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496813557) |
-| CP-09 | Generalization | READY_FOR_REVIEW | [PR #10](https://github.com/keldeo0713/commander-agent-v1/pull/10), [CI run 67](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496998621) |
-| CP-10 | Interaction models and operational scaling | NOT_STARTED | — |
+| CP-09 | Generalization | COMPLETE | [Merged PR #10](https://github.com/keldeo0713/commander-agent-v1/pull/10), [CI run 70](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32497123444) |
+| CP-10 | Interaction models and operational scaling | READY_FOR_REVIEW | [PR #11](https://github.com/keldeo0713/commander-agent-v1/pull/11), [CI run 73](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32497417696) |
 
 ## CP-00 exit checklist
 
@@ -116,3 +116,11 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Partial support reports exact missing primitives visibly.
 - [x] Kenessos remains exactly one regression fixture with no schema specialization.
 - [x] Full CI passes ([run 67](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496998621)).
+
+## CP-10 exit checklist
+
+- [x] Interaction assumptions are explicit, versioned, and reproducibly fingerprinted.
+- [x] Accepted durable jobs use idempotency, leases, expiry, retries, and ownership-checked completion.
+- [x] Worker failure or lease expiry does not lose accepted work when backed by a durable store adapter.
+- [x] Completion, p95 latency, throughput, and cost targets derive from benchmark observations.
+- [x] Full CI passes ([run 73](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32497417696)).

@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-09 — Generalization |
+| Active checkpoint | CP-10 — Interaction models and operational scaling |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-10 — Interaction models and operational scaling |
+| Next checkpoint | Product review |
 
 ## Current objective
 
-Prove the architecture across materially different archetypes with primitive-level coverage gates.
+Complete reproducible interaction scenarios, recoverable job execution, and benchmark-derived operational reporting.
 
 ## Scope completed
 
@@ -50,6 +50,9 @@ Prove the architecture across materially different archetypes with primitive-lev
 - CP-08 merged through pull request #9 with every exit criterion satisfied.
 - Six-archetype regression registry, versioned goals, required primitive declarations, and visible unsupported behavior added.
 
+- CP-09 merged through pull request #10 with every exit criterion satisfied.
+- Versioned interaction fingerprints, durable-store job leases/retries, and benchmark-derived operational targets added.
+
 ## Validation evidence
 
 - CP-00 final branch [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) passed before merge.
@@ -77,4 +80,4 @@ Prove the architecture across materially different archetypes with primitive-lev
 
 ## Recommended next action
 
-Merge CP-09 pull request #10, then begin CP-10 operational scaling.
+Merge CP-10 pull request #11, then conduct the product review.
