@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-10 — Interaction models and operational scaling |
-| Status | READY_FOR_REVIEW |
+| Status | COMPLETE — PRODUCT_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
 | Next checkpoint | Product review |
@@ -80,4 +80,4 @@ Complete reproducible interaction scenarios, recoverable job execution, and benc
 
 ## Recommended next action
 
-Merge CP-10 pull request #11, then conduct the product review.
+Conduct product review against the HLD flows and record follow-up issues as post-HLD work.
