@@ -9,8 +9,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-02 | Commander legality engine | COMPLETE | [Merged pull request #3](https://github.com/keldeo0713/commander-agent-v1/pull/3), [CI run 24](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464046735) |
 | CP-03 | Structured deck specification | COMPLETE | [Merged PR #4](https://github.com/keldeo0713/commander-agent-v1/pull/4), [CI run 30](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464891525) |
 | CP-04 | Functional knowledge and candidate retrieval | COMPLETE | [Merged PR #5](https://github.com/keldeo0713/commander-agent-v1/pull/5), [CI run 37](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466184536) |
-| CP-05 | Kenessos setup and commander-removal simulator | READY_FOR_REVIEW | [PR #6](https://github.com/keldeo0713/commander-agent-v1/pull/6), [CI run 43](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466585881) |
-| CP-06 | Baseline builder and optimizer | NOT_STARTED | — |
+| CP-05 | Kenessos setup and commander-removal simulator | COMPLETE | [Merged PR #6](https://github.com/keldeo0713/commander-agent-v1/pull/6), [CI run 46](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466707384) |
+| CP-06 | Baseline builder and optimizer | READY_FOR_REVIEW | [PR #7](https://github.com/keldeo0713/commander-agent-v1/pull/7), [CI run 51](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32495954441) |
 | CP-07 | End-to-end AI adviser | NOT_STARTED | — |
 | CP-08 | User application and Archidekt export | NOT_STARTED | — |
 | CP-09 | Generalization | NOT_STARTED | — |
@@ -77,3 +77,13 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Matched seeded goldfish/removal reports make assumptions and outcome changes visible.
 - [x] Unsupported mechanics remain visible in report identity.
 - [x] Full CI passes ([run 43](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466585881)).
+
+## CP-06 exit checklist
+
+- [x] Deterministic baseline builder honors deck size, locks, exclusions, role floors, Game Changers, and continuation paths.
+- [x] Constraint failures are structured and never silently relaxed.
+- [x] Swap evaluation uses paired search seeds and records compute cost.
+- [x] Pareto filtering preserves primary, removal, continuation, interaction, and theme tradeoffs.
+- [x] Qualifying finalists receive fresh holdout-seed evaluation.
+- [x] No-improvement outcomes remain explicit.
+- [x] Full CI passes ([run 51](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32495954441)).

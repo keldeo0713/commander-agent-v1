@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-05 — Kenessos setup and commander-removal simulator |
+| Active checkpoint | CP-06 — Baseline builder and optimizer |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-06 — Baseline builder and optimizer |
+| Next checkpoint | CP-07 — End-to-end AI adviser |
 
 ## Current objective
 
-Measure the turn-4 reference milestone and commander-removal resilience reproducibly with versioned policies and seeded trials.
+Improve declared milestones through legal constrained construction, paired evaluation, Pareto selection, and holdout verification.
 
 ## Scope completed
 
@@ -37,6 +37,9 @@ Measure the turn-4 reference milestone and commander-removal resilience reproduc
 
 - CP-04 merged through pull request #5 with every exit criterion satisfied.
 - Versioned deterministic simulator, seeded PRNG, zones, mulligan, mana, commander tax/removal/recast, top-deck setup, activation, reporting, and visible coverage gaps added.
+
+- CP-05 merged through pull request #6 with every exit criterion satisfied.
+- Deterministic baseline construction, structured constraint failures, paired-seed swaps, Pareto filtering, holdout reevaluation, and compute accounting added.
 
 ## Validation evidence
 
@@ -65,4 +68,4 @@ Measure the turn-4 reference milestone and commander-removal resilience reproduc
 
 ## Recommended next action
 
-Merge CP-05 pull request #6, then begin CP-06 baseline construction and optimization.
+Merge CP-06 pull request #7, then begin CP-07 end-to-end orchestration.
