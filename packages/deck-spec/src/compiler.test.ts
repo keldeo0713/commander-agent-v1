@@ -81,7 +81,9 @@ function kenessosSpec(): DeckSpec {
 describe("DeckSpec compiler", () => {
   it("compiles the approved Kenessos request without changing constraint classes", async () => {
     const spec = kenessosSpec();
-    const generate = vi.fn<DeckSpecDraftGenerator["generate"]>(async () => spec);
+    const generate = vi.fn<DeckSpecDraftGenerator["generate"]>(() =>
+      Promise.resolve(spec),
+    );
     const result = await compileDeckRequest(
       {
         request: "Build a fishing-themed Kenessos deck using top-deck manipulation with the highest practical chance to hit a large creature by turn 4.",
@@ -131,7 +133,10 @@ describe("DeckSpec compiler", () => {
         resolvedCommander: spec.commander,
         formatSnapshotId: spec.format.snapshotId,
       },
-      { generatorId: "fixture-generator/1", generate: async () => spec },
+      {
+        generatorId: "fixture-generator/1",
+        generate: () => Promise.resolve(spec),
+      },
     );
     expect(result.status).toBe("unsupported");
   });
