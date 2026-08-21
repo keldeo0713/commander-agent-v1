@@ -90,11 +90,11 @@ describe("Scryfall ingestion", () => {
   it("rejects download URLs outside Scryfall", async () => {
     const outputRoot = await mkdtemp(join(tmpdir(), "commander-scryfall-"));
     temporaryDirectories.push(outputRoot);
-    const fetcher: FetchLike = async (url) => {
+    const fetcher: FetchLike = (url) => {
       if (url !== "https://api.scryfall.com/bulk-data") {
         throw new Error("unexpected network request");
       }
-      return Response.json({
+      return Promise.resolve(Response.json({
         object: "list",
         data: [
           {
@@ -118,7 +118,7 @@ describe("Scryfall ingestion", () => {
             size: 1,
           },
         ],
-      });
+      }));
     };
 
     await expect(

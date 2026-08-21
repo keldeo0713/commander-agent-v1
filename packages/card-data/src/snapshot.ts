@@ -162,7 +162,7 @@ export async function loadCardDataset(
     await readFile(join(datasetDirectory, "manifest.json"), "utf8"),
   ) as CardDatasetManifest;
   if (manifest.schemaVersion !== CARD_DATASET_SCHEMA_VERSION) {
-    throw new Error(`unsupported dataset schema ${manifest.schemaVersion}`);
+    throw new Error("unsupported dataset schema version");
   }
 
   const [oracleCardsJson, printingsJson, issuesJson, oracleSource, printingSource] =

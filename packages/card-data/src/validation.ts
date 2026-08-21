@@ -43,7 +43,7 @@ function stringArray(value: unknown, path: string): string[] {
   if (!Array.isArray(value) || value.some((item) => typeof item !== "string")) {
     throw new Error(`${path} must be an array of strings`);
   }
-  return [...value];
+  return value.filter((item): item is string => typeof item === "string");
 }
 
 function stringRecord(value: unknown, path: string): Record<string, string> {
