@@ -1,5 +1,4 @@
 import type {
-  Color,
   CommanderCardView,
   CommanderDeck,
   CommanderFormatSnapshot,
@@ -153,7 +152,7 @@ export function validateCommanderDeck(
 
   const colorIdentity = [
     ...new Set(commanderCards.flatMap((card) => card.colorIdentity)),
-  ].sort() as Color[];
+  ].sort();
   const banned = new Set(format.bannedNames.map(normalizedName));
   for (const [oracleId, quantity] of entries) {
     const card = cards.get(oracleId);
