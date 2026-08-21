@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-04 — Functional knowledge and candidate retrieval |
+| Active checkpoint | CP-05 — Kenessos setup and commander-removal simulator |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-05 — Kenessos setup and commander-removal simulator |
+| Next checkpoint | CP-06 — Baseline builder and optimizer |
 
 ## Current objective
 
-Produce a high-recall, explainable candidate pool through generic deterministic classification and pluggable semantic retrieval.
+Measure the turn-4 reference milestone and commander-removal resilience reproducibly with versioned policies and seeded trials.
 
 ## Scope completed
 
@@ -34,6 +34,9 @@ Produce a high-recall, explainable candidate pool through generic deterministic 
 - CP-03 merged through pull request #4 with every exit criterion satisfied.
 - Versioned role evidence, generic eligibility classification, hybrid retrieval, and frozen recall benchmark added.
 - Kenessos remains benchmark data only; production retrieval is commander-agnostic.
+
+- CP-04 merged through pull request #5 with every exit criterion satisfied.
+- Versioned deterministic simulator, seeded PRNG, zones, mulligan, mana, commander tax/removal/recast, top-deck setup, activation, reporting, and visible coverage gaps added.
 
 ## Validation evidence
 
@@ -62,4 +65,4 @@ Produce a high-recall, explainable candidate pool through generic deterministic 
 
 ## Recommended next action
 
-Merge CP-04 pull request #5, then begin CP-05 deterministic simulation.
+Merge CP-05 pull request #6, then begin CP-06 baseline construction and optimization.
