@@ -5,8 +5,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | Checkpoint | Name | Status | Evidence |
 |---|---|---|---|
 | CP-00 | Foundation and governance | COMPLETE | [Merged PR #1](https://github.com/keldeo0713/commander-agent-v1/pull/1), [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) |
-| CP-01 | Versioned card truth | READY_FOR_REVIEW | [Draft PR #2](https://github.com/keldeo0713/commander-agent-v1/pull/2), [live acceptance run 19](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32462509574) |
-| CP-02 | Commander legality engine | NOT_STARTED | — |
+| CP-01 | Versioned card truth | COMPLETE | [Merged PR #2](https://github.com/keldeo0713/commander-agent-v1/pull/2), [live acceptance run 19](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32462509574) |
+| CP-02 | Commander legality engine | READY_FOR_REVIEW | [Pull request #3](https://github.com/keldeo0713/commander-agent-v1/pull/3), [CI run 23](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32463914254) |
 | CP-03 | Structured deck specification | NOT_STARTED | — |
 | CP-04 | Functional knowledge and candidate retrieval | NOT_STARTED | — |
 | CP-05 | Kenessos setup and commander-removal simulator | NOT_STARTED | — |
@@ -40,3 +40,12 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Kenessos resolves to one Oracle identity with the expected reference facts.
 - [x] Source attribution and refresh policy are documented.
 - [x] Full `pnpm check` and CP-01 CI pass ([run 19](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32462509574)).
+
+## CP-02 exit checklist
+
+- [x] Generic commander eligibility, color-identity, size, singleton, banned-list, and structured violation validation exist.
+- [x] Versioned format snapshot cites official sources and captures the current named banned list plus Lutri's companion exception.
+- [x] Supported basic-land, card copy-limit, Partner, Friends forever, Background, and Doctor's companion exceptions exist.
+- [x] Invalid Kenessos off-color, duplicate, banned, and size fixtures exist without Kenessos-specific validator code.
+- [x] The commander-rules package contains no LLM or network calls.
+- [x] Supported legality fixture suite and full CI pass 100% ([run 23](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32463914254): 18/18 tests).
