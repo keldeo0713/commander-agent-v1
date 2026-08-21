@@ -30,7 +30,7 @@ export function simulate(input: SimulationInput): SimulationReport {
     inputIdentity: {
       deckId: input.deckId, sampleCount: input.sampleCount, engineVersion: input.engineVersion,
       datasetId: input.datasetId, rulesSnapshotId: input.rulesSnapshotId,
-      policy: input.policy, removal: input.removal,
+      policy: input.policy, removal: input.removal, unsupportedMechanics: input.unsupportedMechanics,
     },
     seeds, successes, probability: successes / input.sampleCount,
     wilson95: wilson(successes, input.sampleCount), successTurnHistogram, failureReasons, trials,
