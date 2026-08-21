@@ -15,7 +15,7 @@ export function scenarioFingerprint(scenario: InteractionScenario): string {
 export type JobStatus = "accepted" | "leased" | "completed" | "failed";
 export interface DurableJob<T> {
   jobId: string; payload: T; status: JobStatus; attempts: number;
-  leaseOwner: string | null; leaseExpiresAt: number | null; result: unknown | null; error: string | null;
+  leaseOwner: string | null; leaseExpiresAt: number | null; result: unknown; error: string | null;
 }
 export interface DurableJobStore<T> {
   putIfAbsent(job: DurableJob<T>): Promise<boolean>;
