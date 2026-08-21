@@ -30,6 +30,7 @@ export interface SimulationInput {
   rulesSnapshotId: string;
   policy: SimulationPolicy;
   removal: RemovalProfile;
+  unsupportedMechanics: string[];
 }
 export type FailureReason = "commander_not_cast" | "commander_removed" | "activation_mana_missing" | "eligible_payoff_missing";
 export interface TrialResult {
