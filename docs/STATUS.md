@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-03 — Structured deck specification |
-| Status | IN_PROGRESS |
+| Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
 | Next checkpoint | CP-04 — Functional knowledge and candidate retrieval |
@@ -41,7 +41,7 @@ Represent user intent without ambiguity in a versioned, inspectable DeckSpec and
 - The normalized SHA-256 was `75809e87b46990767407ec4666979e75d36ab98d3881c01f12447ab8100e8aeb`; source hashes were `af0e7fe0657d5075d79ad1c97af820d6dfea7be0470e7d940cc17dbdd9a0bdb5` for 38,626 Oracle records and `60bafbc94807edc33e29346eff7103a25f698bbbb1809cf296bc090dd0727301` for 116,700 default-card records.
 - Provider freshness at acceptance was approximately 11.2 hours.
 - CP-02 [CI run 23](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32463914254) passed lint, strict typecheck, all 18 tests across 6 files, all 12 package boundaries, and manifest validation.
-- CP-03 offline checks pass; full feature-branch CI remains pending.
+- CP-03 [CI run 28](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464801676) passed lint, strict typecheck, all 23 tests across 7 files, all 12 package boundaries, and manifest validation.
 
 ## Assumptions
 
@@ -57,4 +57,4 @@ Represent user intent without ambiguity in a versioned, inspectable DeckSpec and
 
 ## Recommended next action
 
-Run full CP-03 CI, resolve strict validation findings, and publish the draft checkpoint pull request.
+Review and merge CP-03 pull request #4, then begin CP-04 candidate retrieval.
