@@ -11,8 +11,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-04 | Functional knowledge and candidate retrieval | COMPLETE | [Merged PR #5](https://github.com/keldeo0713/commander-agent-v1/pull/5), [CI run 37](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466184536) |
 | CP-05 | Kenessos setup and commander-removal simulator | COMPLETE | [Merged PR #6](https://github.com/keldeo0713/commander-agent-v1/pull/6), [CI run 46](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466707384) |
 | CP-06 | Baseline builder and optimizer | COMPLETE | [Merged PR #7](https://github.com/keldeo0713/commander-agent-v1/pull/7), [CI run 54](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496071932) |
-| CP-07 | End-to-end AI adviser | READY_FOR_REVIEW | [PR #8](https://github.com/keldeo0713/commander-agent-v1/pull/8), [CI run 56](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496271032) |
-| CP-08 | User application and Archidekt export | NOT_STARTED | — |
+| CP-07 | End-to-end AI adviser | COMPLETE | [Merged PR #8](https://github.com/keldeo0713/commander-agent-v1/pull/8), [CI run 58](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496390649) |
+| CP-08 | User application and Archidekt export | READY_FOR_REVIEW | [PR #9](https://github.com/keldeo0713/commander-agent-v1/pull/9), [CI run 60](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496638561) |
 | CP-09 | Generalization | NOT_STARTED | — |
 | CP-10 | Interaction models and operational scaling | NOT_STARTED | — |
 
@@ -97,3 +97,13 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Deck-version comparison reports metric deltas.
 - [x] Reference flow is executable entirely through ports without editing internal data.
 - [x] Full CI passes ([run 56](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496271032)).
+
+## CP-08 exit checklist
+
+- [x] Responsive shell covers chat, spec, deck, results, and comparison.
+- [x] Job progress, stale-event protection, and cancellation exist.
+- [x] Basic deck-list import reports malformed lines.
+- [x] Account-free Archidekt-compatible export validates before emitting.
+- [x] Export round-trip preserves all 100 cards and commander identity by name/section.
+- [x] No undocumented authenticated Archidekt dependency exists.
+- [x] Full CI passes ([run 60](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496638561)).
