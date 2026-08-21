@@ -100,6 +100,8 @@ export function parseBulkDataDescriptor(
   if (record.object !== "bulk_data" || type !== expectedType) {
     throw new Error(`${path} must be a Scryfall ${expectedType} bulk descriptor`);
   }
+  const usesJsonl =
+    typeof record.download_uri !== "string" || record.download_uri.length === 0;
   return {
       object: "bulk_data",
       id: requireString(record.id, `${path}.id`),
@@ -112,11 +114,20 @@ export function parseBulkDataDescriptor(
         `${path}.download_uri or ${path}.jsonl_download_uri`,
       ),
       contentType: requireString(
-        record.content_type,
+        typeof record.content_type === "string" && record.content_type.length > 0
+          ? record.content_type
+          : usesJsonl
+            ? "application/jsonl"
+            : "application/json",
         `${path}.content_type`,
       ),
       contentEncoding: requireString(
-        record.content_encoding,
+        typeof record.content_encoding === "string" &&
+          record.content_encoding.length > 0
+          ? record.content_encoding
+          : usesJsonl
+            ? "gzip"
+            : "identity",
         `${path}.content_encoding`,
       ),
       size: requireNumber(

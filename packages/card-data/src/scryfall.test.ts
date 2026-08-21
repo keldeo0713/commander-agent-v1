@@ -32,8 +32,8 @@ describe("Scryfall ingestion", () => {
               updated_at: oracleDescriptor.updatedAt,
               download_uri: "",
               jsonl_download_uri: oracleDescriptor.downloadUri,
-              content_type: oracleDescriptor.contentType,
-              content_encoding: oracleDescriptor.contentEncoding,
+              content_type: "",
+              content_encoding: "",
               compressed_size: oracleDescriptor.size,
         });
       }
