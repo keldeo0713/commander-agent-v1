@@ -42,3 +42,7 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=6144
         run: pnpm ingest:scryfall --output data/card-datasets
+      - name: Reimport same Scryfall snapshot
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+        run: pnpm ingest:scryfall --output data/card-datasets
