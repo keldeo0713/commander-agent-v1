@@ -43,7 +43,11 @@ importers:
 
   packages/card-data: {}
 
-  packages/card-knowledge: {}
+  packages/card-knowledge:
+    dependencies:
+      '@commander-agent/card-data':
+        specifier: workspace:*
+        version: link:../card-data
 
   packages/commander-rules: {}
 
