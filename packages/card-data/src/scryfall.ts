@@ -8,9 +8,8 @@ import {
   persistCardDataset,
   type ScryfallSourceContent,
 } from "./snapshot.js";
-import { parseBulkDataList } from "./validation.js";
+import { parseBulkDataDescriptor } from "./validation.js";
 
-const BULK_DATA_URL = "https://api.scryfall.com/bulk-data";
 const REQUIRED_BULK_TYPES: ScryfallBulkType[] = [
   "oracle_cards",
   "default_cards",
@@ -63,16 +62,15 @@ export async function fetchScryfallBulkDescriptors(
   fetcher: FetchLike,
   userAgent: string,
 ): Promise<ScryfallBulkDataDescriptor[]> {
-  const bytes = await fetchBytes(fetcher, BULK_DATA_URL, userAgent);
-  const value: unknown = JSON.parse(new TextDecoder().decode(bytes));
-  const descriptors = parseBulkDataList(value);
-  return REQUIRED_BULK_TYPES.map((type) => {
-    const descriptor = descriptors.find((candidate) => candidate.type === type);
-    if (descriptor === undefined) {
-      throw new Error(`Scryfall bulk-data response is missing ${type}`);
-    }
-    return descriptor;
-  });
+  return Promise.all(REQUIRED_BULK_TYPES.map(async (type) => {
+    const bytes = await fetchBytes(
+      fetcher,
+      `https://api.scryfall.com/bulk-data/${type}`,
+      userAgent,
+    );
+    const value: unknown = JSON.parse(new TextDecoder().decode(bytes));
+    return parseBulkDataDescriptor(value, type);
+  }));
 }
 
 export async function ingestScryfallSnapshot(

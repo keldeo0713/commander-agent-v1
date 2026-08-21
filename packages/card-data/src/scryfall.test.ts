@@ -24,11 +24,8 @@ describe("Scryfall ingestion", () => {
     const oracleDescriptor = fixtureDescriptor("oracle_cards");
     const printingDescriptor = fixtureDescriptor("default_cards");
     const fetcher = vi.fn<FetchLike>(async (url) => {
-      if (url === "https://api.scryfall.com/bulk-data") {
+      if (url === "https://api.scryfall.com/bulk-data/oracle_cards") {
         return Response.json({
-          object: "list",
-          data: [
-            {
               object: "bulk_data",
               id: oracleDescriptor.id,
               type: oracleDescriptor.type,
@@ -37,18 +34,10 @@ describe("Scryfall ingestion", () => {
               content_type: oracleDescriptor.contentType,
               content_encoding: oracleDescriptor.contentEncoding,
               size: oracleDescriptor.size,
-            },
-            {
-              object: "bulk_data",
-              id: "unused-rulings",
-              type: "rulings",
-              updated_at: "2026-08-21T00:00:00.000Z",
-              download_uri: "https://data.scryfall.io/rulings.json",
-              content_type: "application/json",
-              content_encoding: "gzip",
-              size: 1,
-            },
-            {
+        });
+      }
+      if (url === "https://api.scryfall.com/bulk-data/default_cards") {
+        return Response.json({
               object: "bulk_data",
               id: printingDescriptor.id,
               type: printingDescriptor.type,
@@ -57,8 +46,6 @@ describe("Scryfall ingestion", () => {
               content_type: printingDescriptor.contentType,
               content_encoding: printingDescriptor.contentEncoding,
               size: printingDescriptor.size,
-            },
-          ],
         });
       }
       if (url === oracleDescriptor.downloadUri) {
@@ -82,7 +69,7 @@ describe("Scryfall ingestion", () => {
     });
 
     expect(snapshot.manifest.counts.oracleCards).toBe(1);
-    expect(fetcher).toHaveBeenCalledTimes(3);
+    expect(fetcher).toHaveBeenCalledTimes(4);
     expect(fetcher.mock.calls[0]?.[1]).toMatchObject({
       headers: {
         Accept: "application/json",
@@ -95,13 +82,8 @@ describe("Scryfall ingestion", () => {
     const outputRoot = await mkdtemp(join(tmpdir(), "commander-scryfall-"));
     temporaryDirectories.push(outputRoot);
     const fetcher: FetchLike = (url) => {
-      if (url !== "https://api.scryfall.com/bulk-data") {
-        throw new Error("unexpected network request");
-      }
-      return Promise.resolve(Response.json({
-        object: "list",
-        data: [
-          {
+      if (url === "https://api.scryfall.com/bulk-data/oracle_cards") {
+        return Promise.resolve(Response.json({
             object: "bulk_data",
             id: "oracle",
             type: "oracle_cards",
@@ -110,8 +92,10 @@ describe("Scryfall ingestion", () => {
             content_type: "application/json",
             content_encoding: "gzip",
             size: 1,
-          },
-          {
+        }));
+      }
+      if (url === "https://api.scryfall.com/bulk-data/default_cards") {
+        return Promise.resolve(Response.json({
             object: "bulk_data",
             id: "printing",
             type: "default_cards",
@@ -120,9 +104,9 @@ describe("Scryfall ingestion", () => {
             content_type: "application/json",
             content_encoding: "gzip",
             size: 1,
-          },
-        ],
-      }));
+        }));
+      }
+      throw new Error("unexpected network request");
     };
 
     await expect(

@@ -86,26 +86,39 @@ export function parseBulkDataList(value: unknown): ScryfallBulkDataDescriptor[] 
     if (type !== "oracle_cards" && type !== "default_cards") {
       return [];
     }
-    return [{
+    return [parseBulkDataDescriptor(record, type, `data[${index}]`)];
+  });
+}
+
+export function parseBulkDataDescriptor(
+  value: unknown,
+  expectedType: ScryfallBulkType,
+  path = "bulk data descriptor",
+): ScryfallBulkDataDescriptor {
+  const record = requireRecord(value, path);
+  const type = requireString(record.type, `${path}.type`);
+  if (record.object !== "bulk_data" || type !== expectedType) {
+    throw new Error(`${path} must be a Scryfall ${expectedType} bulk descriptor`);
+  }
+  return {
       object: "bulk_data",
-      id: requireString(record.id, `data[${index}].id`),
+      id: requireString(record.id, `${path}.id`),
       type,
-      updatedAt: requireString(record.updated_at, `data[${index}].updated_at`),
+      updatedAt: requireString(record.updated_at, `${path}.updated_at`),
       downloadUri: requireString(
         record.download_uri,
-        `data[${index}].download_uri`,
+        `${path}.download_uri`,
       ),
       contentType: requireString(
         record.content_type,
-        `data[${index}].content_type`,
+        `${path}.content_type`,
       ),
       contentEncoding: requireString(
         record.content_encoding,
-        `data[${index}].content_encoding`,
+        `${path}.content_encoding`,
       ),
-      size: requireNumber(record.size, `data[${index}].size`),
-    } satisfies ScryfallBulkDataDescriptor];
-  });
+      size: requireNumber(record.size, `${path}.size`),
+    } satisfies ScryfallBulkDataDescriptor;
 }
 
 export function parseScryfallCard(value: unknown): ScryfallCardRecord {
