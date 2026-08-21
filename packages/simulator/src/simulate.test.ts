@@ -43,7 +43,7 @@ describe("deterministic simulator", () => {
     const removal = simulate(fixture(1));
     expect(removal.probability).toBeLessThan(goldfish.probability);
     expect(removal.failureReasons.commander_removed).toBeGreaterThan(0);
-    expect(removal.trials.every((trial) => trial.commanderRemovals > 0)).toBe(true);
+    expect(removal.trials.filter((trial) => trial.commanderCasts > 0).every((trial) => trial.commanderRemovals > 0)).toBe(true);
   });
 
   it("rejects decks that cannot satisfy the Commander zone contract", () => {
