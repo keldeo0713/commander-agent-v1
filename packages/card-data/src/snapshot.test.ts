@@ -1,6 +1,7 @@
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { gzipSync } from "node:zlib";
 
 import { afterEach, describe, expect, it } from "vitest";
 
@@ -45,8 +46,10 @@ describe("versioned card datasets", () => {
       const values = JSON.parse(
         new TextDecoder().decode(await fixtureBytes(name)),
       ) as unknown[];
-      return new TextEncoder().encode(
-        `${values.map((value) => JSON.stringify(value)).join("\n")}\n`,
+      return gzipSync(
+        new TextEncoder().encode(
+          `${values.map((value) => JSON.stringify(value)).join("\n")}\n`,
+        ),
       );
     };
     const result = buildCardDataset(

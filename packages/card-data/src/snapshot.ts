@@ -9,6 +9,7 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { join } from "node:path";
+import { gunzipSync } from "node:zlib";
 
 import { normalizeOracleCards, normalizePrintings } from "./normalize.js";
 import {
@@ -34,7 +35,9 @@ function sha256(bytes: Uint8Array | string): string {
 }
 
 function parseArray(bytes: Uint8Array, label: string): unknown[] {
-  const text = new TextDecoder().decode(bytes).trim();
+  const decodedBytes =
+    bytes[0] === 0x1f && bytes[1] === 0x8b ? gunzipSync(bytes) : bytes;
+  const text = new TextDecoder().decode(decodedBytes).trim();
   if (text.startsWith("[")) {
     const value: unknown = JSON.parse(text);
     if (!Array.isArray(value)) {
