@@ -62,10 +62,14 @@ describe("Scryfall ingestion", () => {
         });
       }
       if (url === oracleDescriptor.downloadUri) {
-        return new Response(await fixtureBytes("oracle-cards.json"));
+        return new Response(
+          new TextDecoder().decode(await fixtureBytes("oracle-cards.json")),
+        );
       }
       if (url === printingDescriptor.downloadUri) {
-        return new Response(await fixtureBytes("default-cards.json"));
+        return new Response(
+          new TextDecoder().decode(await fixtureBytes("default-cards.json")),
+        );
       }
       return new Response("not found", { status: 404 });
     });
