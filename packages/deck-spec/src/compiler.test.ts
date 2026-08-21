@@ -154,8 +154,8 @@ describe("DeckSpec validation", () => {
     spec.guardrails.minThemeScore = 2;
     spec.scenario.opponentInteraction.commanderRemoval.enabled = false;
     expect(validateDeckSpec(spec).map((item) => item.code)).toEqual([
-      "constraint_conflict",
       "invalid_constraint",
+      "constraint_conflict",
       "scenario_missing",
     ]);
   });
