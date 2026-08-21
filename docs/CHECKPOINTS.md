@@ -5,7 +5,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | Checkpoint | Name | Status | Evidence |
 |---|---|---|---|
 | CP-00 | Foundation and governance | COMPLETE | [Merged PR #1](https://github.com/keldeo0713/commander-agent-v1/pull/1), [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) |
-| CP-01 | Versioned card truth | IN_PROGRESS | [Draft PR #2](https://github.com/keldeo0713/commander-agent-v1/pull/2), [CI run 10](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32460929140) |
+| CP-01 | Versioned card truth | READY_FOR_REVIEW | [Draft PR #2](https://github.com/keldeo0713/commander-agent-v1/pull/2), [live acceptance run 19](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32462509574) |
 | CP-02 | Commander legality engine | NOT_STARTED | — |
 | CP-03 | Structured deck specification | NOT_STARTED | — |
 | CP-04 | Functional knowledge and candidate retrieval | NOT_STARTED | — |
@@ -35,8 +35,8 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Oracle identities and printing identities are separated.
 - [x] Dataset metadata, hashes, freshness, and rejected-record reports exist.
 - [x] Lookup by name and source identifiers exists.
-- [ ] A current selected Scryfall snapshot imports fully or every rejected record is reported.
-- [x] Reimport is idempotent in deterministic fixtures.
+- [x] A current selected Scryfall snapshot imports fully or every rejected record is reported (38,626 Oracle identities, 116,619 printings, 81 explicit issues).
+- [x] Reimport is idempotent in deterministic fixtures and in live acceptance.
 - [x] Kenessos resolves to one Oracle identity with the expected reference facts.
 - [x] Source attribution and refresh policy are documented.
-- [x] Full `pnpm check` and CP-01 CI pass ([run 10](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32460929140)).
+- [x] Full `pnpm check` and CP-01 CI pass ([run 19](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32462509574)).

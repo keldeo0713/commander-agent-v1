@@ -5,6 +5,9 @@ The ingestion command downloads both `oracle_cards` and `default_cards` so
 rules-level identities remain separate from printing-level identifiers and
 attributes.
 
+The client prefers Scryfall's gzip-compressed JSONL exports, falls back to the
+legacy JSON-array shape when available, and decodes JSONL records incrementally.
+
 ## Run an import
 
 Requirements: Node.js 24+, pnpm 11+, and enough disk/memory for both Scryfall

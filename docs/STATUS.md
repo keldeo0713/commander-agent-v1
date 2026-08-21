@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-01 — Versioned card truth |
-| Status | IN_PROGRESS |
+| Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
 | Next checkpoint | CP-02 — Commander legality engine |
@@ -28,8 +28,10 @@ Ingest Scryfall Oracle and printing snapshots into immutable, content-addressed 
 - CP-00 final branch [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) passed before merge.
 - `node scripts/offline-check.mjs` passed locally for CP-01: 32 source files, 20 JSON files, and all 12 package boundaries validated.
 - `git diff --check` passed.
-- CP-01 [CI run 10](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32460929140) passed the complete `pnpm check` chain.
-- A real Scryfall snapshot acceptance run remains pending.
+- CP-01 [CI run 19](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32462509574) passed the complete `pnpm check` chain and imported the same current Scryfall snapshot twice with identical IDs and hashes.
+- Acceptance dataset `scryfall-20260820210532-75809e87b469` contained 38,626 Oracle identities and 116,619 printings. All 81 rejected default-card records were retained as explicit `invalid_record` issues.
+- The normalized SHA-256 was `75809e87b46990767407ec4666979e75d36ab98d3881c01f12447ab8100e8aeb`; source hashes were `af0e7fe0657d5075d79ad1c97af820d6dfea7be0470e7d940cc17dbdd9a0bdb5` for 38,626 Oracle records and `60bafbc94807edc33e29346eff7103a25f698bbbb1809cf296bc090dd0727301` for 116,700 default-card records.
+- Provider freshness at acceptance was approximately 11.2 hours.
 
 ## Assumptions
 
@@ -39,10 +41,10 @@ Ingest Scryfall Oracle and printing snapshots into immutable, content-addressed 
 
 ## Known limitations
 
-- Current parsing holds each downloaded JSON array in memory; benchmark the real bulk snapshots before marking CP-01 complete.
+- JSONL records are decoded incrementally after gzip decompression; normalized records remain in memory during snapshot construction. The selected live snapshot completed within the acceptance runner's 6 GiB heap allowance.
 - Format banned lists, Game Changers, and Commander legality remain CP-02 scope.
 - Prices and image fields are printing facts, but purchasing/market behavior remains out of scope.
 
 ## Recommended next action
 
-Exercise a current real Scryfall snapshot, record import counts/hashes/freshness, and optimize ingestion memory if the acceptance run shows pressure.
+Review and merge draft pull request #2, then begin CP-02 from the merged checkpoint.
