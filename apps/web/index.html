@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Commander Agent</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header><div><span class="eyebrow">Commander Agent</span><h1>Build around the game you want to play.</h1></div><button class="ghost">Import deck</button></header>
+  <main>
+    <nav aria-label="Workspace">
+      <button class="active">Chat</button><button>Specification</button><button>Deck</button><button>Results</button><button>Compare</button>
+    </nav>
+    <section class="workspace">
+      <article class="conversation">
+        <div class="message system"><strong>Describe your commander and goal.</strong><p>I’ll make assumptions visible before building, then measure the plan under declared conditions.</p></div>
+        <label for="request">Deck request</label>
+        <textarea id="request" rows="7" placeholder="Build a themed Commander deck that…"></textarea>
+        <div class="actions"><button class="primary">Compile specification</button><button class="ghost">Cancel</button></div>
+      </article>
+      <aside>
+        <div class="card"><span class="eyebrow">Current job</span><div class="progress"><i style="width:0%"></i></div><p>Ready to build</p></div>
+        <div class="card"><span class="eyebrow">Visible assumptions</span><ul><li>Commander rules snapshot</li><li>Game Changer maximum</li><li>Interaction and continuation floors</li><li>Simulation policy and seeds</li></ul></div>
+      </aside>
+    </section>
+    <section class="summary-grid" aria-label="Deck results">
+      <div class="card"><span class="eyebrow">Deck</span><strong>100 cards</strong><p>Legal status and role coverage appear here.</p></div>
+      <div class="card"><span class="eyebrow">Measured goal</span><strong>—</strong><p>Confidence interval and assumptions appear here.</p></div>
+      <div class="card"><span class="eyebrow">Export</span><strong>Portable text</strong><p>Download an Archidekt-compatible list without account access.</p></div>
+    </section>
+  </main>
+</body>
+</html>
