@@ -39,7 +39,9 @@ async function built(downloadedAt: string) {
 
 describe("versioned card datasets", () => {
   it("accepts Scryfall JSONL exports", async () => {
-    const asJsonl = async (name: string): Promise<Uint8Array> => {
+    const asJsonl = async (
+      name: "oracle-cards.json" | "default-cards.json",
+    ): Promise<Uint8Array> => {
       const values = JSON.parse(
         new TextDecoder().decode(await fixtureBytes(name)),
       ) as unknown[];
