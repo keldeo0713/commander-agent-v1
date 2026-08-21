@@ -10,8 +10,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-03 | Structured deck specification | COMPLETE | [Merged PR #4](https://github.com/keldeo0713/commander-agent-v1/pull/4), [CI run 30](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464891525) |
 | CP-04 | Functional knowledge and candidate retrieval | COMPLETE | [Merged PR #5](https://github.com/keldeo0713/commander-agent-v1/pull/5), [CI run 37](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466184536) |
 | CP-05 | Kenessos setup and commander-removal simulator | COMPLETE | [Merged PR #6](https://github.com/keldeo0713/commander-agent-v1/pull/6), [CI run 46](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466707384) |
-| CP-06 | Baseline builder and optimizer | READY_FOR_REVIEW | [PR #7](https://github.com/keldeo0713/commander-agent-v1/pull/7), [CI run 51](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32495954441) |
-| CP-07 | End-to-end AI adviser | NOT_STARTED | — |
+| CP-06 | Baseline builder and optimizer | COMPLETE | [Merged PR #7](https://github.com/keldeo0713/commander-agent-v1/pull/7), [CI run 54](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496071932) |
+| CP-07 | End-to-end AI adviser | READY_FOR_REVIEW | [PR #8](https://github.com/keldeo0713/commander-agent-v1/pull/8), [CI run 56](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496271032) |
 | CP-08 | User application and Archidekt export | NOT_STARTED | — |
 | CP-09 | Generalization | NOT_STARTED | — |
 | CP-10 | Interaction models and operational scaling | NOT_STARTED | — |
@@ -87,3 +87,13 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Qualifying finalists receive fresh holdout-seed evaluation.
 - [x] No-improvement outcomes remain explicit.
 - [x] Full CI passes ([run 51](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32495954441)).
+
+## CP-07 exit checklist
+
+- [x] Request-to-spec-to-retrieval-to-build-to-evaluation orchestration exists.
+- [x] Clarification, unsupported, and structured build failures stop safely.
+- [x] Explanations accept only retrieved facts or run evidence.
+- [x] Lock, exclude, relax, and rerun create immutable child deck versions.
+- [x] Deck-version comparison reports metric deltas.
+- [x] Reference flow is executable entirely through ports without editing internal data.
+- [x] Full CI passes ([run 56](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496271032)).
