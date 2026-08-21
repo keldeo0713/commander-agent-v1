@@ -7,8 +7,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-00 | Foundation and governance | COMPLETE | [Merged PR #1](https://github.com/keldeo0713/commander-agent-v1/pull/1), [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) |
 | CP-01 | Versioned card truth | COMPLETE | [Merged PR #2](https://github.com/keldeo0713/commander-agent-v1/pull/2), [live acceptance run 19](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32462509574) |
 | CP-02 | Commander legality engine | COMPLETE | [Merged pull request #3](https://github.com/keldeo0713/commander-agent-v1/pull/3), [CI run 24](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464046735) |
-| CP-03 | Structured deck specification | READY_FOR_REVIEW | [Pull request #4](https://github.com/keldeo0713/commander-agent-v1/pull/4), [CI run 28](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464801676) |
-| CP-04 | Functional knowledge and candidate retrieval | NOT_STARTED | — |
+| CP-03 | Structured deck specification | COMPLETE | [Merged PR #4](https://github.com/keldeo0713/commander-agent-v1/pull/4), [CI run 30](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464891525) |
+| CP-04 | Functional knowledge and candidate retrieval | READY_FOR_REVIEW | [PR #5](https://github.com/keldeo0713/commander-agent-v1/pull/5), [CI run 36](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466103238) |
 | CP-05 | Kenessos setup and commander-removal simulator | NOT_STARTED | — |
 | CP-06 | Baseline builder and optimizer | NOT_STARTED | — |
 | CP-07 | End-to-end AI adviser | NOT_STARTED | — |
@@ -58,3 +58,12 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Approved Kenessos reference request and defaults are represented in a golden fixture.
 - [x] Hard constraints and preferences cannot be silently interchanged by the schema.
 - [x] Full fixture suite and CI pass ([run 28](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464801676): 23/23 tests).
+
+## CP-04 exit checklist
+
+- [x] Versioned role taxonomy and provenance model exist.
+- [x] Generic deterministic eligibility classifier supports the Kenessos criteria as request data.
+- [x] Lexical and pluggable semantic retrieval return visible reasons and legality.
+- [x] Multi-role cards retain all deterministic roles.
+- [x] Frozen benchmark target is established at 100% recall and passes.
+- [x] Full CI passes ([run 36](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466103238)).

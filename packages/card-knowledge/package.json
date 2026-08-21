@@ -1,1 +1,1 @@
-{"name":"@commander-agent/card-knowledge","version":"0.0.0","private":true,"type":"module","exports":{".":"./src/index.ts"}}
+{"name":"@commander-agent/card-knowledge","version":"0.0.0","private":true,"type":"module","exports":{".":"./src/index.ts"},"dependencies":{"@commander-agent/card-data":"workspace:*"}}

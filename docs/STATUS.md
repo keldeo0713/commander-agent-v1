@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-03 — Structured deck specification |
+| Active checkpoint | CP-04 — Functional knowledge and candidate retrieval |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-04 — Functional knowledge and candidate retrieval |
+| Next checkpoint | CP-05 — Kenessos setup and commander-removal simulator |
 
 ## Current objective
 
-Represent user intent without ambiguity in a versioned, inspectable DeckSpec and compile natural-language drafts only through registered goals and visible assumptions.
+Produce a high-recall, explainable candidate pool through generic deterministic classification and pluggable semantic retrieval.
 
 ## Scope completed
 
@@ -31,6 +31,10 @@ Represent user intent without ambiguity in a versioned, inspectable DeckSpec and
 - Provider-independent AI draft-generator port, registered-goal enforcement, structured clarification/unsupported results, and visible inference reasons added.
 - Approved Kenessos golden request added as a reference fixture rather than a schema specialization.
 
+- CP-03 merged through pull request #4 with every exit criterion satisfied.
+- Versioned role evidence, generic eligibility classification, hybrid retrieval, and frozen recall benchmark added.
+- Kenessos remains benchmark data only; production retrieval is commander-agnostic.
+
 ## Validation evidence
 
 - CP-00 final branch [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) passed before merge.
@@ -41,7 +45,8 @@ Represent user intent without ambiguity in a versioned, inspectable DeckSpec and
 - The normalized SHA-256 was `75809e87b46990767407ec4666979e75d36ab98d3881c01f12447ab8100e8aeb`; source hashes were `af0e7fe0657d5075d79ad1c97af820d6dfea7be0470e7d940cc17dbdd9a0bdb5` for 38,626 Oracle records and `60bafbc94807edc33e29346eff7103a25f698bbbb1809cf296bc090dd0727301` for 116,700 default-card records.
 - Provider freshness at acceptance was approximately 11.2 hours.
 - CP-02 [CI run 23](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32463914254) passed lint, strict typecheck, all 18 tests across 6 files, all 12 package boundaries, and manifest validation.
-- CP-03 [CI run 28](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464801676) passed lint, strict typecheck, all 23 tests across 7 files, all 12 package boundaries, and manifest validation.
+- CP-03 [CI run 30](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464891525) passed before merge.
+- CP-04 [CI run 36](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466103238) passed the complete check chain and the frozen benchmark achieved 100% recall.
 
 ## Assumptions
 
@@ -57,4 +62,4 @@ Represent user intent without ambiguity in a versioned, inspectable DeckSpec and
 
 ## Recommended next action
 
-Review and merge CP-03 pull request #4, then begin CP-04 candidate retrieval.
+Merge CP-04 pull request #5, then begin CP-05 deterministic simulation.
