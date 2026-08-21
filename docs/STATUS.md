@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-08 — User application and Archidekt export |
+| Active checkpoint | CP-09 — Generalization |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-09 — Generalization |
+| Next checkpoint | CP-10 — Interaction models and operational scaling |
 
 ## Current objective
 
-Deliver a responsive workspace with cancellable jobs and lossless account-free deck-list exchange.
+Prove the architecture across materially different archetypes with primitive-level coverage gates.
 
 ## Scope completed
 
@@ -47,6 +47,9 @@ Deliver a responsive workspace with cancellable jobs and lossless account-free d
 - CP-07 merged through pull request #8 with every exit criterion satisfied.
 - Responsive workspace shell/state, cancellation, stale-event protection, and validated portable import/export added.
 
+- CP-08 merged through pull request #9 with every exit criterion satisfied.
+- Six-archetype regression registry, versioned goals, required primitive declarations, and visible unsupported behavior added.
+
 ## Validation evidence
 
 - CP-00 final branch [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) passed before merge.
@@ -74,4 +77,4 @@ Deliver a responsive workspace with cancellable jobs and lossless account-free d
 
 ## Recommended next action
 
-Merge CP-08 pull request #9, then begin CP-09 generalization.
+Merge CP-09 pull request #10, then begin CP-10 operational scaling.
