@@ -37,25 +37,34 @@ function sha256(bytes: Uint8Array | string): string {
 function parseArray(bytes: Uint8Array, label: string): unknown[] {
   const decodedBytes =
     bytes[0] === 0x1f && bytes[1] === 0x8b ? gunzipSync(bytes) : bytes;
-  const text = new TextDecoder().decode(decodedBytes).trim();
-  if (text.startsWith("[")) {
-    const value: unknown = JSON.parse(text);
+  const firstContentByte = decodedBytes.find(
+    (byte) => byte !== 0x20 && byte !== 0x09 && byte !== 0x0a && byte !== 0x0d,
+  );
+  if (firstContentByte === 0x5b) {
+    const value: unknown = JSON.parse(new TextDecoder().decode(decodedBytes));
     if (!Array.isArray(value)) {
       throw new Error(`${label} bulk file must be an array or JSONL records`);
     }
     return value;
   }
-  return text.length === 0
-    ? []
-    : text.split(/\r?\n/u).map((line, index) => {
-        try {
-          return JSON.parse(line) as unknown;
-        } catch (error) {
-          throw new Error(`${label} JSONL record ${index} is invalid`, {
-            cause: error,
-          });
-        }
-      });
+  const records: unknown[] = [];
+  const decoder = new TextDecoder();
+  let lineStart = 0;
+  for (let index = 0; index <= decodedBytes.length; index += 1) {
+    if (index !== decodedBytes.length && decodedBytes[index] !== 0x0a) continue;
+    const lineEnd = decodedBytes[index - 1] === 0x0d ? index - 1 : index;
+    if (lineEnd > lineStart) {
+      try {
+        records.push(JSON.parse(decoder.decode(decodedBytes.subarray(lineStart, lineEnd))) as unknown);
+      } catch (error) {
+        throw new Error(`${label} JSONL record ${records.length} is invalid`, {
+          cause: error,
+        });
+      }
+    }
+    lineStart = index + 1;
+  }
+  return records;
 }
 
 function descriptorByType(
