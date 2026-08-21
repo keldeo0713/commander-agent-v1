@@ -4,7 +4,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 
 | Checkpoint | Name | Status | Evidence |
 |---|---|---|---|
-| CP-00 | Foundation and governance | IN_PROGRESS | Current branch and CI |
+| CP-00 | Foundation and governance | READY_FOR_REVIEW | [Draft PR #1](https://github.com/keldeo0713/commander-agent-v1/pull/1), [CI run 5](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32457885590) |
 | CP-01 | Versioned card truth | NOT_STARTED | — |
 | CP-02 | Commander legality engine | NOT_STARTED | — |
 | CP-03 | Structured deck specification | NOT_STARTED | — |
@@ -22,9 +22,9 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 - [x] HLD, status, checkpoint ledger, and ADR template exist.
 - [x] Shared schema/version conventions are represented in code.
 - [x] CI is configured for lint, typecheck, tests, boundary checks, and manifest validation.
-- [ ] Fresh install and `pnpm check` succeed.
-- [ ] Boundary checks prove domain cannot import integration/application packages.
-- [ ] Sample run manifest validates.
+- [x] Fresh install and `pnpm check` succeed.
+- [x] Boundary checks prove domain cannot import integration/application packages.
+- [x] Sample run manifest validates.
 - [x] Product implementation is deferred to later checkpoints.
 
 Do not mark CP-00 complete until every item is checked and review evidence is linked.

@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-00 — Foundation and governance |
-| Status | IN_PROGRESS |
-| Last updated | 2026-08-20 |
+| Status | READY_FOR_REVIEW |
+| Last updated | 2026-08-21 |
 | HLD version | 1.0 |
 | Next checkpoint | CP-01 — Versioned card truth |
 
@@ -19,12 +19,16 @@ Establish a reproducible TypeScript monorepo, versioned domain-contract foundati
 - Run-manifest v1 schema stub and sample defined.
 - Local and CI validation commands defined.
 - Agent, contribution, checkpoint, and ADR workflows documented.
+- pnpm 11 dependency build allowlist and frozen dependency lock committed.
+- Draft pull request opened for checkpoint review.
 
 ## Validation evidence
 
-- `node scripts/offline-check.mjs` passed: 20 source files, 18 JSON files, and all 12 package boundaries validated.
+- GitHub Actions [CI run 5](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32457885590) passed on commit `418a3c84dd539e8f392977f0745f49734b384bf4` with Node.js 24.19.0 and pnpm 11.19.0.
+- `pnpm install --frozen-lockfile` passed from a fresh GitHub Actions checkout.
+- `pnpm check` passed: lint, typecheck, 3 unit tests, all 12 package boundaries, and the `run-manifest/1` sample validation.
+- `node scripts/offline-check.mjs` passed locally: 20 source files, 18 JSON files, and all 12 package boundaries validated.
 - `git diff --check` passed.
-- Dependency installation is unavailable in the current restricted network environment, so the complete `pnpm check` remains pending GitHub CI.
 
 ## Assumptions
 
@@ -36,8 +40,8 @@ Establish a reproducible TypeScript monorepo, versioned domain-contract foundati
 
 - No card ingestion, legality, deck building, simulation, optimization, or UI behavior exists in CP-00.
 - The run manifest is a foundation contract and will gain domain fields through versioned changes.
-- `pnpm-lock.yaml` must be generated and committed after the first dependency-enabled install; CI temporarily uses `--no-frozen-lockfile` until then.
+- CP-00 remains `READY_FOR_REVIEW` until its draft pull request is reviewed and merged.
 
 ## Recommended next action
 
-Publish the feature branch, run the full GitHub CI check, commit the generated dependency lock, and review the draft pull request before beginning CP-01.
+Review and merge draft pull request #1. After merge, mark CP-00 `COMPLETE` and begin CP-01 on a new feature branch.
