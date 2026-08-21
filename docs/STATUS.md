@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-07 — End-to-end AI adviser |
+| Active checkpoint | CP-08 — User application and Archidekt export |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-08 — User application and Archidekt export |
+| Next checkpoint | CP-09 — Generalization |
 
 ## Current objective
 
-Complete the request-to-spec-to-build conversational loop with evidence-bound explanations and immutable revisions.
+Deliver a responsive workspace with cancellable jobs and lossless account-free deck-list exchange.
 
 ## Scope completed
 
@@ -44,6 +44,9 @@ Complete the request-to-spec-to-build conversational loop with evidence-bound ex
 - CP-06 merged through pull request #7 with every exit criterion satisfied.
 - End-to-end adviser orchestration, explicit stop states, evidence validation, immutable deck versions, revision operations, and comparison added.
 
+- CP-07 merged through pull request #8 with every exit criterion satisfied.
+- Responsive workspace shell/state, cancellation, stale-event protection, and validated portable import/export added.
+
 ## Validation evidence
 
 - CP-00 final branch [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) passed before merge.
@@ -71,4 +74,4 @@ Complete the request-to-spec-to-build conversational loop with evidence-bound ex
 
 ## Recommended next action
 
-Merge CP-07 pull request #8, then begin CP-08 user application and export.
+Merge CP-08 pull request #9, then begin CP-09 generalization.
