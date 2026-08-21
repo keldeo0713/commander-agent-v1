@@ -1,2 +1,1 @@
-/** Golden, statistical, and regression evaluation boundary. */
-export const packageName = "evals";
+export * from "./generalization.js";
