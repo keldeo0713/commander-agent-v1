@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-06 — Baseline builder and optimizer |
+| Active checkpoint | CP-07 — End-to-end AI adviser |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-07 — End-to-end AI adviser |
+| Next checkpoint | CP-08 — User application and Archidekt export |
 
 ## Current objective
 
-Improve declared milestones through legal constrained construction, paired evaluation, Pareto selection, and holdout verification.
+Complete the request-to-spec-to-build conversational loop with evidence-bound explanations and immutable revisions.
 
 ## Scope completed
 
@@ -41,6 +41,9 @@ Improve declared milestones through legal constrained construction, paired evalu
 - CP-05 merged through pull request #6 with every exit criterion satisfied.
 - Deterministic baseline construction, structured constraint failures, paired-seed swaps, Pareto filtering, holdout reevaluation, and compute accounting added.
 
+- CP-06 merged through pull request #7 with every exit criterion satisfied.
+- End-to-end adviser orchestration, explicit stop states, evidence validation, immutable deck versions, revision operations, and comparison added.
+
 ## Validation evidence
 
 - CP-00 final branch [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) passed before merge.
@@ -68,4 +71,4 @@ Improve declared milestones through legal constrained construction, paired evalu
 
 ## Recommended next action
 
-Merge CP-06 pull request #7, then begin CP-07 end-to-end orchestration.
+Merge CP-07 pull request #8, then begin CP-08 user application and export.
