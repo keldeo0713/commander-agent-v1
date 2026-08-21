@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-01 — Versioned card truth |
-| Status | READY_FOR_REVIEW |
+| Active checkpoint | CP-02 — Commander legality engine |
+| Status | IN_PROGRESS |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-02 — Commander legality engine |
+| Next checkpoint | CP-03 — Structured deck specification |
 
 ## Current objective
 
-Ingest Scryfall Oracle and printing snapshots into immutable, content-addressed datasets with explicit failures, reproducibility metadata, and deterministic lookup contracts.
+Validate Commander deck construction deterministically against a versioned format snapshot with structured, explainable violations.
 
 ## Scope completed
 
@@ -22,6 +22,10 @@ Ingest Scryfall Oracle and printing snapshots into immutable, content-addressed 
 - Lookup by normalized name, Oracle ID, Scryfall ID, and set/collector number added.
 - Kenessos fixtures and deterministic ingestion/catalog tests added.
 - Source attribution, refresh policy, command usage, and failure behavior documented.
+- CP-01 merged through pull request #2 with every exit criterion satisfied.
+- Generic Commander size, commander eligibility, color-identity, singleton, banned-list, companion, and supported-pair validation added.
+- Versioned `commander-rules/1` format snapshot and structured violation contracts added.
+- Kenessos is used only as a legality regression fixture; no strategy or commander-specific branch exists in the validator.
 
 ## Validation evidence
 
@@ -32,6 +36,7 @@ Ingest Scryfall Oracle and printing snapshots into immutable, content-addressed 
 - Acceptance dataset `scryfall-20260820210532-75809e87b469` contained 38,626 Oracle identities and 116,619 printings. All 81 rejected default-card records were retained as explicit `invalid_record` issues.
 - The normalized SHA-256 was `75809e87b46990767407ec4666979e75d36ab98d3881c01f12447ab8100e8aeb`; source hashes were `af0e7fe0657d5075d79ad1c97af820d6dfea7be0470e7d940cc17dbdd9a0bdb5` for 38,626 Oracle records and `60bafbc94807edc33e29346eff7103a25f698bbbb1809cf296bc090dd0727301` for 116,700 default-card records.
 - Provider freshness at acceptance was approximately 11.2 hours.
+- CP-02 offline validation is pending full CI on its feature branch.
 
 ## Assumptions
 
@@ -42,9 +47,9 @@ Ingest Scryfall Oracle and printing snapshots into immutable, content-addressed 
 ## Known limitations
 
 - JSONL records are decoded incrementally after gzip decompression; normalized records remain in memory during snapshot construction. The selected live snapshot completed within the acceptance runner's 6 GiB heap allowance.
-- Format banned lists, Game Changers, and Commander legality remain CP-02 scope.
+- Game Changers and bracket guardrails remain later deck-spec/builder scope; they are not format legality failures.
 - Prices and image fields are printing facts, but purchasing/market behavior remains out of scope.
 
 ## Recommended next action
 
-Review and merge draft pull request #2, then begin CP-02 from the merged checkpoint.
+Run the complete CP-02 fixture suite and CI, then publish a draft checkpoint pull request.
