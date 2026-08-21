@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-02 — Commander legality engine |
-| Status | READY_FOR_REVIEW |
+| Active checkpoint | CP-03 — Structured deck specification |
+| Status | IN_PROGRESS |
 | Last updated | 2026-08-21 |
 | HLD version | 1.0 |
-| Next checkpoint | CP-03 — Structured deck specification |
+| Next checkpoint | CP-04 — Functional knowledge and candidate retrieval |
 
 ## Current objective
 
-Validate Commander deck construction deterministically against a versioned format snapshot with structured, explainable violations.
+Represent user intent without ambiguity in a versioned, inspectable DeckSpec and compile natural-language drafts only through registered goals and visible assumptions.
 
 ## Scope completed
 
@@ -26,6 +26,10 @@ Validate Commander deck construction deterministically against a versioned forma
 - Generic Commander size, commander eligibility, color-identity, singleton, banned-list, companion, and supported-pair validation added.
 - Versioned `commander-rules/1` format snapshot and structured violation contracts added.
 - Kenessos is used only as a legality regression fixture; no strategy or commander-specific branch exists in the validator.
+- CP-02 merged through pull request #3 with every exit criterion satisfied.
+- Versioned `deck-spec/1` separates hard constraints, guardrails, objectives, preferences, continuation paths, and scenario assumptions.
+- Provider-independent AI draft-generator port, registered-goal enforcement, structured clarification/unsupported results, and visible inference reasons added.
+- Approved Kenessos golden request added as a reference fixture rather than a schema specialization.
 
 ## Validation evidence
 
@@ -37,6 +41,7 @@ Validate Commander deck construction deterministically against a versioned forma
 - The normalized SHA-256 was `75809e87b46990767407ec4666979e75d36ab98d3881c01f12447ab8100e8aeb`; source hashes were `af0e7fe0657d5075d79ad1c97af820d6dfea7be0470e7d940cc17dbdd9a0bdb5` for 38,626 Oracle records and `60bafbc94807edc33e29346eff7103a25f698bbbb1809cf296bc090dd0727301` for 116,700 default-card records.
 - Provider freshness at acceptance was approximately 11.2 hours.
 - CP-02 [CI run 23](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32463914254) passed lint, strict typecheck, all 18 tests across 6 files, all 12 package boundaries, and manifest validation.
+- CP-03 offline checks pass; full feature-branch CI remains pending.
 
 ## Assumptions
 
@@ -52,4 +57,4 @@ Validate Commander deck construction deterministically against a versioned forma
 
 ## Recommended next action
 
-Review and merge pull request #3, then begin CP-03 from the merged checkpoint.
+Run full CP-03 CI, resolve strict validation findings, and publish the draft checkpoint pull request.
