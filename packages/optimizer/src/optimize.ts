@@ -1,6 +1,6 @@
-import type { EvaluatedDeck, OptimizationRequest, OptimizationResult } from "./types.js";
+import type { EvaluatedDeck, EvaluationPort, OptimizationRequest, OptimizationResult } from "./types.js";
 
-export async function optimize(request: OptimizationRequest, evaluator: import("./types.js").EvaluationPort): Promise<OptimizationResult> {
+export async function optimize(request: OptimizationRequest, evaluator: EvaluationPort): Promise<OptimizationResult> {
   const evaluated: EvaluatedDeck[] = [];
   const searchHistory: OptimizationResult["searchHistory"] = [];
   for (const swap of request.swaps) {
