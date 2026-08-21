@@ -21,6 +21,7 @@ function fixture(removalProbability = 0): SimulationInput {
       commanderManaCost: 2, activationManaCost: 4, onPlay: true,
     },
     removal: { profileId: "fixture-removal/1", enabled: removalProbability > 0, earliestTurn: 2, perTurnProbability: removalProbability },
+    unsupportedMechanics: [],
   };
 }
 
@@ -44,6 +45,24 @@ describe("deterministic simulator", () => {
     expect(removal.probability).toBeLessThan(goldfish.probability);
     expect(removal.failureReasons.commander_removed).toBeGreaterThan(0);
     expect(removal.trials.filter((trial) => trial.commanderCasts > 0).every((trial) => trial.commanderRemovals > 0)).toBe(true);
+  });
+
+  it("agrees with exact zero and one probability fixtures", () => {
+    const certain = fixture();
+    certain.library = cards(99, "eligible_payoff", 6);
+    certain.policy = { ...certain.policy, minimumOpeningLands: 0, maximumOpeningLands: 7, commanderManaCost: 0, activationManaCost: 0 };
+    expect(simulate(certain).probability).toBe(1);
+
+    const impossible = fixture();
+    impossible.library = cards(99, "other", 1);
+    impossible.policy = { ...impossible.policy, minimumOpeningLands: 0, maximumOpeningLands: 7, commanderManaCost: 0, activationManaCost: 0 };
+    expect(simulate(impossible).probability).toBe(0);
+  });
+
+  it("keeps unsupported mechanics visible in the report identity", () => {
+    const input = fixture();
+    input.unsupportedMechanics = ["political threat assessment"];
+    expect(simulate(input).inputIdentity.unsupportedMechanics).toEqual(["political threat assessment"]);
   });
 
   it("rejects decks that cannot satisfy the Commander zone contract", () => {
