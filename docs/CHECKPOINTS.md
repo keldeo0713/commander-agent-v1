@@ -12,8 +12,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-05 | Kenessos setup and commander-removal simulator | COMPLETE | [Merged PR #6](https://github.com/keldeo0713/commander-agent-v1/pull/6), [CI run 46](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466707384) |
 | CP-06 | Baseline builder and optimizer | COMPLETE | [Merged PR #7](https://github.com/keldeo0713/commander-agent-v1/pull/7), [CI run 54](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496071932) |
 | CP-07 | End-to-end AI adviser | COMPLETE | [Merged PR #8](https://github.com/keldeo0713/commander-agent-v1/pull/8), [CI run 58](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496390649) |
-| CP-08 | User application and Archidekt export | READY_FOR_REVIEW | [PR #9](https://github.com/keldeo0713/commander-agent-v1/pull/9), [CI run 60](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496638561) |
-| CP-09 | Generalization | NOT_STARTED | — |
+| CP-08 | User application and Archidekt export | COMPLETE | [Merged PR #9](https://github.com/keldeo0713/commander-agent-v1/pull/9), [CI run 65](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496813557) |
+| CP-09 | Generalization | READY_FOR_REVIEW | [PR #10](https://github.com/keldeo0713/commander-agent-v1/pull/10), [CI run 67](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496998621) |
 | CP-10 | Interaction models and operational scaling | NOT_STARTED | — |
 
 ## CP-00 exit checklist
@@ -107,3 +107,12 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Export round-trip preserves all 100 cards and commander identity by name/section.
 - [x] No undocumented authenticated Archidekt dependency exists.
 - [x] Full CI passes ([run 60](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496638561)).
+
+## CP-09 exit checklist
+
+- [x] Regression suite covers six materially different Commander archetypes.
+- [x] Goal definitions declare required simulator primitives independently of commanders.
+- [x] Coverage gates execute only fully supported goals.
+- [x] Partial support reports exact missing primitives visibly.
+- [x] Kenessos remains exactly one regression fixture with no schema specialization.
+- [x] Full CI passes ([run 67](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496998621)).
