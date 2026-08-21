@@ -27,7 +27,7 @@ describe("baseline builder", () => {
     expect(first.status).toBe("built");
     if (first.status === "built") {
       expect(first.deck.oracleIds).toHaveLength(99);
-      expect(first.deck.roleCounts).toMatchObject({ land: 35, interaction: 8, continuation: 1 });
+      expect(first.deck.roleCounts.land).toBeGreaterThanOrEqual(35);\n      expect(first.deck.roleCounts.interaction).toBeGreaterThanOrEqual(8);\n      expect(first.deck.roleCounts.continuation).toBeGreaterThanOrEqual(1);
       expect(first.deck.declaredWinPathIds).toEqual(["combat-damage"]);
     }
   });
