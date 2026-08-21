@@ -28,7 +28,8 @@ Ingest Scryfall Oracle and printing snapshots into immutable, content-addressed 
 - CP-00 final branch [CI run 6](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32458014249) passed before merge.
 - `node scripts/offline-check.mjs` passed locally for CP-01: 32 source files, 20 JSON files, and all 12 package boundaries validated.
 - `git diff --check` passed.
-- Complete `pnpm check` and a real Scryfall snapshot acceptance run remain pending CI.
+- CP-01 [CI run 10](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32460929140) passed the complete `pnpm check` chain.
+- A real Scryfall snapshot acceptance run remains pending.
 
 ## Assumptions
 
@@ -44,4 +45,4 @@ Ingest Scryfall Oracle and printing snapshots into immutable, content-addressed 
 
 ## Recommended next action
 
-Run the full CI suite, exercise a current real Scryfall snapshot, record import counts/hashes/freshness, and optimize ingestion memory if the acceptance run shows pressure.
+Exercise a current real Scryfall snapshot, record import counts/hashes/freshness, and optimize ingestion memory if the acceptance run shows pressure.
