@@ -34,9 +34,25 @@ function sha256(bytes: Uint8Array | string): string {
 }
 
 function parseArray(bytes: Uint8Array, label: string): unknown[] {
-  const value: unknown = JSON.parse(new TextDecoder().decode(bytes));
-  if (!Array.isArray(value)) throw new Error(`${label} bulk file must be an array`);
-  return value;
+  const text = new TextDecoder().decode(bytes).trim();
+  if (text.startsWith("[")) {
+    const value: unknown = JSON.parse(text);
+    if (!Array.isArray(value)) {
+      throw new Error(`${label} bulk file must be an array or JSONL records`);
+    }
+    return value;
+  }
+  return text.length === 0
+    ? []
+    : text.split(/\r?\n/u).map((line, index) => {
+        try {
+          return JSON.parse(line) as unknown;
+        } catch (error) {
+          throw new Error(`${label} JSONL record ${index} is invalid`, {
+            cause: error,
+          });
+        }
+      });
 }
 
 function descriptorByType(

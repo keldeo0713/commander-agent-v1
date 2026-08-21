@@ -38,6 +38,36 @@ async function built(downloadedAt: string) {
 }
 
 describe("versioned card datasets", () => {
+  it("accepts Scryfall JSONL exports", async () => {
+    const asJsonl = async (name: string): Promise<Uint8Array> => {
+      const values = JSON.parse(
+        new TextDecoder().decode(await fixtureBytes(name)),
+      ) as unknown[];
+      return new TextEncoder().encode(
+        `${values.map((value) => JSON.stringify(value)).join("\n")}\n`,
+      );
+    };
+    const result = buildCardDataset(
+      [
+        {
+          descriptor: fixtureDescriptor("oracle_cards"),
+          bytes: await asJsonl("oracle-cards.json"),
+        },
+        {
+          descriptor: fixtureDescriptor("default_cards"),
+          bytes: await asJsonl("default-cards.json"),
+        },
+      ],
+      "2026-08-21T01:00:00.000Z",
+    );
+
+    expect(result.snapshot.manifest.counts).toEqual({
+      oracleCards: 1,
+      printings: 1,
+      rejectedRecords: 0,
+    });
+  });
+
   it("is content-addressed and idempotent on reimport", async () => {
     const outputRoot = await mkdtemp(join(tmpdir(), "commander-card-data-"));
     temporaryDirectories.push(outputRoot);

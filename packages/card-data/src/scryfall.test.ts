@@ -30,10 +30,11 @@ describe("Scryfall ingestion", () => {
               id: oracleDescriptor.id,
               type: oracleDescriptor.type,
               updated_at: oracleDescriptor.updatedAt,
-              download_uri: oracleDescriptor.downloadUri,
+              download_uri: "",
+              jsonl_download_uri: oracleDescriptor.downloadUri,
               content_type: oracleDescriptor.contentType,
               content_encoding: oracleDescriptor.contentEncoding,
-              size: oracleDescriptor.size,
+              compressed_size: oracleDescriptor.size,
         });
       }
       if (url === "https://api.scryfall.com/bulk-data/default_cards") {

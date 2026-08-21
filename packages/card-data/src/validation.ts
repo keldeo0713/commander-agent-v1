@@ -106,8 +106,10 @@ export function parseBulkDataDescriptor(
       type,
       updatedAt: requireString(record.updated_at, `${path}.updated_at`),
       downloadUri: requireString(
-        record.download_uri,
-        `${path}.download_uri`,
+        typeof record.download_uri === "string" && record.download_uri.length > 0
+          ? record.download_uri
+          : record.jsonl_download_uri,
+        `${path}.download_uri or ${path}.jsonl_download_uri`,
       ),
       contentType: requireString(
         record.content_type,
@@ -117,7 +119,10 @@ export function parseBulkDataDescriptor(
         record.content_encoding,
         `${path}.content_encoding`,
       ),
-      size: requireNumber(record.size, `${path}.size`),
+      size: requireNumber(
+        typeof record.size === "number" ? record.size : record.compressed_size,
+        `${path}.size or ${path}.compressed_size`,
+      ),
     } satisfies ScryfallBulkDataDescriptor;
 }
 
