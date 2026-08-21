@@ -1,2 +1,2 @@
-/** Legal baseline deck construction boundary. */
-export const packageName = "deck-builder";
+export * from "./builder.js";
+export * from "./types.js";
