@@ -12,6 +12,7 @@
     "noUnusedParameters": true,
     "useUnknownInCatchVariables": true,
     "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-13 — Runnable local demo |
+| Active checkpoint | CP-14 — Local demo API integration |
 | Status | READY_FOR_REVIEW |
-| Last updated | 2026-08-21 |
+| Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Product-owner local demo feedback |
+| Next checkpoint | Authoritative commander/card-data adapter |
 
 ## Current objective
 
-Provide one documented local command that runs the approved terminal demo and one automated self-check that verifies the complete static delivery path.
+Move discovery, bounded custom mapping, exact template allocation, and optional example construction out of the browser fixture and through the local application API/orchestrator.
 
 ## Scope completed
 
@@ -60,6 +60,9 @@ Provide one documented local command that runs the approved terminal demo and on
 - CP-12 adds a generic template orchestrator for commander resolution, explainable mechanic retrieval, bounded custom mapping, exact template allocation, and role-matched example validation.
 - CP-12 merged through pull request #13 after final CI run 86.
 - CP-13 adds a dependency-free localhost server, health endpoint, demo self-check, and current setup instructions.
+- CP-14 adds local JSON endpoints for session discovery, custom mechanic mapping, exact template optimization, and optional example construction.
+- The terminal browser now renders API results instead of owning mechanic, template, or card-list mathematics.
+- The Kenessos example is role-aligned to the exact 100-slot template and exported as plain quantity/name lines.
 
 ## Validation evidence
 
@@ -78,6 +81,8 @@ Provide one documented local command that runs the approved terminal demo and on
 - CP-12 [CI run 84](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551782373) passed the complete check chain.
 - CP-13 local validation passes lint, strict typecheck, all 58 tests across 19 files, all 12 package boundaries, `pnpm demo:check`, offline validation, and `git diff --check`.
 - CP-13 [CI run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904) passed the complete check chain.
+- CP-14 local validation passes strict typecheck, lint, all 59 tests across 19 files, the demo API self-check, all 12 package boundaries, and `git diff --check`.
+- CP-14 [CI run 92](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592023953) passed the complete check chain.
 
 ## Assumptions
 
@@ -90,7 +95,8 @@ Provide one documented local command that runs the approved terminal demo and on
 - JSONL records are decoded incrementally after gzip decompression; normalized records remain in memory during snapshot construction. The selected live snapshot completed within the acceptance runner's 6 GiB heap allowance.
 - Game Changers and bracket guardrails remain later deck-spec/builder scope; they are not format legality failures.
 - Prices and image fields are printing facts, but purchasing/market behavior remains out of scope.
+- CP-14's local adapter accepts non-empty commander names so the interaction can be exercised without network access. Only Kenessos has fixture-backed identity/color facts and a complete example; authoritative resolution for arbitrary commanders is the next adapter checkpoint.
 
 ## Recommended next action
 
-Publish CP-13, verify CI, and hand the exact local demo commands to the product owner for testing and feedback.
+Publish CP-14, verify CI, then connect the local API to the versioned card catalog and functional-knowledge retrieval rather than expanding browser fixtures.
