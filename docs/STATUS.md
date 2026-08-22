@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-13 — Runnable local demo |
-| Status | IN_PROGRESS |
+| Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.1 |
 | Next checkpoint | Product-owner local demo feedback |
@@ -77,6 +77,7 @@ Provide one documented local command that runs the approved terminal demo and on
 - CP-12 local validation passes lint, strict typecheck, all 57 tests across 18 files, all 12 package boundaries, offline validation, and `git diff --check`.
 - CP-12 [CI run 84](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551782373) passed the complete check chain.
 - CP-13 local validation passes lint, strict typecheck, all 58 tests across 19 files, all 12 package boundaries, `pnpm demo:check`, offline validation, and `git diff --check`.
+- CP-13 [CI run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904) passed the complete check chain.
 
 ## Assumptions
 
