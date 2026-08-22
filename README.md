@@ -29,7 +29,7 @@ pnpm demo
 
 Open `http://127.0.0.1:4173` in a browser. Stop the server with `Ctrl+C`.
 
-The demo accepts any commander name for the template flow. Kenessos is currently the only complete card-level example fixture; other commanders intentionally show that their example fixture is not loaded. The primary functional-template experience is not Kenessos-specific.
+The browser calls a local application API for mechanic discovery, bounded custom mapping, exact template allocation, and optional example construction. The offline demo accepts any non-empty commander name so the flow can be exercised without a network call. Kenessos is currently the only fixture with authoritative identity/color facts and a complete card-level example; other commanders intentionally show that their example fixture is not loaded. The primary functional-template orchestration is not Kenessos-specific.
 
 To verify the local demo without keeping a server open:
 
