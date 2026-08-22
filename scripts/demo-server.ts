@@ -86,7 +86,11 @@ function parseCommander(value: unknown): ResolvedCommander | null {
   if (!value || typeof value !== "object") return null;
   const candidate = value as Record<string, unknown>;
   if (typeof candidate["oracleId"] !== "string" || typeof candidate["name"] !== "string" || !Array.isArray(candidate["colorIdentity"]) || !candidate["colorIdentity"].every((color) => typeof color === "string")) return null;
-  return { oracleId: candidate["oracleId"], name: candidate["name"], colorIdentity: candidate["colorIdentity"] };
+  const commander: ResolvedCommander = { oracleId: candidate["oracleId"], name: candidate["name"], colorIdentity: candidate["colorIdentity"] };
+  if (typeof candidate["oracleText"] === "string") commander.oracleText = candidate["oracleText"];
+  if (typeof candidate["typeLine"] === "string") commander.typeLine = candidate["typeLine"];
+  if (typeof candidate["sourceId"] === "string") commander.sourceId = candidate["sourceId"];
+  return commander;
 }
 
 function json(response: ServerResponse, status: number, body: unknown): void {
