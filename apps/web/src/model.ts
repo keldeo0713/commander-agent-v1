@@ -1,4 +1,4 @@
-export type WorkspacePanel = "chat" | "spec" | "deck" | "results" | "comparison";
+export type WorkspacePanel = "commander" | "mechanics" | "template" | "example" | "comparison";
 export type JobStatus = "idle" | "queued" | "running" | "completed" | "failed" | "cancelled";
 export interface JobView { jobId: string | null; status: JobStatus; progress: number; message: string }
 export interface WorkspaceState {
@@ -22,7 +22,7 @@ export type WorkspaceAction =
   | { type: "compare"; leftVersionId: string; rightVersionId: string };
 
 export const initialWorkspaceState: WorkspaceState = {
-  activePanel: "chat", request: "", spec: null, deckVersionIds: [],
+  activePanel: "commander", request: "", spec: null, deckVersionIds: [],
   selectedVersionId: null, comparisonVersionIds: null,
   job: { jobId: null, status: "idle", progress: 0, message: "" },
 };
@@ -32,10 +32,10 @@ export function reduceWorkspace(state: WorkspaceState, action: WorkspaceAction):
   switch (action.type) {
     case "navigate": return { ...state, activePanel: action.panel };
     case "request_changed": return { ...state, request: action.request };
-    case "spec_loaded": return { ...state, spec: structuredClone(action.spec), activePanel: "spec" };
+    case "spec_loaded": return { ...state, spec: structuredClone(action.spec), activePanel: "mechanics" };
     case "job_started": return { ...state, job: { jobId: action.jobId, status: "running", progress: 0, message: "Starting build" } };
     case "job_progress": return { ...state, job: { ...state.job, progress: clamp(action.progress), message: action.message } };
-    case "job_finished": return { ...state, deckVersionIds: [...state.deckVersionIds, action.versionId], selectedVersionId: action.versionId, activePanel: "results", job: { ...state.job, status: "completed", progress: 1, message: "Build complete" } };
+    case "job_finished": return { ...state, deckVersionIds: [...state.deckVersionIds, action.versionId], selectedVersionId: action.versionId, activePanel: "template", job: { ...state.job, status: "completed", progress: 1, message: "Template complete" } };
     case "job_failed": return { ...state, job: { ...state.job, status: "failed", message: action.message } };
     case "job_cancelled": return { ...state, job: { ...state.job, status: "cancelled", message: "Cancelled" } };
     case "compare": return { ...state, comparisonVersionIds: [action.leftVersionId, action.rightVersionId], activePanel: "comparison" };

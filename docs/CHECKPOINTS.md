@@ -15,6 +15,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-08 | User application and Archidekt export | COMPLETE | [Merged PR #9](https://github.com/keldeo0713/commander-agent-v1/pull/9), [CI run 65](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496813557) |
 | CP-09 | Generalization | COMPLETE | [Merged PR #10](https://github.com/keldeo0713/commander-agent-v1/pull/10), [CI run 70](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32497123444) |
 | CP-10 | Interaction models and operational scaling | COMPLETE | [Merged PR #11](https://github.com/keldeo0713/commander-agent-v1/pull/11), [CI run 76](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32497531454) |
+| CP-11 | Template-first product flow | READY_FOR_REVIEW | [Draft PR #12](https://github.com/keldeo0713/commander-agent-v1/pull/12), [CI run 80](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551491570) |
 
 ## CP-00 exit checklist
 
@@ -124,3 +125,13 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Worker failure or lease expiry does not lose accepted work when backed by a durable store adapter.
 - [x] Completion, p95 latency, throughput, and cost targets derive from benchmark observations.
 - [x] Full CI passes ([run 73](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32497417696)).
+
+## CP-11 exit checklist
+
+- [x] Product-review decisions are recorded in HLD 1.1 and ADR-0003.
+- [x] Commander and bracket precede mechanic discovery.
+- [x] Custom mechanic ideas require a visible registered-component mapping.
+- [x] The primary result is an exact 100-slot functional template.
+- [x] Complete card lists remain optional examples and Kenessos remains fixture-only.
+- [x] Example export contains only importer-safe quantity/name lines.
+- [x] Full feature-branch CI passes ([run 80](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551491570): 53/53 tests).

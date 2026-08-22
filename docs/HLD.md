@@ -4,8 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Status | Approved baseline; ready for CP-00 |
-| Version | 1.0 |
+| Status | Approved product-review baseline; CP-11 active |
+| Version | 1.1 |
 | Date | 2026-08-20 |
 | Product owner | User |
 | Initial reference commander | Kenessos, Priest of Thassa |
@@ -196,16 +196,15 @@ Numeric latency and accuracy service-level objectives will be set after the firs
 
 ### 6.1 Build flow
 
-1. User selects or names a commander.
-2. User describes the theme, desired play pattern, milestone turn, budget, bracket, Game Changer tolerance, collection restrictions, and disliked cards.
-3. The AI compiles the request into a `DeckSpec`.
-4. The application shows assumptions and asks only for material missing information.
-5. The knowledge engine finds legal candidate cards and assigns roles.
-6. The builder produces a legal baseline deck.
-7. The simulator measures the baseline.
-8. The optimizer proposes swaps and reevaluates them using matched simulation seeds.
-9. The application presents the best candidates as a Pareto comparison across setup probability, resilience, continuation, win-path strength, theme, and other preferences rather than hiding all tradeoffs in one score.
-10. The user selects a version, inspects explanations, and exports to Archidekt.
+1. User selects or names a commander and bracket from 1–5.
+2. The application retrieves a broad curated set of mechanics available to that commander.
+3. The user selects mechanics and may enter a custom idea; custom input must map visibly to registered gameplay components before optimization.
+4. The AI compiles the choices into a `DeckSpec` and the application shows material assumptions.
+5. The knowledge, legality, simulation, and optimization engines solve an exact 100-slot functional template.
+6. The application presents the template as the primary result so the player retains card-level expression.
+7. On request, the builder produces a legal example deck that traces every card to the template quantities.
+8. The simulator and optimizer measure the example and present Pareto alternatives without hiding tradeoffs.
+9. The user can revise the template, inspect explanations, and export either the template or a plain importer-safe example list.
 
 ### 6.2 Iteration flow
 
@@ -1232,6 +1231,7 @@ A change is done only when:
 | P-011 | Define a “big” Kenessos hit as an eligible creature with mana value 6 or greater by default. | Prevents cheap eligible creatures from inflating the primary milestone probability. |
 | P-012 | Allow no more than three current Game Changers by default. | Establishes the approved default power constraint while leaving the exact selection optimizable. |
 | P-013 | Build the application local-first on one computer while preserving a hosted scale path. | Matches the initial usage model without blocking future access or concurrency. |
+| P-014 | Make commander + bracket + mechanic discovery the primary input flow, and an optimized functional template the primary output. Free-form mechanics must map to registered gameplay components; complete decks are optional examples. | Preserves player expression while keeping the optimization engine bounded, explainable, and testable. |
 
 These decisions are approved for the v1.0 baseline. CP-00 should copy structural decisions into ADRs without changing their meaning.
 
@@ -1266,6 +1266,14 @@ These do not block CP-00 and should be resolved at the checkpoint that first nee
 ---
 
 ## 28. Changelog
+
+### 1.1 — 2026-08-21
+
+- Approved the terminal-style, template-first product flow after product review.
+- Replaced requested target-turn input with Commander bracket 1–5 in the primary experience.
+- Added curated mechanic discovery and bounded custom-mechanic mapping.
+- Made complete deck generation an optional example of the optimized template.
+- Required importer-safe exports to omit UI comments and section labels.
 
 ### 1.0 — 2026-08-20
 

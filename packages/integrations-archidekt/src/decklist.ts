@@ -15,10 +15,8 @@ export interface ParsedDeckList {
 
 export function exportArchidektText(deck: PortableDeck): string {
   validatePortableDeck(deck);
-  const lines = [`// ${deck.name}`, "// COMMANDER"];
-  for (const entry of sorted(deck.commanders)) lines.push(`${entry.quantity} ${entry.name}`);
-  lines.push("", "// DECK");
-  for (const entry of sorted(deck.cards)) lines.push(`${entry.quantity} ${entry.name}`);
+  const lines: string[] = [];
+  for (const entry of sorted([...deck.commanders, ...deck.cards])) lines.push(`${entry.quantity} ${entry.name}`);
   return `${lines.join("\n")}\n`;
 }
 

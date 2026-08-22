@@ -10,12 +10,13 @@ function deck(): PortableDeck {
 }
 
 describe("portable deck lists", () => {
-  it("round-trips a 100-card deck and commander", () => {
+  it("exports a complete importer-safe list without comments", () => {
     const source = deck();
     const text = exportArchidektText(source);
     const parsed = parseDeckList(text);
     expect(parsed.issues).toEqual([]);
-    expect(parsed.commanderNames).toEqual(["Reference Commander"]);
+    expect(text).not.toContain("//");
+    expect(text).not.toContain("#");
     expect(parsed.entries.reduce((sum, entry) => sum + entry.quantity, 0)).toBe(100);
     expect(new Set(parsed.entries.map((entry) => entry.name))).toEqual(new Set([...source.commanders, ...source.cards].map((entry) => entry.name)));
   });
