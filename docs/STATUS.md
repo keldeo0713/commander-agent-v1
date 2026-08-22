@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-11 — Template-first product flow |
-| Status | IN_PROGRESS |
+| Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.1 |
 | Next checkpoint | CP-12 — Live template orchestration |
@@ -52,6 +52,10 @@ Codify the approved terminal UX and template-first workflow while preserving the
 
 - CP-09 merged through pull request #10 with every exit criterion satisfied.
 - Versioned interaction fingerprints, durable-store job leases/retries, and benchmark-derived operational targets added.
+- CP-11 records the approved template-first flow in HLD 1.1 and ADR-0003.
+- Commander + bracket now lead into mechanic discovery, including bounded custom-input mapping.
+- The terminal workspace produces an exact 100-slot functional template as its primary result.
+- Complete decks are optional examples; their downloads contain only importer-safe quantity/name lines.
 
 ## Validation evidence
 
@@ -65,6 +69,7 @@ Codify the approved terminal UX and template-first workflow while preserving the
 - CP-02 [CI run 23](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32463914254) passed lint, strict typecheck, all 18 tests across 6 files, all 12 package boundaries, and manifest validation.
 - CP-03 [CI run 30](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464891525) passed before merge.
 - CP-04 [CI run 36](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466103238) passed the complete check chain and the frozen benchmark achieved 100% recall.
+- CP-11 [CI run 80](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551491570) passed lint, strict typecheck, all 53 tests across 17 files, all 12 package boundaries, and manifest validation.
 
 ## Assumptions
 
