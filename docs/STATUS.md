@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-12 — Live template orchestration |
-| Status | IN_PROGRESS |
+| Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.1 |
 | Next checkpoint | CP-13 — Runtime adapters and end-to-end local application |
@@ -73,6 +73,7 @@ Connect the approved template-first workflow to explicit commander, mechanic, op
 - CP-04 [CI run 36](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466103238) passed the complete check chain and the frozen benchmark achieved 100% recall.
 - CP-11 [CI run 80](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551491570) passed lint, strict typecheck, all 53 tests across 17 files, all 12 package boundaries, and manifest validation.
 - CP-12 local validation passes lint, strict typecheck, all 57 tests across 18 files, all 12 package boundaries, offline validation, and `git diff --check`.
+- CP-12 [CI run 84](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551782373) passed the complete check chain.
 
 ## Assumptions
 
