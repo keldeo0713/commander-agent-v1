@@ -17,7 +17,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-10 | Interaction models and operational scaling | COMPLETE | [Merged PR #11](https://github.com/keldeo0713/commander-agent-v1/pull/11), [CI run 76](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32497531454) |
 | CP-11 | Template-first product flow | COMPLETE | [Merged PR #12](https://github.com/keldeo0713/commander-agent-v1/pull/12), [CI run 82](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551573149) |
 | CP-12 | Live template orchestration | COMPLETE | [Merged PR #13](https://github.com/keldeo0713/commander-agent-v1/pull/13), [CI run 86](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551837922) |
-| CP-13 | Runnable local demo | IN_PROGRESS | `feature/cp-13-local-runtime-adapters` |
+| CP-13 | Runnable local demo | READY_FOR_REVIEW | [Draft PR #14](https://github.com/keldeo0713/commander-agent-v1/pull/14), [CI run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904) |
 
 ## CP-00 exit checklist
 
@@ -154,4 +154,4 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] `pnpm demo:check` verifies health, terminal HTML, and the interactive browser script.
 - [x] Cross-platform setup and shutdown instructions are documented in `README.md`.
 - [x] The demo boundary identifies Kenessos as the only card-level fixture while allowing any commander through the template flow.
-- [ ] Feature-branch CI passes.
+- [x] Feature-branch CI passes ([run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904): 58/58 tests plus demo self-check).
