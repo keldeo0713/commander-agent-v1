@@ -18,7 +18,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-11 | Template-first product flow | COMPLETE | [Merged PR #12](https://github.com/keldeo0713/commander-agent-v1/pull/12), [CI run 82](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551573149) |
 | CP-12 | Live template orchestration | COMPLETE | [Merged PR #13](https://github.com/keldeo0713/commander-agent-v1/pull/13), [CI run 86](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551837922) |
 | CP-13 | Runnable local demo | COMPLETE | [Merged PR #14](https://github.com/keldeo0713/commander-agent-v1/pull/14), [CI run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904) |
-| CP-14 | Local demo API integration | IN_PROGRESS | Local validation: 59/59 tests plus demo API self-check |
+| CP-14 | Local demo API integration | READY_FOR_REVIEW | [Draft PR #15](https://github.com/keldeo0713/commander-agent-v1/pull/15), [CI run 92](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592023953) |
 
 ## CP-00 exit checklist
 
@@ -165,4 +165,4 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Optional Kenessos example construction runs through the orchestrator and matches every template role quantity.
 - [x] Example export remains importer-safe quantity/name lines with no comments or section headers.
 - [x] API integration tests cover discovery, mapping, template generation, and the exact 100-card example.
-- [ ] Feature-branch CI passes.
+- [x] Feature-branch CI passes ([run 92](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592023953): 59/59 tests plus demo API self-check).
