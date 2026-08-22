@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import {
   TemplateOrchestrator,
   type CommanderBracket,
@@ -6,8 +5,10 @@ import {
   type FunctionalSlot,
   type MechanicCandidate,
   type OptimizedTemplate,
+  type ResolvedCommander,
   type TemplateOrchestrationPorts,
 } from "./template-orchestrator.ts";
+import { createScryfallCommanderResolver } from "./scryfall-commander-resolver.ts";
 
 const MECHANICS: MechanicCandidate[] = [
   mechanic("top-deck", "Top-deck manipulation", ["selection", "library-setup"], "Improves draw quality and planned reveals"),
@@ -42,25 +43,42 @@ export function mechanicById(id: string): MechanicCandidate | null {
 }
 
 function createDemoPorts(): TemplateOrchestrationPorts {
+  const resolveLiveCommander = createScryfallCommanderResolver();
   return {
     resolveCommander: (name) => {
       const normalized = name.replace(/\s+/g, " ").trim();
       if (!normalized) return Promise.resolve(null);
       const isKenessos = /^kenessos(?:, priest of thassa)?$/i.test(normalized);
-      return Promise.resolve({
-        oracleId: isKenessos ? "e7188e71-115c-4f90-a1e1-8656f2f8f40c" : `demo-${createHash("sha256").update(normalized.toLowerCase()).digest("hex").slice(0, 16)}`,
-        name: isKenessos ? "Kenessos, Priest of Thassa" : normalized,
-        colorIdentity: isKenessos ? ["G", "U"] : [],
-      });
+      if (!isKenessos) return resolveLiveCommander(normalized);
+      return Promise.resolve({ oracleId: "45b3a028-5705-4dc8-bfab-04bb5e01eea6", name: "Kenessos, Priest of Thassa", colorIdentity: ["G", "U"], oracleText: "If you would scry a number of cards, scry that many cards plus one instead. Look at the top card of your library. If it is a Kraken, Leviathan, Octopus, or Serpent creature card, you may put it onto the battlefield.", typeLine: "Legendary Creature — Merfolk Cleric", sourceId: "cp-01-kenessos-fixture/1" });
     },
-    retrieveMechanics: (commander, bracket) => Promise.resolve(MECHANICS.map((candidate) => ({
-      ...structuredClone(candidate),
-      reason: `${candidate.reason}; available for ${commander.name} at bracket ${bracket}`,
-    }))),
+    retrieveMechanics: (commander, bracket) => Promise.resolve(discoverMechanics(commander, bracket)),
     mapCustomMechanic: (input) => Promise.resolve(mapCustom(input)),
     optimize: () => Promise.resolve(structuredClone(TEMPLATE_SLOTS)),
     buildExample: (template) => Promise.resolve(buildKenessosExample(template)),
   };
+}
+
+function discoverMechanics(commander: ResolvedCommander, bracket: CommanderBracket): MechanicCandidate[] {
+  const text = `${commander.typeLine ?? ""} ${commander.oracleText ?? ""}`.toLowerCase();
+  const signals: Array<{ id: string; pattern: RegExp; evidence: string }> = [
+    { id: "top-deck", pattern: /scry|surveil|top card|library|draw/, evidence: "library selection or card-flow text" },
+    { id: "big-creatures", pattern: /kraken|leviathan|octopus|serpent|power [4-9]|mana value [4-9]/, evidence: "large-creature or mana-value payoff text" },
+    { id: "graveyard", pattern: /graveyard|mill|discard|return .* card/, evidence: "graveyard setup or recursion text" },
+    { id: "tokens", pattern: /create .* token|tokens? you control/, evidence: "token production or scaling text" },
+    { id: "artifacts", pattern: /artifact|treasure|clue|food/, evidence: "artifact resource or payoff text" },
+    { id: "spells", pattern: /instant|sorcery|cast .* spell|copy .* spell/, evidence: "spell casting or copying text" },
+    { id: "lands", pattern: /landfall|land card|land enters|play an additional land/, evidence: "land development or landfall text" },
+    { id: "combat", pattern: /combat|attacks?|deals combat damage|aura|equipment/, evidence: "combat or commander-damage text" },
+  ];
+  const matched = signals.filter(({ pattern }) => pattern.test(text));
+  const orderedIds = [...matched.map(({ id }) => id), ...MECHANICS.map(({ id }) => id)];
+  return [...new Set(orderedIds)].slice(0, Math.max(5, Math.min(8, matched.length + 3))).map((id) => {
+    const candidate = MECHANICS.find((item) => item.id === id);
+    if (!candidate) throw new Error(`unknown mechanic ${id}`);
+    const signal = matched.find((item) => item.id === id);
+    return { ...structuredClone(candidate), reason: signal ? `${commander.name} has ${signal.evidence}` : `${candidate.reason}; complementary option at bracket ${bracket}`, provenanceId: signal ? commander.sourceId ?? "commander-card-text/1" : candidate.provenanceId };
+  });
 }
 
 function mechanic(id: string, name: string, componentIds: string[], reason: string): MechanicCandidate {

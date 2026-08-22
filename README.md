@@ -29,7 +29,7 @@ pnpm demo
 
 Open `http://127.0.0.1:4173` in a browser. Stop the server with `Ctrl+C`.
 
-The browser calls a local application API for mechanic discovery, bounded custom mapping, exact template allocation, and optional example construction. The offline demo accepts any non-empty commander name so the flow can be exercised without a network call. Kenessos is currently the only fixture with authoritative identity/color facts and a complete card-level example; other commanders intentionally show that their example fixture is not loaded. The primary functional-template orchestration is not Kenessos-specific.
+The browser calls a local application API for commander resolution, mechanic discovery, bounded custom mapping, exact template allocation, and optional example construction. Arbitrary commander names are resolved exactly through the [Scryfall named-card API](https://scryfall.com/docs/api/cards/named), must be Commander-legal and commander-eligible, and use current card text and color identity to rank mechanic options. This requires internet access. Kenessos is bundled as the deterministic offline fixture and remains the only complete card-level example; other commanders intentionally show that their example fixture is not loaded. The primary functional-template orchestration is not Kenessos-specific.
 
 To verify the local demo without keeping a server open:
 

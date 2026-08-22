@@ -18,7 +18,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-11 | Template-first product flow | COMPLETE | [Merged PR #12](https://github.com/keldeo0713/commander-agent-v1/pull/12), [CI run 82](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551573149) |
 | CP-12 | Live template orchestration | COMPLETE | [Merged PR #13](https://github.com/keldeo0713/commander-agent-v1/pull/13), [CI run 86](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551837922) |
 | CP-13 | Runnable local demo | COMPLETE | [Merged PR #14](https://github.com/keldeo0713/commander-agent-v1/pull/14), [CI run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904) |
-| CP-14 | Local demo API integration | READY_FOR_REVIEW | [Draft PR #15](https://github.com/keldeo0713/commander-agent-v1/pull/15), [CI run 92](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592023953) |
+| CP-14 | Local demo API integration | COMPLETE | [Merged PR #15](https://github.com/keldeo0713/commander-agent-v1/pull/15), [CI run 94](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592100565) |
+| CP-15 | Authoritative commander resolution | READY_FOR_REVIEW | [Draft PR #16](https://github.com/keldeo0713/commander-agent-v1/pull/16), [CI run 96](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592588783) |
 
 ## CP-00 exit checklist
 
@@ -166,3 +167,13 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Example export remains importer-safe quantity/name lines with no comments or section headers.
 - [x] API integration tests cover discovery, mapping, template generation, and the exact 100-card example.
 - [x] Feature-branch CI passes ([run 92](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592023953): 59/59 tests plus demo API self-check).
+
+## CP-15 exit checklist
+
+- [x] Non-fixture commander names resolve through an exact authoritative provider lookup.
+- [x] Missing, non-Commander-legal, and commander-ineligible cards cannot begin a template session.
+- [x] Resolved identity includes Oracle ID, canonical name, color identity, type line, Oracle text, and source provenance.
+- [x] Commander card text deterministically ranks registered mechanic candidates and produces visible evidence.
+- [x] Provider behavior is cached and covered by injected success, rejection, and not-found tests.
+- [x] Kenessos remains a deterministic offline fixture while arbitrary commanders use the generic provider path.
+- [x] Feature-branch CI passes ([run 96](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592588783): 63/63 tests plus demo API self-check).

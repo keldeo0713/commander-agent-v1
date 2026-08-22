@@ -1,7 +1,7 @@
 export const TEMPLATE_ORCHESTRATION_VERSION = "template-orchestration/1" as const;
 
 export type CommanderBracket = 1 | 2 | 3 | 4 | 5;
-export interface ResolvedCommander { oracleId: string; name: string; colorIdentity: string[] }
+export interface ResolvedCommander { oracleId: string; name: string; colorIdentity: string[]; oracleText?: string; typeLine?: string; sourceId?: string }
 export interface MechanicCandidate { id: string; name: string; componentIds: string[]; reason: string; provenanceId: string }
 export interface FunctionalSlot { quantity: number; roleId: string; objective: string; selectionRule: string }
 export interface OptimizedTemplate {

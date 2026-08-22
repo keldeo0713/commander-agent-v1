@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-14 — Local demo API integration |
+| Active checkpoint | CP-15 — Authoritative commander resolution |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Authoritative commander/card-data adapter |
+| Next checkpoint | Mechanic-aware template allocation |
 
 ## Current objective
 
-Move discovery, bounded custom mapping, exact template allocation, and optional example construction out of the browser fixture and through the local application API/orchestrator.
+Resolve arbitrary commander input against current authoritative card facts and use those facts to produce commander-linked mechanic discovery without adding commander-specific production branches.
 
 ## Scope completed
 
@@ -63,6 +63,9 @@ Move discovery, bounded custom mapping, exact template allocation, and optional 
 - CP-14 adds local JSON endpoints for session discovery, custom mechanic mapping, exact template optimization, and optional example construction.
 - The terminal browser now renders API results instead of owning mechanic, template, or card-list mathematics.
 - The Kenessos example is role-aligned to the exact 100-slot template and exported as plain quantity/name lines.
+- CP-15 adds exact-name Scryfall commander resolution with legality and commander-eligibility gates, request caching, and normalized source facts.
+- Oracle text, type line, color identity, and provenance now reach the terminal and deterministically rank commander-linked mechanic options.
+- Provider tests use injected responses; Kenessos remains the offline self-check fixture rather than a production-only code path.
 
 ## Validation evidence
 
@@ -83,6 +86,8 @@ Move discovery, bounded custom mapping, exact template allocation, and optional 
 - CP-13 [CI run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904) passed the complete check chain.
 - CP-14 local validation passes strict typecheck, lint, all 59 tests across 19 files, the demo API self-check, all 12 package boundaries, and `git diff --check`.
 - CP-14 [CI run 92](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592023953) passed the complete check chain.
+- CP-15 local validation passes strict typecheck, lint, all 63 tests across 21 files, the demo API self-check, all 12 package boundaries, and `git diff --check`.
+- CP-15 [CI run 96](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592588783) passed the complete check chain.
 
 ## Assumptions
 
@@ -95,8 +100,9 @@ Move discovery, bounded custom mapping, exact template allocation, and optional 
 - JSONL records are decoded incrementally after gzip decompression; normalized records remain in memory during snapshot construction. The selected live snapshot completed within the acceptance runner's 6 GiB heap allowance.
 - Game Changers and bracket guardrails remain later deck-spec/builder scope; they are not format legality failures.
 - Prices and image fields are printing facts, but purchasing/market behavior remains out of scope.
-- CP-14's local adapter accepts non-empty commander names so the interaction can be exercised without network access. Only Kenessos has fixture-backed identity/color facts and a complete example; authoritative resolution for arbitrary commanders is the next adapter checkpoint.
+- Arbitrary commander discovery requires access to Scryfall's named-card API. Kenessos remains available offline for deterministic setup and self-checks.
+- CP-15 ranks registered mechanics from commander card text; the next checkpoint makes exact slot quantities respond to selected mechanics and bracket instead of using one fixed role allocation.
 
 ## Recommended next action
 
-Publish CP-14, verify CI, then connect the local API to the versioned card catalog and functional-knowledge retrieval rather than expanding browser fixtures.
+Publish CP-15, verify CI, then replace fixed template quantities with deterministic mechanic- and bracket-aware allocation under the exact-100 invariant.
