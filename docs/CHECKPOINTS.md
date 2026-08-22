@@ -15,7 +15,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-08 | User application and Archidekt export | COMPLETE | [Merged PR #9](https://github.com/keldeo0713/commander-agent-v1/pull/9), [CI run 65](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32496813557) |
 | CP-09 | Generalization | COMPLETE | [Merged PR #10](https://github.com/keldeo0713/commander-agent-v1/pull/10), [CI run 70](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32497123444) |
 | CP-10 | Interaction models and operational scaling | COMPLETE | [Merged PR #11](https://github.com/keldeo0713/commander-agent-v1/pull/11), [CI run 76](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32497531454) |
-| CP-11 | Template-first product flow | READY_FOR_REVIEW | [Draft PR #12](https://github.com/keldeo0713/commander-agent-v1/pull/12), [CI run 80](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551491570) |
+| CP-11 | Template-first product flow | COMPLETE | [Merged PR #12](https://github.com/keldeo0713/commander-agent-v1/pull/12), [CI run 82](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551573149) |
+| CP-12 | Live template orchestration | IN_PROGRESS | `feature/cp-12-live-template-orchestration` |
 
 ## CP-00 exit checklist
 
@@ -135,3 +136,12 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Complete card lists remain optional examples and Kenessos remains fixture-only.
 - [x] Example export contains only importer-safe quantity/name lines.
 - [x] Full feature-branch CI passes ([run 80](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551491570): 53/53 tests).
+
+## CP-12 exit checklist
+
+- [x] Commander names resolve through an injected card-data port.
+- [x] Mechanic discovery returns deduplicated reasons and provenance.
+- [x] Free-form mechanics cannot proceed without registered component IDs.
+- [x] Template optimization rejects any result that does not total exactly 100.
+- [x] Optional examples must total 100, include a commander, and match every template role quantity.
+- [ ] Feature-branch CI passes.
