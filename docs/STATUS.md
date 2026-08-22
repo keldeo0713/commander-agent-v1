@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-11 — Template-first product flow |
+| Active checkpoint | CP-12 — Live template orchestration |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-21 |
 | HLD version | 1.1 |
-| Next checkpoint | CP-12 — Live template orchestration |
+| Next checkpoint | CP-13 — Runtime adapters and end-to-end local application |
 
 ## Current objective
 
-Codify the approved terminal UX and template-first workflow while preserving the generic deterministic engine and treating complete decks as optional examples.
+Connect the approved template-first workflow to explicit commander, mechanic, optimization, and example-deck ports without adding commander-specific application branches.
 
 ## Scope completed
 
@@ -56,6 +56,8 @@ Codify the approved terminal UX and template-first workflow while preserving the
 - Commander + bracket now lead into mechanic discovery, including bounded custom-input mapping.
 - The terminal workspace produces an exact 100-slot functional template as its primary result.
 - Complete decks are optional examples; their downloads contain only importer-safe quantity/name lines.
+- CP-11 merged through pull request #12 after final CI run 82.
+- CP-12 adds a generic template orchestrator for commander resolution, explainable mechanic retrieval, bounded custom mapping, exact template allocation, and role-matched example validation.
 
 ## Validation evidence
 
@@ -70,6 +72,8 @@ Codify the approved terminal UX and template-first workflow while preserving the
 - CP-03 [CI run 30](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32464891525) passed before merge.
 - CP-04 [CI run 36](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32466103238) passed the complete check chain and the frozen benchmark achieved 100% recall.
 - CP-11 [CI run 80](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551491570) passed lint, strict typecheck, all 53 tests across 17 files, all 12 package boundaries, and manifest validation.
+- CP-12 local validation passes lint, strict typecheck, all 57 tests across 18 files, all 12 package boundaries, offline validation, and `git diff --check`.
+- CP-12 [CI run 84](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551782373) passed the complete check chain.
 
 ## Assumptions
 
@@ -85,4 +89,4 @@ Codify the approved terminal UX and template-first workflow while preserving the
 
 ## Recommended next action
 
-Complete CP-11 validation and publish its draft pull request, then wire the template UI to live card lookup, mechanic retrieval, and optimizer ports in CP-12.
+Publish CP-12 and verify CI, then implement the concrete local runtime adapters and replace browser fixture data in CP-13.

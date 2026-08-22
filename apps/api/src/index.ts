@@ -1,2 +1,3 @@
-/** API composition root. Product behavior begins in a later checkpoint. */
+/** API composition root for adviser and template-first orchestration. */
 export const applicationName = "commander-agent-api";
+export * from "./template-orchestrator.js";
