@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-10 — Interaction models and operational scaling |
-| Status | COMPLETE — PRODUCT_REVIEW |
+| Active checkpoint | CP-11 — Template-first product flow |
+| Status | IN_PROGRESS |
 | Last updated | 2026-08-21 |
-| HLD version | 1.0 |
-| Next checkpoint | Product review |
+| HLD version | 1.1 |
+| Next checkpoint | CP-12 — Live template orchestration |
 
 ## Current objective
 
-Complete reproducible interaction scenarios, recoverable job execution, and benchmark-derived operational reporting.
+Codify the approved terminal UX and template-first workflow while preserving the generic deterministic engine and treating complete decks as optional examples.
 
 ## Scope completed
 
@@ -80,4 +80,4 @@ Complete reproducible interaction scenarios, recoverable job execution, and benc
 
 ## Recommended next action
 
-Conduct product review against the HLD flows and record follow-up issues as post-HLD work.
+Complete CP-11 validation and publish its draft pull request, then wire the template UI to live card lookup, mechanic retrieval, and optimizer ports in CP-12.
