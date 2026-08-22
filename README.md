@@ -1,12 +1,12 @@
 # Commander Agent
 
-An evidence-driven AI system for building legal MTG Commander decks against explicit, turn-based strategic goals.
+An evidence-driven AI system that helps players choose a commander and bracket, explore mechanics, and generate an optimized 100-card functional template before optionally viewing a complete example deck.
 
 The first vertical slice optimizes a fishing-themed **Kenessos, Priest of Thassa** deck for a mana-value-6-or-greater activation hit by turn 4, while accounting for commander removal and preserving credible ways to win afterward.
 
 ## Current status
 
-CP-00 foundation and governance. See [docs/STATUS.md](docs/STATUS.md) and [docs/CHECKPOINTS.md](docs/CHECKPOINTS.md).
+The approved template-first terminal demo is locally runnable. See [docs/STATUS.md](docs/STATUS.md) and [docs/CHECKPOINTS.md](docs/CHECKPOINTS.md) for implementation evidence and remaining production boundaries.
 
 ## Setup
 
@@ -17,6 +17,25 @@ pnpm install && pnpm check
 ```
 
 That single command installs dependencies, lints, type-checks, tests, verifies architectural boundaries, and validates the sample run manifest.
+
+## Run the local demo
+
+From the repository folder:
+
+```bash
+pnpm install
+pnpm demo
+```
+
+Open `http://127.0.0.1:4173` in a browser. Stop the server with `Ctrl+C`.
+
+The demo accepts any commander name for the template flow. Kenessos is currently the only complete card-level example fixture; other commanders intentionally show that their example fixture is not loaded. The primary functional-template experience is not Kenessos-specific.
+
+To verify the local demo without keeping a server open:
+
+```bash
+pnpm demo:check
+```
 
 ## Architecture
 

@@ -16,6 +16,8 @@
     "test:watch": "vitest",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "check:offline": "node scripts/offline-check.mjs",
+    "demo": "node --experimental-strip-types scripts/demo-server.ts",
+    "demo:check": "node --experimental-strip-types scripts/demo-server.ts --check",
     "ingest:scryfall": "tsx scripts/ingest-scryfall.ts",
     "validate:manifest": "tsx scripts/validate-sample-manifest.ts",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm check:boundaries && pnpm validate:manifest"

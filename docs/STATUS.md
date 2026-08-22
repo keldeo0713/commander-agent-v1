@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-12 — Live template orchestration |
-| Status | READY_FOR_REVIEW |
+| Active checkpoint | CP-13 — Runnable local demo |
+| Status | IN_PROGRESS |
 | Last updated | 2026-08-21 |
 | HLD version | 1.1 |
-| Next checkpoint | CP-13 — Runtime adapters and end-to-end local application |
+| Next checkpoint | Product-owner local demo feedback |
 
 ## Current objective
 
-Connect the approved template-first workflow to explicit commander, mechanic, optimization, and example-deck ports without adding commander-specific application branches.
+Provide one documented local command that runs the approved terminal demo and one automated self-check that verifies the complete static delivery path.
 
 ## Scope completed
 
@@ -58,6 +58,8 @@ Connect the approved template-first workflow to explicit commander, mechanic, op
 - Complete decks are optional examples; their downloads contain only importer-safe quantity/name lines.
 - CP-11 merged through pull request #12 after final CI run 82.
 - CP-12 adds a generic template orchestrator for commander resolution, explainable mechanic retrieval, bounded custom mapping, exact template allocation, and role-matched example validation.
+- CP-12 merged through pull request #13 after final CI run 86.
+- CP-13 adds a dependency-free localhost server, health endpoint, demo self-check, and current setup instructions.
 
 ## Validation evidence
 
@@ -74,6 +76,7 @@ Connect the approved template-first workflow to explicit commander, mechanic, op
 - CP-11 [CI run 80](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551491570) passed lint, strict typecheck, all 53 tests across 17 files, all 12 package boundaries, and manifest validation.
 - CP-12 local validation passes lint, strict typecheck, all 57 tests across 18 files, all 12 package boundaries, offline validation, and `git diff --check`.
 - CP-12 [CI run 84](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551782373) passed the complete check chain.
+- CP-13 local validation passes lint, strict typecheck, all 58 tests across 19 files, all 12 package boundaries, `pnpm demo:check`, offline validation, and `git diff --check`.
 
 ## Assumptions
 
@@ -89,4 +92,4 @@ Connect the approved template-first workflow to explicit commander, mechanic, op
 
 ## Recommended next action
 
-Publish CP-12 and verify CI, then implement the concrete local runtime adapters and replace browser fixture data in CP-13.
+Publish CP-13, verify CI, and hand the exact local demo commands to the product owner for testing and feedback.
