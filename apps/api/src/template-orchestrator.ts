@@ -26,7 +26,11 @@ export type TemplateSessionResult =
   | { status: "commander_not_found"; query: string };
 
 export class TemplateOrchestrator {
-  constructor(private readonly ports: TemplateOrchestrationPorts) {}
+  private readonly ports: TemplateOrchestrationPorts;
+
+  constructor(ports: TemplateOrchestrationPorts) {
+    this.ports = ports;
+  }
 
   async start(commanderName: string, bracket: CommanderBracket): Promise<TemplateSessionResult> {
     const query = commanderName.trim();
