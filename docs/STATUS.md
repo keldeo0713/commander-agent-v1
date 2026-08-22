@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-15 — Authoritative commander resolution |
-| Status | IN_PROGRESS |
+| Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
 | Next checkpoint | Mechanic-aware template allocation |
@@ -87,6 +87,7 @@ Resolve arbitrary commander input against current authoritative card facts and u
 - CP-14 local validation passes strict typecheck, lint, all 59 tests across 19 files, the demo API self-check, all 12 package boundaries, and `git diff --check`.
 - CP-14 [CI run 92](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592023953) passed the complete check chain.
 - CP-15 local validation passes strict typecheck, lint, all 63 tests across 21 files, the demo API self-check, all 12 package boundaries, and `git diff --check`.
+- CP-15 [CI run 96](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592588783) passed the complete check chain.
 
 ## Assumptions
 
