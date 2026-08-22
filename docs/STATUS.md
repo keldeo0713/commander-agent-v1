@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-14 — Local demo API integration |
-| Status | IN_PROGRESS |
+| Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
 | Next checkpoint | Authoritative commander/card-data adapter |
@@ -82,6 +82,7 @@ Move discovery, bounded custom mapping, exact template allocation, and optional 
 - CP-13 local validation passes lint, strict typecheck, all 58 tests across 19 files, all 12 package boundaries, `pnpm demo:check`, offline validation, and `git diff --check`.
 - CP-13 [CI run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904) passed the complete check chain.
 - CP-14 local validation passes strict typecheck, lint, all 59 tests across 19 files, the demo API self-check, all 12 package boundaries, and `git diff --check`.
+- CP-14 [CI run 92](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592023953) passed the complete check chain.
 
 ## Assumptions
 
