@@ -46,12 +46,12 @@ export function summarizeRoleCoverage(state: CandidateSelectionState, bundle: Ca
   });
 }
 
-export function summarizeFullTemplateCoverage(state: CandidateSelectionState, manaBase: { totalLands: number; namedCardQuantity: number }): FullTemplateCoverage {
+export function summarizeFullTemplateCoverage(state: CandidateSelectionState, manaBase: { totalLands: number; namedCardQuantity: number }, selectedNonbasicQuantity = 0): FullTemplateCoverage {
   const includedNonlandQuantity = state.decisions.filter(({ decision }) => decision === "included").length;
   const structurallyCoveredQuantity = Math.min(100, 1 + manaBase.totalLands + includedNonlandQuantity);
-  const namedCardQuantity = Math.min(100, 1 + manaBase.namedCardQuantity + includedNonlandQuantity);
+  const namedCardQuantity = Math.min(100, 1 + manaBase.namedCardQuantity + selectedNonbasicQuantity + includedNonlandQuantity);
   const remainingNonlandQuantity = Math.max(0, 100 - 1 - manaBase.totalLands - includedNonlandQuantity);
-  const unresolvedManaQuantity = Math.max(0, manaBase.totalLands - manaBase.namedCardQuantity);
+  const unresolvedManaQuantity = Math.max(0, manaBase.totalLands - manaBase.namedCardQuantity - selectedNonbasicQuantity);
   const status = namedCardQuantity === 100 ? "card-named" : structurallyCoveredQuantity === 100 ? "structurally-covered" : "partial";
   return { templateQuantity: 100, commanderQuantity: 1, manaBaseQuantity: manaBase.totalLands, includedNonlandQuantity, structurallyCoveredQuantity, namedCardQuantity, remainingNonlandQuantity, unresolvedManaQuantity, status };
 }
