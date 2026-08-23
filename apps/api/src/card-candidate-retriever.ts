@@ -2,6 +2,7 @@ import type { OptimizedTemplate, ResolvedCommander } from "./template-orchestrat
 
 export const CARD_CANDIDATE_BUNDLE_VERSION = "card-candidate-bundle/1" as const;
 export const CANDIDATE_QUERY_PLAN_VERSION = "candidate-query-plan/1" as const;
+export const CANDIDATE_RANKING_VERSION = "candidate-ranking/1" as const;
 export const SCRYFALL_SEARCH_ENDPOINT = "https://api.scryfall.com/cards/search";
 
 export interface CardCandidate {
@@ -13,6 +14,10 @@ export interface CardCandidate {
   colorIdentity: string[];
   roleId: string;
   evidence: string;
+  rank: number;
+  rankScore: number;
+  rankingEvidence: string[];
+  rankingVersion: typeof CANDIDATE_RANKING_VERSION;
   sourceId: "scryfall-search-api/1";
 }
 export interface CandidateQueryPlan { schemaVersion: typeof CANDIDATE_QUERY_PLAN_VERSION; queryId: string; roleId: string; mechanicIds: string[]; query: string; evidence: string }
@@ -41,6 +46,26 @@ const MECHANIC_ROLE_QUERIES: Record<string, { engine: string; payoff: string; ev
   spells: { engine: `(t:instant or t:sorcery or o:"copy target spell")`, payoff: `(o:"magecraft" or o:"whenever you cast" or o:"copy that spell")`, evidence: "instant/sorcery density and cast payoffs" },
   lands: { engine: `(o:"landfall" or o:"play an additional land")`, payoff: `(o:"landfall" or o:"for each land you control")`, evidence: "land development and landfall payoffs" },
   combat: { engine: `(t:equipment or t:aura or o:"attacks")`, payoff: `(o:"combat damage" or o:"double strike" or o:"commander you control")`, evidence: "combat setup and commander-damage payoffs" },
+};
+
+const ROLE_SIGNALS: Record<string, RegExp> = {
+  ramp: /add .*mana|search your library for .*land|additional land/i,
+  "primary-engine": /whenever|at the beginning|scry|surveil|copy|graveyard|token|artifact|landfall|attacks/i,
+  "payoffs-finishers": /you win the game|double strike|combat damage|for each|creatures you control get|artifacts you control/i,
+  "card-advantage": /draw|exile the top|return .* from your graveyard/i,
+  interaction: /destroy target|exile target|counter target|deals? .* damage to target/i,
+  "protection-rebuild": /hexproof|indestructible|protection from|return .*graveyard|phase out/i,
+};
+
+const MECHANIC_SIGNALS: Record<string, RegExp> = {
+  "top-deck": /scry|surveil|top (?:card|cards)|library/i,
+  "big-creatures": /kraken|leviathan|octopus|serpent|power [4-9]|mana value [4-9]/i,
+  graveyard: /graveyard|mill|discard|reanimate/i,
+  tokens: /create .*token|tokens? you control/i,
+  artifacts: /artifact|treasure|clue|food/i,
+  spells: /instant|sorcery|cast .*spell|copy .*spell|magecraft/i,
+  lands: /landfall|land enters|additional land|lands? you control/i,
+  combat: /combat|attacks?|equipment|aura|double strike/i,
 };
 
 export function buildCandidateQueryPlan(template: OptimizedTemplate, roleId: string): CandidateQueryPlan | null {
@@ -77,7 +102,7 @@ export function createCardCandidateRetriever(options: CandidateRetrieverOptions 
         url.searchParams.set("order", "edhrec");
         const response = await fetchCards(url, { headers: { accept: "application/json;q=0.9,*/*;q=0.8", "user-agent": "commander-agent-v1/0.1 (+https://github.com/keldeo0713/commander-agent-v1)" } });
         if (!response.ok) throw new Error(`candidate lookup failed for ${slot.roleId} (${response.status})`);
-        candidates = parseCandidates(await response.json() as ScryfallSearchPage, template.commander, slot.roleId, plan.evidence).slice(0, limit);
+        candidates = rankCardCandidates(parseCandidates(await response.json() as ScryfallSearchPage, template.commander, slot.roleId, plan.evidence), slot.roleId, plan.mechanicIds).slice(0, limit);
         cache.set(query, candidates);
         if (delayMs > 0) await new Promise((resolve) => setTimeout(resolve, delayMs));
       }
@@ -85,6 +110,42 @@ export function createCardCandidateRetriever(options: CandidateRetrieverOptions 
     }
     return { schemaVersion: CARD_CANDIDATE_BUNDLE_VERSION, commanderOracleId: template.commander.oracleId, roles };
   };
+}
+
+export function rankCardCandidates(candidates: CardCandidate[], roleId: string, mechanicIds: string[]): CardCandidate[] {
+  const selectedMechanics = [...new Set(mechanicIds)].sort();
+  const ranked = candidates.map((candidate) => {
+    const text = `${candidate.typeLine} ${candidate.oracleText}`;
+    const evidence: string[] = [];
+    let score = 0;
+    if (ROLE_SIGNALS[roleId]?.test(text)) {
+      score += 20;
+      evidence.push(`+20 ${roleId} text signal`);
+    }
+    for (const mechanicId of selectedMechanics) if (MECHANIC_SIGNALS[mechanicId]?.test(text)) {
+      score += 12;
+      evidence.push(`+12 ${mechanicId} mechanic signal`);
+    }
+    const curve = curveScore(roleId, candidate.manaValue);
+    if (curve > 0) {
+      score += curve;
+      evidence.push(`+${curve} ${roleId} mana-value fit`);
+    }
+    if (!evidence.length) evidence.push("+0 provider query match only");
+    return { ...candidate, rank: 0, rankScore: score, rankingEvidence: evidence, rankingVersion: CANDIDATE_RANKING_VERSION };
+  }).sort((left, right) => right.rankScore - left.rankScore || compareText(left.name, right.name) || compareText(left.oracleId, right.oracleId));
+  return ranked.map((candidate, index) => ({ ...candidate, rank: index + 1 }));
+}
+
+function curveScore(roleId: string, manaValue: number): number {
+  if (roleId === "payoffs-finishers") return manaValue >= 6 ? 5 : manaValue >= 4 ? 3 : 0;
+  if (["ramp", "interaction", "protection-rebuild"].includes(roleId)) return manaValue <= 2 ? 5 : manaValue <= 3 ? 3 : 0;
+  if (["primary-engine", "card-advantage"].includes(roleId)) return manaValue <= 3 ? 5 : manaValue <= 4 ? 3 : 0;
+  return 0;
+}
+
+function compareText(left: string, right: string): number {
+  return left < right ? -1 : left > right ? 1 : 0;
 }
 
 function identityQuery(commander: ResolvedCommander): string {
@@ -103,7 +164,7 @@ function parseCandidates(page: ScryfallSearchPage, commander: ResolvedCommander,
     const legalities = card.legalities && typeof card.legalities === "object" ? card.legalities as Record<string, unknown> : {};
     if (typeof card.oracle_id !== "string" || typeof card.name !== "string" || typeof card.cmc !== "number" || typeof card.type_line !== "string" || !Array.isArray(card.color_identity) || !card.color_identity.every((color) => typeof color === "string") || legalities["commander"] !== "legal" || card.oracle_id === commander.oracleId || seen.has(card.oracle_id) || !card.color_identity.every((color) => allowed.has(color))) continue;
     seen.add(card.oracle_id);
-    candidates.push({ oracleId: card.oracle_id, name: card.name, manaValue: card.cmc, typeLine: card.type_line, oracleText: typeof card.oracle_text === "string" ? card.oracle_text : "", colorIdentity: card.color_identity, roleId, evidence, sourceId: "scryfall-search-api/1" });
+    candidates.push({ oracleId: card.oracle_id, name: card.name, manaValue: card.cmc, typeLine: card.type_line, oracleText: typeof card.oracle_text === "string" ? card.oracle_text : "", colorIdentity: card.color_identity, roleId, evidence, rank: 0, rankScore: 0, rankingEvidence: [], rankingVersion: CANDIDATE_RANKING_VERSION, sourceId: "scryfall-search-api/1" });
   }
   return candidates;
 }
