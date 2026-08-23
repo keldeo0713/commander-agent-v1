@@ -145,6 +145,7 @@ Use included-card mana symbols to refine the basic-land split and retrieve legal
 - CP-22 [CI run 124](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621119920) passed the complete check chain.
 - CP-22 final [CI run 126](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621186925) passed before merge.
 - CP-23 local validation passes strict typecheck, lint, all 92 tests across 28 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-23 [CI run 128](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621715909) passed the complete check chain.
 
 ## Assumptions
 
