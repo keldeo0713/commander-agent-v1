@@ -22,7 +22,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-15 | Authoritative commander resolution | COMPLETE | [Merged PR #16](https://github.com/keldeo0713/commander-agent-v1/pull/16), [CI run 98](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592666600) |
 | CP-16 | Mechanic-aware template allocation | COMPLETE | [Merged PR #17](https://github.com/keldeo0713/commander-agent-v1/pull/17), [CI run 102](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609569991) |
 | CP-17 | Card candidate realization | COMPLETE | [Merged PR #18](https://github.com/keldeo0713/commander-agent-v1/pull/18), [CI run 106](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612675217) |
-| CP-18 | Candidate quality calibration | READY_FOR_REVIEW | [Draft PR #19](https://github.com/keldeo0713/commander-agent-v1/pull/19), [CI run 108](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613094438) |
+| CP-18 | Candidate quality calibration | COMPLETE | [Merged PR #19](https://github.com/keldeo0713/commander-agent-v1/pull/19), [CI run 110](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613141022) |
+| CP-19 | Explainable candidate ranking | READY_FOR_REVIEW | Local validation: 76/76 tests; CI pending |
 
 ## CP-00 exit checklist
 
@@ -213,3 +214,14 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Candidate inspection exposes plan evidence without auto-selecting cards.
 - [x] Local validation passes 73/73 tests, demo self-check, boundary checks, and offline validation.
 - [x] Feature-branch CI passes ([run 108](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613094438): 73/73 tests plus demo API self-check).
+
+## CP-19 exit checklist
+
+- [x] Candidate ranking has a stable versioned contract.
+- [x] Every score exposes its role, mechanic, and mana-value contributions.
+- [x] Rankings are invariant to provider order and mechanic ordering or duplication.
+- [x] Stable name and Oracle-ID tie-breaks make equal scores reproducible.
+- [x] The terminal shows rank evidence and does not select cards for the player.
+- [x] Ranking documentation explicitly avoids optimality claims.
+- [x] Local validation passes 76/76 tests, demo self-check, boundary checks, and offline validation.
+- [ ] Feature-branch CI passes.
