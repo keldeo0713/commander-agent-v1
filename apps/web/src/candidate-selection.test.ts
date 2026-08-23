@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { createCandidateSelection, decideCandidate, reconcileCandidateSelection, summarizeRoleCoverage, type CandidateBundleView } from "./candidate-selection.js";
+import { createCandidateSelection, decideCandidate, exportCandidateSelection, reconcileCandidateSelection, summarizeRoleCoverage, type CandidateBundleView } from "./candidate-selection.js";
 
 const bundle: CandidateBundleView = { commanderOracleId: "cmd", roles: [
-  { roleId: "ramp", requiredQuantity: 2, candidates: [{ oracleId: "a" }, { oracleId: "b" }, { oracleId: "c" }] },
-  { roleId: "interaction", requiredQuantity: 1, candidates: [{ oracleId: "x" }] },
+  { roleId: "ramp", requiredQuantity: 2, candidates: [{ oracleId: "a", name: "Alpha" }, { oracleId: "b", name: "Beta" }, { oracleId: "c", name: "Gamma" }] },
+  { roleId: "interaction", requiredQuantity: 1, candidates: [{ oracleId: "x", name: "Answer" }, { oracleId: "a", name: "Alpha" }] },
 ] };
 
 describe("player candidate selection", () => {
@@ -23,7 +23,15 @@ describe("player candidate selection", () => {
   it("persists available decisions and prunes stale ones after refresh", () => {
     let state = decideCandidate(createCandidateSelection(), bundle, { roleId: "ramp", oracleId: "a" }, "included");
     state = decideCandidate(state, bundle, { roleId: "interaction", oracleId: "x" }, "excluded");
-    const refreshed: CandidateBundleView = { ...bundle, roles: [{ ...bundle.roles[0]!, candidates: [{ oracleId: "a" }, { oracleId: "c" }] }, { ...bundle.roles[1]!, candidates: [] }] };
+    const refreshed: CandidateBundleView = { ...bundle, roles: [{ ...bundle.roles[0]!, candidates: [{ oracleId: "a", name: "Alpha" }, { oracleId: "c", name: "Gamma" }] }, { ...bundle.roles[1]!, candidates: [] }] };
     expect(reconcileCandidateSelection(state, refreshed).decisions).toEqual([{ roleId: "ramp", oracleId: "a", decision: "included" }]);
+  });
+
+  it("enforces singleton choices across roles and exports importer-safe lines", () => {
+    let state = decideCandidate(createCandidateSelection(), bundle, { roleId: "ramp", oracleId: "a" }, "included");
+    expect(() => decideCandidate(state, bundle, { roleId: "interaction", oracleId: "a" }, "included")).toThrow("another role");
+    state = decideCandidate(state, bundle, { roleId: "interaction", oracleId: "x" }, "included");
+    expect(exportCandidateSelection(state, bundle, "Test Commander")).toBe("1 Test Commander\n1 Alpha\n1 Answer");
+    expect(exportCandidateSelection(state, bundle, "Test Commander")).not.toContain("#");
   });
 });
