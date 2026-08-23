@@ -10,6 +10,7 @@ import type { OptimizedTemplate } from "../apps/api/src/template-orchestrator.ts
 import { planManaBase } from "../apps/api/src/mana-base-planner.ts";
 import { createNonbasicLandRetriever, type LandPreferences, type NonbasicLandBundle } from "../apps/api/src/nonbasic-land-retriever.ts";
 import { calculateColoredSourceTargets } from "../apps/api/src/colored-source-target.ts";
+import { validatePlayerDeck } from "../apps/api/src/player-deck-validator.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "apps", "web");
 const routes = new Map([["/", "index.html"], ["/index.html", "index.html"], ["/styles.css", "styles.css"], ["/app.js", "app.js"]]);
@@ -97,6 +98,11 @@ async function handleApi(request: IncomingMessage, path: string, response: Serve
       const colors = Array.isArray(body["colorIdentity"]) ? body["colorIdentity"].filter((color): color is string => typeof color === "string") : [];
       const sources = body["availableSources"] && typeof body["availableSources"] === "object" ? body["availableSources"] as Record<string, number> : {};
       json(response, 200, calculateColoredSourceTargets(cards, colors, sources));
+      return;
+    }
+    if (path === "/api/deck-validation") {
+      try { json(response, 200, validatePlayerDeck(body as never)); }
+      catch { json(response, 400, { error: "invalid_deck_validation_request" }); }
       return;
     }
     json(response, 404, { error: "not_found" });

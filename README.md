@@ -37,6 +37,8 @@ To verify the local demo without keeping a server open:
 pnpm demo:check
 ```
 
+The local API also exposes a versioned complete-deck validator. A player-built list is complete only when every nonland role and fixing/utility land slot is exactly covered, named Oracle identities remain singleton-safe, and the commander plus main deck total exactly 100 cards. It reports structured gaps and never fills a missing slot automatically.
+
 ## Architecture
 
 The approved system design lives in [docs/HLD.md](docs/HLD.md). The repository starts as a modular TypeScript monolith with versioned contracts and replaceable ports for data, simulation, optimization, AI providers, and Archidekt.

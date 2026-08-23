@@ -29,7 +29,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-22 | Mana-base planning and full coverage | COMPLETE | [Merged PR #23](https://github.com/keldeo0713/commander-agent-v1/pull/23), [CI run 126](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621186925) |
 | CP-23 | Colored-source analysis and nonbasic retrieval | COMPLETE | [Merged PR #24](https://github.com/keldeo0713/commander-agent-v1/pull/24), [CI run 129](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621759328) |
 | CP-24 | Nonbasic selection and source validation | COMPLETE | [Merged PR #25](https://github.com/keldeo0713/commander-agent-v1/pull/25), [CI run 133](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655231947) |
-| CP-25 | Turn-aware source targets and land quality | READY_FOR_REVIEW | [Draft PR #26](https://github.com/keldeo0713/commander-agent-v1/pull/26), [CI run 135](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655959837) |
+| CP-25 | Turn-aware source targets and land quality | COMPLETE | [Merged PR #26](https://github.com/keldeo0713/commander-agent-v1/pull/26), [CI run 136](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656046342) |
+| CP-26 | Complete player-deck validation | READY_FOR_REVIEW | Local validation: 102/102 tests |
 
 ## CP-00 exit checklist
 
@@ -303,3 +304,14 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] The terminal exposes target probabilities and land-quality evidence without hiding model exclusions.
 - [x] Local validation passes 99/99 tests, JavaScript syntax validation, demo self-check, boundary checks, and offline validation.
 - [x] Feature-branch CI passes ([run 135](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655959837): 99/99 tests plus demo API self-check).
+
+## CP-26 exit checklist
+
+- [x] Complete player-deck validation has a stable versioned contract.
+- [x] Every nonland functional role must be covered at its exact template quantity.
+- [x] Fixing and utility land choices must exactly cover their planned capacities.
+- [x] Commander, nonland, and selected nonbasic Oracle identities are singleton-safe.
+- [x] The validator requires exactly 100 cards and the planned total land quantity.
+- [x] Structured violations distinguish role, land, singleton, and deck-size failures.
+- [x] The local API exposes validation without selecting or fabricating cards.
+- [x] Local validation passes 102/102 tests, demo self-check, boundary checks, and offline validation.
