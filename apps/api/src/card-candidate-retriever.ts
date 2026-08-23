@@ -86,7 +86,7 @@ export function createCardCandidateRetriever(options: CandidateRetrieverOptions 
   const fetchCards = options.fetch ?? globalThis.fetch;
   const endpoint = options.endpoint ?? SCRYFALL_SEARCH_ENDPOINT;
   const delayMs = options.delayMs ?? 110;
-  const limit = options.limitPerRole ?? 5;
+  const fixedLimit = options.limitPerRole;
   const cache = new Map<string, CardCandidate[]>();
   return async (template) => {
     const roles: CandidateRole[] = [];
@@ -102,11 +102,12 @@ export function createCardCandidateRetriever(options: CandidateRetrieverOptions 
         url.searchParams.set("order", "edhrec");
         const response = await fetchCards(url, { headers: { accept: "application/json;q=0.9,*/*;q=0.8", "user-agent": "commander-agent-v1/0.1 (+https://github.com/keldeo0713/commander-agent-v1)" } });
         if (!response.ok) throw new Error(`candidate lookup failed for ${slot.roleId} (${response.status})`);
-        candidates = rankCardCandidates(parseCandidates(await response.json() as ScryfallSearchPage, template.commander, slot.roleId, plan.evidence), slot.roleId, plan.mechanicIds).slice(0, limit);
+        candidates = rankCardCandidates(parseCandidates(await response.json() as ScryfallSearchPage, template.commander, slot.roleId, plan.evidence), slot.roleId, plan.mechanicIds);
         cache.set(query, candidates);
         if (delayMs > 0) await new Promise((resolve) => setTimeout(resolve, delayMs));
       }
-      roles.push({ roleId: slot.roleId, requiredQuantity: slot.quantity, queryId: plan.queryId, queryEvidence: plan.evidence, candidates: structuredClone(candidates) });
+      const limit = fixedLimit ?? Math.min(25, Math.max(12, slot.quantity));
+      roles.push({ roleId: slot.roleId, requiredQuantity: slot.quantity, queryId: plan.queryId, queryEvidence: plan.evidence, candidates: structuredClone(candidates.slice(0, limit)) });
     }
     return { schemaVersion: CARD_CANDIDATE_BUNDLE_VERSION, commanderOracleId: template.commander.oracleId, roles };
   };
