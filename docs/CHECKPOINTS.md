@@ -27,7 +27,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-20 | Player-controlled candidate selection | COMPLETE | [Merged PR #21](https://github.com/keldeo0713/commander-agent-v1/pull/21), [CI run 118](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615114447) |
 | CP-21 | Candidate pool expansion and selection export | COMPLETE | [Merged PR #22](https://github.com/keldeo0713/commander-agent-v1/pull/22), [CI run 122](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32616027895) |
 | CP-22 | Mana-base planning and full coverage | COMPLETE | [Merged PR #23](https://github.com/keldeo0713/commander-agent-v1/pull/23), [CI run 126](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621186925) |
-| CP-23 | Colored-source analysis and nonbasic retrieval | READY_FOR_REVIEW | Local validation: 92/92 tests; CI pending |
+| CP-23 | Colored-source analysis and nonbasic retrieval | READY_FOR_REVIEW | [Draft PR #24](https://github.com/keldeo0713/commander-agent-v1/pull/24), [CI run 128](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621715909) |
 
 ## CP-00 exit checklist
 
@@ -276,4 +276,4 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Provider requests use explicit headers, identity-keyed caching, and visible failures.
 - [x] The API and terminal refresh and display colored demand and land options.
 - [x] Local validation passes 92/92 tests, demo self-check, boundary checks, and offline validation.
-- [ ] Feature-branch CI passes.
+- [x] Feature-branch CI passes ([run 128](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621715909): 92/92 tests plus demo API self-check).
