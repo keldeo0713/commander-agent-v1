@@ -5,6 +5,7 @@ export interface CandidateSelectionState { schemaVersion: typeof CANDIDATE_SELEC
 export interface CandidateRoleView { roleId: string; requiredQuantity: number; candidates: Array<{ oracleId: string; name: string }> }
 export interface CandidateBundleView { commanderOracleId: string; roles: CandidateRoleView[] }
 export interface RoleCoverage { roleId: string; requiredQuantity: number; includedQuantity: number; remainingQuantity: number; excludedQuantity: number; status: "empty" | "partial" | "covered" }
+export interface FullTemplateCoverage { templateQuantity: 100; commanderQuantity: 1; manaBaseQuantity: number; includedNonlandQuantity: number; structurallyCoveredQuantity: number; namedCardQuantity: number; remainingNonlandQuantity: number; unresolvedManaQuantity: number; status: "partial" | "structurally-covered" | "card-named" }
 
 export function createCandidateSelection(): CandidateSelectionState {
   return { schemaVersion: CANDIDATE_SELECTION_VERSION, decisions: [] };
@@ -43,6 +44,16 @@ export function summarizeRoleCoverage(state: CandidateSelectionState, bundle: Ca
     const remainingQuantity = Math.max(0, role.requiredQuantity - includedQuantity);
     return { roleId: role.roleId, requiredQuantity: role.requiredQuantity, includedQuantity, remainingQuantity, excludedQuantity, status: remainingQuantity === 0 ? "covered" : includedQuantity === 0 ? "empty" : "partial" };
   });
+}
+
+export function summarizeFullTemplateCoverage(state: CandidateSelectionState, manaBase: { totalLands: number; namedCardQuantity: number }): FullTemplateCoverage {
+  const includedNonlandQuantity = state.decisions.filter(({ decision }) => decision === "included").length;
+  const structurallyCoveredQuantity = Math.min(100, 1 + manaBase.totalLands + includedNonlandQuantity);
+  const namedCardQuantity = Math.min(100, 1 + manaBase.namedCardQuantity + includedNonlandQuantity);
+  const remainingNonlandQuantity = Math.max(0, 100 - 1 - manaBase.totalLands - includedNonlandQuantity);
+  const unresolvedManaQuantity = Math.max(0, manaBase.totalLands - manaBase.namedCardQuantity);
+  const status = namedCardQuantity === 100 ? "card-named" : structurallyCoveredQuantity === 100 ? "structurally-covered" : "partial";
+  return { templateQuantity: 100, commanderQuantity: 1, manaBaseQuantity: manaBase.totalLands, includedNonlandQuantity, structurallyCoveredQuantity, namedCardQuantity, remainingNonlandQuantity, unresolvedManaQuantity, status };
 }
 
 function key(ref: CandidateRef): string { return `${ref.roleId}\u0000${ref.oracleId}`; }
