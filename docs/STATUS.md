@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Active checkpoint | CP-17 — Card candidate realization |
-| Status | IN_PROGRESS |
+| Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
 | Next checkpoint | Candidate quality and taxonomy calibration |
@@ -97,6 +97,7 @@ Let players inspect a bounded legal, commander-color candidate pool for each cal
 - CP-16 local validation passes strict typecheck, lint, all 67 tests across 22 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-16 [CI run 100](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609526025) passed the complete check chain.
 - CP-17 local validation passes strict typecheck, lint, all 70 tests across 23 files, the complete demo API self-check, all 12 package boundaries, and `git diff --check`.
+- CP-17 [CI run 104](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612598317) passed the complete check chain.
 
 ## Assumptions
 
