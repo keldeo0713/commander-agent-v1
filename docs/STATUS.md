@@ -105,6 +105,7 @@ Make engine and payoff candidate searches respond deterministically to the playe
 - CP-17 [CI run 104](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612598317) passed the complete check chain.
 - CP-17 final [CI run 106](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612675217) passed before merge.
 - CP-18 local validation passes strict typecheck, lint, all 73 tests across 24 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-18 [CI run 108](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613094438) passed the complete check chain.
 
 ## Assumptions
 
