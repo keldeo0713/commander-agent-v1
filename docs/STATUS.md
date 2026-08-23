@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-15 — Authoritative commander resolution |
+| Active checkpoint | CP-16 — Mechanic-aware template allocation |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Mechanic-aware template allocation |
+| Next checkpoint | Card-level candidate realization |
 
 ## Current objective
 
-Resolve arbitrary commander input against current authoritative card facts and use those facts to produce commander-linked mechanic discovery without adding commander-specific production branches.
+Turn bracket and selected registered mechanics into deterministic, explainable role quantities while preserving a conservative mana foundation and the exact 100-card invariant.
 
 ## Scope completed
 
@@ -66,6 +66,9 @@ Resolve arbitrary commander input against current authoritative card facts and u
 - CP-15 adds exact-name Scryfall commander resolution with legality and commander-eligibility gates, request caching, and normalized source facts.
 - Oracle text, type line, color identity, and provenance now reach the terminal and deterministically rank commander-linked mechanic options.
 - Provider tests use injected responses; Kenessos remains the offline self-check fixture rather than a production-only code path.
+- CP-16 adds versioned bracket baselines, registered-mechanic deltas, bounded role floors/ceilings, deterministic balancing, and visible allocation reasons.
+- Different strategy selections and brackets now produce materially different exact-100 templates without changing the 37-land foundation before card-level curve analysis exists.
+- The Kenessos example fixture dynamically follows the allocated role quantities and remains exactly 100 cards.
 
 ## Validation evidence
 
@@ -88,6 +91,8 @@ Resolve arbitrary commander input against current authoritative card facts and u
 - CP-14 [CI run 92](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592023953) passed the complete check chain.
 - CP-15 local validation passes strict typecheck, lint, all 63 tests across 21 files, the demo API self-check, all 12 package boundaries, and `git diff --check`.
 - CP-15 [CI run 96](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592588783) passed the complete check chain.
+- CP-16 local validation passes strict typecheck, lint, all 67 tests across 22 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-16 [CI run 100](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609526025) passed the complete check chain.
 
 ## Assumptions
 
@@ -102,7 +107,9 @@ Resolve arbitrary commander input against current authoritative card facts and u
 - Prices and image fields are printing facts, but purchasing/market behavior remains out of scope.
 - Arbitrary commander discovery requires access to Scryfall's named-card API. Kenessos remains available offline for deterministic setup and self-checks.
 - CP-15 ranks registered mechanics from commander card text; the next checkpoint makes exact slot quantities respond to selected mechanics and bracket instead of using one fixed role allocation.
+- Mana-base quantity remains fixed at 37 until a card-level candidate pool and mana-curve/source analysis can justify changing it with evidence.
+- Mechanic deltas currently operate on functional roles; card-level realization and simulation-backed calibration remain later checkpoints.
 
 ## Recommended next action
 
-Publish CP-15, verify CI, then replace fixed template quantities with deterministic mechanic- and bracket-aware allocation under the exact-100 invariant.
+Publish CP-16, verify CI, then realize each functional slot from legal commander-color candidate cards with explicit role evidence.

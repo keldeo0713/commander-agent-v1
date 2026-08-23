@@ -2,13 +2,13 @@ import {
   TemplateOrchestrator,
   type CommanderBracket,
   type ExampleDeckEntry,
-  type FunctionalSlot,
   type MechanicCandidate,
   type OptimizedTemplate,
   type ResolvedCommander,
   type TemplateOrchestrationPorts,
 } from "./template-orchestrator.ts";
 import { createScryfallCommanderResolver } from "./scryfall-commander-resolver.ts";
+import { allocateTemplate } from "./template-allocator.ts";
 
 const MECHANICS: MechanicCandidate[] = [
   mechanic("top-deck", "Top-deck manipulation", ["selection", "library-setup"], "Improves draw quality and planned reveals"),
@@ -19,17 +19,6 @@ const MECHANICS: MechanicCandidate[] = [
   mechanic("spells", "Spellslinger", ["spell-density", "spell-payoff"], "Rewards repeated instant and sorcery casting"),
   mechanic("lands", "Landfall", ["land-development", "landfall-payoff"], "Converts land drops into repeatable value"),
   mechanic("combat", "Combat / Voltron", ["commander-damage", "combat-protection"], "Builds a protected combat-based closing line"),
-];
-
-const TEMPLATE_SLOTS: FunctionalSlot[] = [
-  { quantity: 1, roleId: "commander", objective: "Define the engine", selectionRule: "Resolved commander" },
-  { quantity: 37, roleId: "mana-base", objective: "Cast spells on curve", selectionRule: "Tune sources to color identity" },
-  { quantity: 10, roleId: "ramp", objective: "Develop ahead of curve", selectionRule: "Prefer efficient acceleration" },
-  { quantity: 15, roleId: "primary-engine", objective: "Execute chosen mechanics", selectionRule: "Direct enablers first" },
-  { quantity: 12, roleId: "payoffs-finishers", objective: "Convert engine into wins", selectionRule: "Use multiple closing paths" },
-  { quantity: 9, roleId: "card-advantage", objective: "Maintain resources", selectionRule: "Prefer synergy overlap" },
-  { quantity: 10, roleId: "interaction", objective: "Contest opposing plans", selectionRule: "Flexible efficient answers" },
-  { quantity: 6, roleId: "protection-rebuild", objective: "Recover from disruption", selectionRule: "Protect and rebuild" },
 ];
 
 export const demoTemplateOrchestrator = new TemplateOrchestrator(createDemoPorts());
@@ -54,7 +43,7 @@ function createDemoPorts(): TemplateOrchestrationPorts {
     },
     retrieveMechanics: (commander, bracket) => Promise.resolve(discoverMechanics(commander, bracket)),
     mapCustomMechanic: (input) => Promise.resolve(mapCustom(input)),
-    optimize: () => Promise.resolve(structuredClone(TEMPLATE_SLOTS)),
+    optimize: ({ bracket, mechanics }) => Promise.resolve(allocateTemplate(bracket, mechanics)),
     buildExample: (template) => Promise.resolve(buildKenessosExample(template)),
   };
 }
@@ -113,7 +102,15 @@ function buildKenessosExample(template: OptimizedTemplate): ExampleDeckEntry[] {
     "Beast Within", "Counterspell", "Negate", "Pongify", "Rapid Hybridization", "Reality Shift", "Resculpt", "Swan Song", "Krosan Grip", "Aetherize",
     "Heroic Intervention", "Tamiyo's Safekeeping", "Tyvar's Stand", "Slip Out the Back", "Eternal Witness", "Bala Ged Recovery",
   ];
-  const ranges: Array<[number, number, string]> = [[0, 10, "mana-base"], [10, 20, "ramp"], [20, 35, "primary-engine"], [35, 47, "payoffs-finishers"], [47, 56, "card-advantage"], [56, 66, "interaction"], [66, 72, "protection-rebuild"]];
+  const ranges: Array<[number, number, string]> = [[0, 10, "mana-base"]];
+  let cursor = 10;
+  for (const roleId of ["ramp", "primary-engine", "payoffs-finishers", "card-advantage", "interaction", "protection-rebuild"]) {
+    const quantity = template.slots.find((slot) => slot.roleId === roleId)?.quantity;
+    if (quantity === undefined) throw new Error(`example template is missing ${roleId}`);
+    ranges.push([cursor, cursor + quantity, roleId]);
+    cursor += quantity;
+  }
+  if (cursor !== names.length) throw new Error("example fixture cannot satisfy allocated role quantities");
   const entries: ExampleDeckEntry[] = [
     { oracleId: template.commander.oracleId, name: template.commander.name, quantity: 1, roleId: "commander", commander: true },
     { oracleId: "basic-island", name: "Island", quantity: 14, roleId: "mana-base", commander: false },
