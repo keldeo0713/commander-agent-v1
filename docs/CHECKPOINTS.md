@@ -23,7 +23,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-16 | Mechanic-aware template allocation | COMPLETE | [Merged PR #17](https://github.com/keldeo0713/commander-agent-v1/pull/17), [CI run 102](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609569991) |
 | CP-17 | Card candidate realization | COMPLETE | [Merged PR #18](https://github.com/keldeo0713/commander-agent-v1/pull/18), [CI run 106](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612675217) |
 | CP-18 | Candidate quality calibration | COMPLETE | [Merged PR #19](https://github.com/keldeo0713/commander-agent-v1/pull/19), [CI run 110](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613141022) |
-| CP-19 | Explainable candidate ranking | READY_FOR_REVIEW | Local validation: 76/76 tests; CI pending |
+| CP-19 | Explainable candidate ranking | READY_FOR_REVIEW | [Draft PR #20](https://github.com/keldeo0713/commander-agent-v1/pull/20), [CI run 112](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614133213) |
 
 ## CP-00 exit checklist
 
@@ -224,4 +224,4 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] The terminal shows rank evidence and does not select cards for the player.
 - [x] Ranking documentation explicitly avoids optimality claims.
 - [x] Local validation passes 76/76 tests, demo self-check, boundary checks, and offline validation.
-- [ ] Feature-branch CI passes.
+- [x] Feature-branch CI passes ([run 112](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614133213): 76/76 tests plus demo API self-check).
