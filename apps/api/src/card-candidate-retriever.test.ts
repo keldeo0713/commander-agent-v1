@@ -1,0 +1,12 @@
+import { describe, expect, it, vi } from "vitest";
+import { createCardCandidateRetriever } from "./card-candidate-retriever.js";
+import type { OptimizedTemplate } from "./template-orchestrator.js";
+
+const template:OptimizedTemplate={schemaVersion:"functional-template/1",commander:{oracleId:"cmd",name:"Test",colorIdentity:["G","U"]},bracket:3,mechanics:[{id:"tokens",name:"Tokens",componentIds:["token-production"],reason:"x",provenanceId:"x"}],slots:[{quantity:1,roleId:"commander",objective:"x",selectionRule:"x"},{quantity:37,roleId:"mana-base",objective:"x",selectionRule:"x"},{quantity:10,roleId:"ramp",objective:"x",selectionRule:"x"},{quantity:52,roleId:"primary-engine",objective:"x",selectionRule:"x"}]};
+const legal={oracle_id:"legal",name:"Legal Simic Card",cmc:2,type_line:"Artifact",oracle_text:"Add one mana.",color_identity:["G"],legalities:{commander:"legal"}};
+
+describe("card candidate retrieval",()=>{
+  it("returns role-grouped legal in-identity candidates with evidence",async()=>{const body=JSON.stringify({data:[legal,{...legal,oracle_id:"off",name:"Off-color",color_identity:["B"]},{...legal,oracle_id:"banned",name:"Banned",legalities:{commander:"banned"}},{...legal,oracle_id:"cmd",name:"Commander"}]});const fetchCards=vi.fn<typeof fetch>().mockImplementation(()=>Promise.resolve(new Response(body,{status:200})));const retrieve=createCardCandidateRetriever({fetch:fetchCards,delayMs:0,limitPerRole:3});const bundle=await retrieve(template);expect(bundle.roles).toHaveLength(2);expect(bundle.roles.every(role=>role.candidates.map(card=>card.name).join() === "Legal Simic Card")).toBe(true);expect(bundle.roles[0]?.candidates[0]).toMatchObject({colorIdentity:["G"],sourceId:"scryfall-search-api/1"});expect(String((fetchCards.mock.calls[0]?.[0] as URL).searchParams.get("q"))).toContain("id<=gu")});
+  it("caches repeated role queries",async()=>{const fetchCards=vi.fn<typeof fetch>().mockImplementation(()=>Promise.resolve(new Response(JSON.stringify({data:[legal]}),{status:200})));const retrieve=createCardCandidateRetriever({fetch:fetchCards,delayMs:0});await retrieve(template);await retrieve(template);expect(fetchCards).toHaveBeenCalledTimes(2)});
+  it("fails visibly on malformed provider data",async()=>{const retrieve=createCardCandidateRetriever({fetch:vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify({object:"list"}),{status:200})),delayMs:0});await expect(retrieve(template)).rejects.toThrow("missing data")});
+});
