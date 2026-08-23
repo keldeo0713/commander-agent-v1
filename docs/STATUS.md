@@ -128,6 +128,7 @@ Make candidate pools large enough to cover normal nonland role targets and let p
 - CP-20 [CI run 116](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615061396) passed the complete check chain.
 - CP-20 final [CI run 118](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615114447) passed before merge.
 - CP-21 local validation passes strict typecheck, lint, all 81 tests across 26 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-21 [CI run 120](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615969447) passed the complete check chain.
 
 ## Assumptions
 
