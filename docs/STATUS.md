@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-22 — Mana-base planning and full coverage |
+| Active checkpoint | CP-23 — Colored-source analysis and nonbasic retrieval |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Colored-source analysis and named nonbasic retrieval |
+| Next checkpoint | Player-controlled nonbasic selection and source validation |
 
 ## Current objective
 
-Represent the 37-land foundation generically for every color identity and distinguish structurally allocated template slots from actual named-card coverage.
+Use included-card mana symbols to refine the basic-land split and retrieve legal named nonbasic fixing and utility options without silently choosing them.
 
 ## Scope completed
 
@@ -97,6 +97,11 @@ Represent the 37-land foundation generically for every color identity and distin
 - Every mana plan checksums to the template's authoritative 37-land quantity and records its current pip-demand assumptions.
 - Full coverage separately reports structural allocation, named cards, remaining nonlands, and unresolved mana slots.
 - Partial selection export now includes the plan's named basics without presenting unnamed nonbasic slots as completed cards.
+- CP-22 merged through pull request #23 after final CI run 126.
+- CP-23 carries normalized mana costs on candidate cards and counts selected-card colored symbols by commander identity.
+- Basic quantities rebalance proportionally while preserving at least one basic for every commander color and the exact 37-land checksum.
+- A cached Scryfall adapter retrieves legal, nonbasic, in-identity lands with explicit fixing or utility evidence.
+- The terminal refreshes pip demand after every include/exclude choice and displays named nonbasic options as unselected suggestions.
 
 ## Validation evidence
 
@@ -138,6 +143,8 @@ Represent the 37-land foundation generically for every color identity and distin
 - CP-21 final [CI run 122](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32616027895) passed before merge.
 - CP-22 local validation passes strict typecheck, lint, all 88 tests across 27 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-22 [CI run 124](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621119920) passed the complete check chain.
+- CP-22 final [CI run 126](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621186925) passed before merge.
+- CP-23 local validation passes strict typecheck, lint, all 92 tests across 28 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 
 ## Assumptions
 
@@ -156,9 +163,10 @@ Represent the 37-land foundation generically for every color identity and distin
 - Candidate retrieval uses deterministic Scryfall syntax and a small inspection pool; the frozen calibration proves differentiated retrieval intent, not live precision/recall or card optimality.
 - Candidate ranking is a transparent lexical and mana-value heuristic; EDHREC-ordered provider retrieval still bounds the inspected pool, and scores are not simulation-backed optimality claims.
 - Candidate pools remain capped at 25 and use only the first Scryfall result page; unusually large or low-recall roles may still need pagination or broader retrieval.
-- Mana planning does not yet analyze colored pips from player-selected cards or name the fixing/utility lands; partial selection export remains explicitly incomplete.
+- Pip demand currently covers player-included nonland candidates but not the commander's printed mana cost or unchosen future cards.
+- Nonbasic classification uses produced-mana and Oracle-text signals; tapped status, budget, land-type synergies, and numeric source sufficiency remain unmodeled.
 - Mana-base candidates and complete arbitrary-commander example construction remain deferred.
 
 ## Recommended next action
 
-Publish CP-22, verify CI, then calculate colored-source demand from selected cards and retrieve legal named nonbasic options without silently choosing them.
+Publish CP-23, verify CI, then let players assign named nonbasics to fixing/utility slots and validate resulting colored-source counts before export.
