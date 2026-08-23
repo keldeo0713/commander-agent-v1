@@ -160,6 +160,7 @@ Validate a player-built list as a complete 100-card deck only when every functio
 - CP-25 [CI run 135](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655959837) passed the complete check chain.
 - CP-25 final [CI run 136](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656046342) passed before merge through pull request #26.
 - CP-26 local validation passes strict typecheck, lint, all 102 tests across 31 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-26 [CI run 138](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656376185) passed the complete check chain.
 
 ## Assumptions
 
