@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-17 — Card candidate realization |
+| Active checkpoint | CP-18 — Candidate quality calibration |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Candidate quality and taxonomy calibration |
+| Next checkpoint | Candidate ranking and card-level template realization |
 
 ## Current objective
 
-Let players inspect a bounded legal, commander-color candidate pool for each calculated functional role without turning suggestions into an automatically selected deck.
+Make engine and payoff candidate searches respond deterministically to the player's registered mechanics, with visible versioned evidence and six-archetype regression coverage.
 
 ## Scope completed
 
@@ -72,6 +72,11 @@ Let players inspect a bounded legal, commander-color candidate pool for each cal
 - CP-17 adds rate-limited, cached Scryfall role searches and a versioned candidate-bundle contract.
 - Provider results are independently filtered for Commander legality, commander color identity, Oracle-ID uniqueness, and commander exclusion.
 - The terminal exposes candidate inspection as a secondary action with required quantities and per-card retrieval evidence; no card is silently selected.
+- CP-17 merged through pull request #18 after final CI run 106.
+- CP-18 adds a versioned mechanic-aware query planner for engine and payoff roles while retaining generic support-role plans.
+- Query identity is invariant to mechanic order and commander identity; it contains no Kenessos or other commander-name specialization.
+- Six frozen archetypes now prove differentiated top-deck, graveyard, spells, tokens, artifacts, and combat retrieval intent.
+- Candidate groups expose the query-plan ID and reason before showing legal in-color cards.
 
 ## Validation evidence
 
@@ -98,6 +103,9 @@ Let players inspect a bounded legal, commander-color candidate pool for each cal
 - CP-16 [CI run 100](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609526025) passed the complete check chain.
 - CP-17 local validation passes strict typecheck, lint, all 70 tests across 23 files, the complete demo API self-check, all 12 package boundaries, and `git diff --check`.
 - CP-17 [CI run 104](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612598317) passed the complete check chain.
+- CP-17 final [CI run 106](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612675217) passed before merge.
+- CP-18 local validation passes strict typecheck, lint, all 73 tests across 24 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-18 [CI run 108](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613094438) passed the complete check chain.
 
 ## Assumptions
 
@@ -111,12 +119,11 @@ Let players inspect a bounded legal, commander-color candidate pool for each cal
 - Game Changers and bracket guardrails remain later deck-spec/builder scope; they are not format legality failures.
 - Prices and image fields are printing facts, but purchasing/market behavior remains out of scope.
 - Arbitrary commander discovery requires access to Scryfall's named-card API. Kenessos remains available offline for deterministic setup and self-checks.
-- CP-15 ranks registered mechanics from commander card text; the next checkpoint makes exact slot quantities respond to selected mechanics and bracket instead of using one fixed role allocation.
 - Mana-base quantity remains fixed at 37 until a card-level candidate pool and mana-curve/source analysis can justify changing it with evidence.
 - Mechanic deltas currently operate on functional roles; card-level realization and simulation-backed calibration remain later checkpoints.
-- Candidate retrieval uses broad role queries and returns a small inspection pool, not a claim that every returned card is optimal or sufficient to fill the role quantity.
+- Candidate retrieval uses deterministic Scryfall syntax and a small inspection pool; the frozen calibration proves differentiated retrieval intent, not live precision/recall or card optimality.
 - Mana-base candidates and complete arbitrary-commander example construction remain deferred.
 
 ## Recommended next action
 
-Publish CP-17, verify CI, then calibrate role-query precision and mechanic-specific candidate evidence against frozen multi-archetype fixtures.
+Publish CP-18, verify CI, then rank candidates within each role using explicit card-level features without silently constructing the player's deck.

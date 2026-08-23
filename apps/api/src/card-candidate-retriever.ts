@@ -1,6 +1,7 @@
 import type { OptimizedTemplate, ResolvedCommander } from "./template-orchestrator.ts";
 
 export const CARD_CANDIDATE_BUNDLE_VERSION = "card-candidate-bundle/1" as const;
+export const CANDIDATE_QUERY_PLAN_VERSION = "candidate-query-plan/1" as const;
 export const SCRYFALL_SEARCH_ENDPOINT = "https://api.scryfall.com/cards/search";
 
 export interface CardCandidate {
@@ -14,7 +15,8 @@ export interface CardCandidate {
   evidence: string;
   sourceId: "scryfall-search-api/1";
 }
-export interface CandidateRole { roleId: string; requiredQuantity: number; candidates: CardCandidate[] }
+export interface CandidateQueryPlan { schemaVersion: typeof CANDIDATE_QUERY_PLAN_VERSION; queryId: string; roleId: string; mechanicIds: string[]; query: string; evidence: string }
+export interface CandidateRole { roleId: string; requiredQuantity: number; queryId: string; queryEvidence: string; candidates: CardCandidate[] }
 export interface CardCandidateBundle { schemaVersion: typeof CARD_CANDIDATE_BUNDLE_VERSION; commanderOracleId: string; roles: CandidateRole[] }
 export interface CandidateRetrieverOptions { fetch?: typeof globalThis.fetch; endpoint?: string; delayMs?: number; limitPerRole?: number }
 
@@ -30,6 +32,31 @@ const ROLE_QUERIES: Record<string, { query: string; evidence: string }> = {
   "protection-rebuild": { query: `(o:"hexproof" or o:"indestructible" or o:"return target" or o:"return a")`, evidence: "protection or recovery text matched the rebuild retrieval rule" },
 };
 
+const MECHANIC_ROLE_QUERIES: Record<string, { engine: string; payoff: string; evidence: string }> = {
+  "top-deck": { engine: `(o:"scry" or o:"surveil" or o:"look at the top")`, payoff: `(mv>=5 and (t:creature or o:"from the top"))`, evidence: "top-deck setup and high-impact reveals" },
+  "big-creatures": { engine: `(o:"mana value" or o:"power 4 or greater")`, payoff: `(t:creature and mv>=6)`, evidence: "large-creature setup and closing threats" },
+  graveyard: { engine: `(o:"graveyard" or o:"mill" or o:"discard")`, payoff: `(o:"return" and o:"graveyard")`, evidence: "graveyard setup and recursion" },
+  tokens: { engine: `(o:"create" and o:"token")`, payoff: `(o:"tokens you control" or o:"creatures you control get")`, evidence: "token production and board scaling" },
+  artifacts: { engine: `(t:artifact or o:"artifact you control")`, payoff: `(o:"artifacts you control" or o:"for each artifact")`, evidence: "artifact density and artifact payoffs" },
+  spells: { engine: `(t:instant or t:sorcery or o:"copy target spell")`, payoff: `(o:"magecraft" or o:"whenever you cast" or o:"copy that spell")`, evidence: "instant/sorcery density and cast payoffs" },
+  lands: { engine: `(o:"landfall" or o:"play an additional land")`, payoff: `(o:"landfall" or o:"for each land you control")`, evidence: "land development and landfall payoffs" },
+  combat: { engine: `(t:equipment or t:aura or o:"attacks")`, payoff: `(o:"combat damage" or o:"double strike" or o:"commander you control")`, evidence: "combat setup and commander-damage payoffs" },
+};
+
+export function buildCandidateQueryPlan(template: OptimizedTemplate, roleId: string): CandidateQueryPlan | null {
+  const base = ROLE_QUERIES[roleId];
+  if (!base) return null;
+  const mechanicIds = [...new Set(template.mechanics.map(({ id }) => id).filter((id) => MECHANIC_ROLE_QUERIES[id]))].sort();
+  if ((roleId === "primary-engine" || roleId === "payoffs-finishers") && mechanicIds.length) {
+    const field = roleId === "primary-engine" ? "engine" : "payoff";
+    const rules = mechanicIds.map((id) => MECHANIC_ROLE_QUERIES[id]).filter((rule): rule is NonNullable<typeof rule> => rule !== undefined);
+    const query = `(${rules.map((rule) => rule[field]).join(" or ")})`;
+    const evidence = `${rules.map((rule) => rule.evidence).join("; ")} matched selected mechanics`;
+    return { schemaVersion: CANDIDATE_QUERY_PLAN_VERSION, queryId: `${CANDIDATE_QUERY_PLAN_VERSION}:${roleId}:${mechanicIds.join("+")}`, roleId, mechanicIds, query, evidence };
+  }
+  return { schemaVersion: CANDIDATE_QUERY_PLAN_VERSION, queryId: `${CANDIDATE_QUERY_PLAN_VERSION}:${roleId}:generic`, roleId, mechanicIds: [], query: base.query, evidence: base.evidence };
+}
+
 export function createCardCandidateRetriever(options: CandidateRetrieverOptions = {}): (template: OptimizedTemplate) => Promise<CardCandidateBundle> {
   const fetchCards = options.fetch ?? globalThis.fetch;
   const endpoint = options.endpoint ?? SCRYFALL_SEARCH_ENDPOINT;
@@ -39,9 +66,9 @@ export function createCardCandidateRetriever(options: CandidateRetrieverOptions 
   return async (template) => {
     const roles: CandidateRole[] = [];
     for (const slot of template.slots.filter(({ roleId }) => roleId !== "commander" && roleId !== "mana-base")) {
-      const rule = ROLE_QUERIES[slot.roleId];
-      if (!rule) continue;
-      const query = `${rule.query} f:commander ${identityQuery(template.commander)} -is:funny`;
+      const plan = buildCandidateQueryPlan(template, slot.roleId);
+      if (!plan) continue;
+      const query = `${plan.query} f:commander ${identityQuery(template.commander)} -is:funny`;
       let candidates = cache.get(query);
       if (!candidates) {
         const url = new URL(endpoint);
@@ -50,11 +77,11 @@ export function createCardCandidateRetriever(options: CandidateRetrieverOptions 
         url.searchParams.set("order", "edhrec");
         const response = await fetchCards(url, { headers: { accept: "application/json;q=0.9,*/*;q=0.8", "user-agent": "commander-agent-v1/0.1 (+https://github.com/keldeo0713/commander-agent-v1)" } });
         if (!response.ok) throw new Error(`candidate lookup failed for ${slot.roleId} (${response.status})`);
-        candidates = parseCandidates(await response.json() as ScryfallSearchPage, template.commander, slot.roleId, rule.evidence).slice(0, limit);
+        candidates = parseCandidates(await response.json() as ScryfallSearchPage, template.commander, slot.roleId, plan.evidence).slice(0, limit);
         cache.set(query, candidates);
         if (delayMs > 0) await new Promise((resolve) => setTimeout(resolve, delayMs));
       }
-      roles.push({ roleId: slot.roleId, requiredQuantity: slot.quantity, candidates: structuredClone(candidates) });
+      roles.push({ roleId: slot.roleId, requiredQuantity: slot.quantity, queryId: plan.queryId, queryEvidence: plan.evidence, candidates: structuredClone(candidates) });
     }
     return { schemaVersion: CARD_CANDIDATE_BUNDLE_VERSION, commanderOracleId: template.commander.oracleId, roles };
   };

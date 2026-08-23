@@ -7,7 +7,7 @@ describe("local demo server", () => {
   });
 
   it("runs discovery, mapping, template, and example requests through the local API", async () => {
-    const server = createDemoServer({ retrieveCardCandidates: (template) => Promise.resolve({ schemaVersion: "card-candidate-bundle/1", commanderOracleId: template.commander.oracleId, roles: [{ roleId: "ramp", requiredQuantity: 10, candidates: [{ oracleId: "candidate", name: "Nature's Lore", manaValue: 2, typeLine: "Sorcery", oracleText: "Search your library for a Forest card.", colorIdentity: ["G"], roleId: "ramp", evidence: "fixture evidence", sourceId: "scryfall-search-api/1" }] }] }) });
+    const server = createDemoServer({ retrieveCardCandidates: (template) => Promise.resolve({ schemaVersion: "card-candidate-bundle/1", commanderOracleId: template.commander.oracleId, roles: [{ roleId: "ramp", requiredQuantity: 10, queryId: "candidate-query-plan/1:ramp:generic", queryEvidence: "fixture query evidence", candidates: [{ oracleId: "candidate", name: "Nature's Lore", manaValue: 2, typeLine: "Sorcery", oracleText: "Search your library for a Forest card.", colorIdentity: ["G"], roleId: "ramp", evidence: "fixture evidence", sourceId: "scryfall-search-api/1" }] }] }) });
     await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
     const address = server.address();
     if (address === null || typeof address === "string") throw new Error("server did not bind");
