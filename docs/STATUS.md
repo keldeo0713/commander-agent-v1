@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-24 — Nonbasic selection and source validation |
+| Active checkpoint | CP-25 — Turn-aware source targets and land quality |
 | Status | READY_FOR_REVIEW |
-| Last updated | 2026-08-22 |
+| Last updated | 2026-08-23 |
 | HLD version | 1.1 |
-| Next checkpoint | Cast-on-curve source targets and land quality |
+| Next checkpoint | Complete player-built list and role validation |
 
 ## Current objective
 
-Let players explicitly assign legal named nonbasics to fixing and utility slots, validate named colored-source presence, and export only chosen lands.
+Calculate reproducible cast-on-curve colored-source targets and rank legal land options with visible tapped-land and optional per-card budget evidence.
 
 ## Scope completed
 
@@ -155,6 +155,9 @@ Let players explicitly assign legal named nonbasics to fixing and utility slots,
 - CP-23 final [CI run 129](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621759328) passed before merge.
 - CP-24 local validation passes strict typecheck, lint, all 95 tests across 29 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-24 [CI run 131](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655175448) passed the complete check chain.
+- CP-24 final [CI run 133](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655231947) passed before merge.
+- CP-25 local validation passes strict typecheck, lint, all 99 tests across 30 files, JavaScript syntax validation, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-25 [CI run 135](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655959837) passed the complete check chain.
 
 ## Assumptions
 
@@ -174,10 +177,10 @@ Let players explicitly assign legal named nonbasics to fixing and utility slots,
 - Candidate ranking is a transparent lexical and mana-value heuristic; EDHREC-ordered provider retrieval still bounds the inspected pool, and scores are not simulation-backed optimality claims.
 - Candidate pools remain capped at 25 and use only the first Scryfall result page; unusually large or low-recall roles may still need pagination or broader retrieval.
 - Pip demand currently covers player-included nonland candidates but not the commander's printed mana cost or unchosen future cards.
-- Nonbasic classification uses produced-mana and Oracle-text signals; tapped status, budget, land-type synergies, and numeric source sufficiency remain unmodeled.
-- Colored-source validation proves named source presence only; it does not yet calculate the number of untapped sources needed to cast specific spells on curve.
+- Land-quality ranking uses transparent Oracle-text and price signals; it does not model land-type synergies, price availability, or in-game sequencing.
+- Cast-on-curve targets use a 99-card hypergeometric model with an opening seven and one draw per turn. Mulligans, ramp, filtering, treasures, and tapped-source timing remain explicit exclusions.
 - Mana-base candidates and complete arbitrary-commander example construction remain deferred.
 
 ## Recommended next action
 
-Publish CP-24, verify CI, then calculate turn-aware colored-source targets and rank land quality using tapped status and player budget constraints.
+Publish CP-25, verify CI, then let the player complete and validate all 99 main-deck slots without automatic card choices.

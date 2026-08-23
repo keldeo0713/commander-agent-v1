@@ -8,12 +8,13 @@ import { createCardCandidateRetriever } from "../apps/api/src/card-candidate-ret
 import type { CardCandidateBundle } from "../apps/api/src/card-candidate-retriever.ts";
 import type { OptimizedTemplate } from "../apps/api/src/template-orchestrator.ts";
 import { planManaBase } from "../apps/api/src/mana-base-planner.ts";
-import { createNonbasicLandRetriever, type NonbasicLandBundle } from "../apps/api/src/nonbasic-land-retriever.ts";
+import { createNonbasicLandRetriever, type LandPreferences, type NonbasicLandBundle } from "../apps/api/src/nonbasic-land-retriever.ts";
+import { calculateColoredSourceTargets } from "../apps/api/src/colored-source-target.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "apps", "web");
 const routes = new Map([["/", "index.html"], ["/index.html", "index.html"], ["/styles.css", "styles.css"], ["/app.js", "app.js"]]);
 const contentTypes: Record<string, string> = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8" };
-export interface DemoServerOptions { retrieveCardCandidates?: (template: OptimizedTemplate) => Promise<CardCandidateBundle>; retrieveNonbasicLands?: (commander: ResolvedCommander) => Promise<NonbasicLandBundle> }
+export interface DemoServerOptions { retrieveCardCandidates?: (template: OptimizedTemplate) => Promise<CardCandidateBundle>; retrieveNonbasicLands?: (commander: ResolvedCommander, preferences?: LandPreferences) => Promise<NonbasicLandBundle> }
 
 export function createDemoServer(options: DemoServerOptions = {}): Server {
   const retrieveCardCandidates = options.retrieveCardCandidates ?? createCardCandidateRetriever();
@@ -21,7 +22,7 @@ export function createDemoServer(options: DemoServerOptions = {}): Server {
   return createServer((request, response) => { void handleRequest(request, response, retrieveCardCandidates, retrieveNonbasicLands); });
 }
 
-async function handleRequest(request: IncomingMessage, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>, retrieveNonbasicLands: (commander: ResolvedCommander) => Promise<NonbasicLandBundle>): Promise<void> {
+async function handleRequest(request: IncomingMessage, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>, retrieveNonbasicLands: (commander: ResolvedCommander, preferences?: LandPreferences) => Promise<NonbasicLandBundle>): Promise<void> {
     const url = new URL(request.url ?? "/", "http://localhost");
     if (url.pathname === "/health") {
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
@@ -41,7 +42,7 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse,
     }
 }
 
-async function handleApi(request: IncomingMessage, path: string, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>, retrieveNonbasicLands: (commander: ResolvedCommander) => Promise<NonbasicLandBundle>): Promise<void> {
+async function handleApi(request: IncomingMessage, path: string, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>, retrieveNonbasicLands: (commander: ResolvedCommander, preferences?: LandPreferences) => Promise<NonbasicLandBundle>): Promise<void> {
   if (request.method !== "POST") { json(response, 405, { error: "method_not_allowed" }); return; }
   try {
     const body = await readJson(request);
@@ -86,7 +87,16 @@ async function handleApi(request: IncomingMessage, path: string, response: Serve
     if (path === "/api/land-candidates") {
       const commander = parseCommander(body["commander"]);
       if (!commander) { json(response, 400, { error: "invalid_land_candidate_request" }); return; }
-      json(response, 200, await retrieveNonbasicLands(commander));
+      const maxPriceUsd = typeof body["maxPriceUsd"] === "number" ? body["maxPriceUsd"] : undefined;
+      const preferences = maxPriceUsd === undefined ? {} : { maxPriceUsd };
+      json(response, 200, await retrieveNonbasicLands(commander, preferences));
+      return;
+    }
+    if (path === "/api/source-targets") {
+      const cards = Array.isArray(body["cards"]) ? body["cards"].filter((card): card is { name: string; manaCost: string; manaValue: number } => Boolean(card) && typeof card === "object" && typeof (card as Record<string, unknown>)["name"] === "string" && typeof (card as Record<string, unknown>)["manaCost"] === "string" && typeof (card as Record<string, unknown>)["manaValue"] === "number") : [];
+      const colors = Array.isArray(body["colorIdentity"]) ? body["colorIdentity"].filter((color): color is string => typeof color === "string") : [];
+      const sources = body["availableSources"] && typeof body["availableSources"] === "object" ? body["availableSources"] as Record<string, number> : {};
+      json(response, 200, calculateColoredSourceTargets(cards, colors, sources));
       return;
     }
     json(response, 404, { error: "not_found" });
