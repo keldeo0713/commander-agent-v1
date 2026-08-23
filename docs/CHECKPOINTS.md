@@ -23,7 +23,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-16 | Mechanic-aware template allocation | COMPLETE | [Merged PR #17](https://github.com/keldeo0713/commander-agent-v1/pull/17), [CI run 102](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609569991) |
 | CP-17 | Card candidate realization | COMPLETE | [Merged PR #18](https://github.com/keldeo0713/commander-agent-v1/pull/18), [CI run 106](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612675217) |
 | CP-18 | Candidate quality calibration | COMPLETE | [Merged PR #19](https://github.com/keldeo0713/commander-agent-v1/pull/19), [CI run 110](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613141022) |
-| CP-19 | Explainable candidate ranking | READY_FOR_REVIEW | [Draft PR #20](https://github.com/keldeo0713/commander-agent-v1/pull/20), [CI run 112](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614133213) |
+| CP-19 | Explainable candidate ranking | COMPLETE | [Merged PR #20](https://github.com/keldeo0713/commander-agent-v1/pull/20), [CI run 114](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614171654) |
+| CP-20 | Player-controlled candidate selection | READY_FOR_REVIEW | Local validation: 79/79 tests; CI pending |
 
 ## CP-00 exit checklist
 
@@ -225,3 +226,15 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Ranking documentation explicitly avoids optimality claims.
 - [x] Local validation passes 76/76 tests, demo self-check, boundary checks, and offline validation.
 - [x] Feature-branch CI passes ([run 112](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614133213): 76/76 tests plus demo API self-check).
+
+## CP-20 exit checklist
+
+- [x] Include and exclude decisions are explicit, per-role, and mutually exclusive.
+- [x] Selection state has a stable versioned contract and deterministic ordering.
+- [x] Unknown or stale candidates cannot enter selection state.
+- [x] A role cannot be included beyond its required template quantity.
+- [x] Coverage exposes selected, required, excluded, remaining, and status values.
+- [x] Available decisions survive candidate refresh while stale decisions are pruned.
+- [x] Terminal controls never auto-fill a role or complete a deck.
+- [x] Local validation passes 79/79 tests, demo self-check, boundary checks, and offline validation.
+- [ ] Feature-branch CI passes.
