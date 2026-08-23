@@ -137,6 +137,7 @@ Represent the 37-land foundation generically for every color identity and distin
 - CP-21 [CI run 120](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615969447) passed the complete check chain.
 - CP-21 final [CI run 122](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32616027895) passed before merge.
 - CP-22 local validation passes strict typecheck, lint, all 88 tests across 27 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-22 [CI run 124](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621119920) passed the complete check chain.
 
 ## Assumptions
 
