@@ -26,7 +26,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-19 | Explainable candidate ranking | COMPLETE | [Merged PR #20](https://github.com/keldeo0713/commander-agent-v1/pull/20), [CI run 114](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614171654) |
 | CP-20 | Player-controlled candidate selection | COMPLETE | [Merged PR #21](https://github.com/keldeo0713/commander-agent-v1/pull/21), [CI run 118](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615114447) |
 | CP-21 | Candidate pool expansion and selection export | COMPLETE | [Merged PR #22](https://github.com/keldeo0713/commander-agent-v1/pull/22), [CI run 122](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32616027895) |
-| CP-22 | Mana-base planning and full coverage | READY_FOR_REVIEW | Local validation: 88/88 tests; CI pending |
+| CP-22 | Mana-base planning and full coverage | READY_FOR_REVIEW | [Draft PR #23](https://github.com/keldeo0713/commander-agent-v1/pull/23), [CI run 124](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621119920) |
 
 ## CP-00 exit checklist
 
@@ -263,4 +263,4 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] The local API and terminal expose mana assumptions and unresolved quantities.
 - [x] Partial export includes named basics but never fabricates unnamed nonbasics.
 - [x] Local validation passes 88/88 tests, demo self-check, boundary checks, and offline validation.
-- [ ] Feature-branch CI passes.
+- [x] Feature-branch CI passes ([run 124](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621119920): 88/88 tests plus demo API self-check).
