@@ -11,6 +11,7 @@ export interface CardCandidate {
   manaValue: number;
   typeLine: string;
   oracleText: string;
+  manaCost: string;
   colorIdentity: string[];
   roleId: string;
   evidence: string;
@@ -25,7 +26,7 @@ export interface CandidateRole { roleId: string; requiredQuantity: number; query
 export interface CardCandidateBundle { schemaVersion: typeof CARD_CANDIDATE_BUNDLE_VERSION; commanderOracleId: string; roles: CandidateRole[] }
 export interface CandidateRetrieverOptions { fetch?: typeof globalThis.fetch; endpoint?: string; delayMs?: number; limitPerRole?: number }
 
-interface ScryfallSearchCard { oracle_id?: unknown; name?: unknown; cmc?: unknown; type_line?: unknown; oracle_text?: unknown; color_identity?: unknown; legalities?: unknown }
+interface ScryfallSearchCard { oracle_id?: unknown; name?: unknown; cmc?: unknown; mana_cost?: unknown; type_line?: unknown; oracle_text?: unknown; color_identity?: unknown; legalities?: unknown }
 interface ScryfallSearchPage { data?: unknown }
 
 const ROLE_QUERIES: Record<string, { query: string; evidence: string }> = {
@@ -165,7 +166,7 @@ function parseCandidates(page: ScryfallSearchPage, commander: ResolvedCommander,
     const legalities = card.legalities && typeof card.legalities === "object" ? card.legalities as Record<string, unknown> : {};
     if (typeof card.oracle_id !== "string" || typeof card.name !== "string" || typeof card.cmc !== "number" || typeof card.type_line !== "string" || !Array.isArray(card.color_identity) || !card.color_identity.every((color) => typeof color === "string") || legalities["commander"] !== "legal" || card.oracle_id === commander.oracleId || seen.has(card.oracle_id) || !card.color_identity.every((color) => allowed.has(color))) continue;
     seen.add(card.oracle_id);
-    candidates.push({ oracleId: card.oracle_id, name: card.name, manaValue: card.cmc, typeLine: card.type_line, oracleText: typeof card.oracle_text === "string" ? card.oracle_text : "", colorIdentity: card.color_identity, roleId, evidence, rank: 0, rankScore: 0, rankingEvidence: [], rankingVersion: CANDIDATE_RANKING_VERSION, sourceId: "scryfall-search-api/1" });
+    candidates.push({ oracleId: card.oracle_id, name: card.name, manaValue: card.cmc, manaCost: typeof card.mana_cost === "string" ? card.mana_cost : "", typeLine: card.type_line, oracleText: typeof card.oracle_text === "string" ? card.oracle_text : "", colorIdentity: card.color_identity, roleId, evidence, rank: 0, rankScore: 0, rankingEvidence: [], rankingVersion: CANDIDATE_RANKING_VERSION, sourceId: "scryfall-search-api/1" });
   }
   return candidates;
 }
