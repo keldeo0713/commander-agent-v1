@@ -27,7 +27,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-20 | Player-controlled candidate selection | COMPLETE | [Merged PR #21](https://github.com/keldeo0713/commander-agent-v1/pull/21), [CI run 118](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615114447) |
 | CP-21 | Candidate pool expansion and selection export | COMPLETE | [Merged PR #22](https://github.com/keldeo0713/commander-agent-v1/pull/22), [CI run 122](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32616027895) |
 | CP-22 | Mana-base planning and full coverage | COMPLETE | [Merged PR #23](https://github.com/keldeo0713/commander-agent-v1/pull/23), [CI run 126](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621186925) |
-| CP-23 | Colored-source analysis and nonbasic retrieval | READY_FOR_REVIEW | [Draft PR #24](https://github.com/keldeo0713/commander-agent-v1/pull/24), [CI run 128](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621715909) |
+| CP-23 | Colored-source analysis and nonbasic retrieval | COMPLETE | [Merged PR #24](https://github.com/keldeo0713/commander-agent-v1/pull/24), [CI run 129](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621759328) |
+| CP-24 | Nonbasic selection and source validation | READY_FOR_REVIEW | [Draft PR #25](https://github.com/keldeo0713/commander-agent-v1/pull/25), [CI run 131](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655175448) |
 
 ## CP-00 exit checklist
 
@@ -277,3 +278,15 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] The API and terminal refresh and display colored demand and land options.
 - [x] Local validation passes 92/92 tests, demo self-check, boundary checks, and offline validation.
 - [x] Feature-branch CI passes ([run 128](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621715909): 92/92 tests plus demo API self-check).
+
+## CP-24 exit checklist
+
+- [x] Nonbasic selection has a stable versioned contract and deterministic ordering.
+- [x] Only inspected legal land options can be selected.
+- [x] Singleton identity and fixing/utility slot capacities are enforced.
+- [x] Named source counts combine planned basics with selected nonbasics.
+- [x] Source results expose demand, count, and presence without an unsupported probability claim.
+- [x] Selected lands update named-card coverage and plain quantity/name export.
+- [x] Unselected land suggestions never enter coverage or export.
+- [x] Local validation passes 95/95 tests, demo self-check, boundary checks, and offline validation.
+- [x] Feature-branch CI passes ([run 131](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655175448): 95/95 tests plus demo API self-check).
