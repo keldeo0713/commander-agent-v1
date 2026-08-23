@@ -8,25 +8,27 @@ import { createCardCandidateRetriever } from "../apps/api/src/card-candidate-ret
 import type { CardCandidateBundle } from "../apps/api/src/card-candidate-retriever.ts";
 import type { OptimizedTemplate } from "../apps/api/src/template-orchestrator.ts";
 import { planManaBase } from "../apps/api/src/mana-base-planner.ts";
+import { createNonbasicLandRetriever, type NonbasicLandBundle } from "../apps/api/src/nonbasic-land-retriever.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "apps", "web");
 const routes = new Map([["/", "index.html"], ["/index.html", "index.html"], ["/styles.css", "styles.css"], ["/app.js", "app.js"]]);
 const contentTypes: Record<string, string> = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8" };
-export interface DemoServerOptions { retrieveCardCandidates?: (template: OptimizedTemplate) => Promise<CardCandidateBundle> }
+export interface DemoServerOptions { retrieveCardCandidates?: (template: OptimizedTemplate) => Promise<CardCandidateBundle>; retrieveNonbasicLands?: (commander: ResolvedCommander) => Promise<NonbasicLandBundle> }
 
 export function createDemoServer(options: DemoServerOptions = {}): Server {
   const retrieveCardCandidates = options.retrieveCardCandidates ?? createCardCandidateRetriever();
-  return createServer((request, response) => { void handleRequest(request, response, retrieveCardCandidates); });
+  const retrieveNonbasicLands = options.retrieveNonbasicLands ?? createNonbasicLandRetriever();
+  return createServer((request, response) => { void handleRequest(request, response, retrieveCardCandidates, retrieveNonbasicLands); });
 }
 
-async function handleRequest(request: IncomingMessage, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>): Promise<void> {
+async function handleRequest(request: IncomingMessage, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>, retrieveNonbasicLands: (commander: ResolvedCommander) => Promise<NonbasicLandBundle>): Promise<void> {
     const url = new URL(request.url ?? "/", "http://localhost");
     if (url.pathname === "/health") {
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
       response.end(JSON.stringify({ status: "ok", application: "commander-agent-demo", version: "cp-14" }));
       return;
     }
-    if (url.pathname.startsWith("/api/")) { await handleApi(request, url.pathname, response, retrieveCardCandidates); return; }
+    if (url.pathname.startsWith("/api/")) { await handleApi(request, url.pathname, response, retrieveCardCandidates, retrieveNonbasicLands); return; }
     const file = routes.get(url.pathname);
     if (!file) { response.writeHead(404, { "content-type": "text/plain; charset=utf-8" }); response.end("Not found"); return; }
     try {
@@ -39,7 +41,7 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse,
     }
 }
 
-async function handleApi(request: IncomingMessage, path: string, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>): Promise<void> {
+async function handleApi(request: IncomingMessage, path: string, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>, retrieveNonbasicLands: (commander: ResolvedCommander) => Promise<NonbasicLandBundle>): Promise<void> {
   if (request.method !== "POST") { json(response, 405, { error: "method_not_allowed" }); return; }
   try {
     const body = await readJson(request);
@@ -77,7 +79,14 @@ async function handleApi(request: IncomingMessage, path: string, response: Serve
     if (path === "/api/mana-base") {
       const template = body["template"];
       if (!template || typeof template !== "object") { json(response, 400, { error: "invalid_mana_base_request" }); return; }
-      json(response, 200, planManaBase(template as OptimizedTemplate));
+      const selectedCards = Array.isArray(body["selectedCards"]) ? body["selectedCards"].filter((card): card is { manaCost: string } => Boolean(card) && typeof card === "object" && typeof (card as Record<string, unknown>)["manaCost"] === "string") : [];
+      json(response, 200, planManaBase(template as OptimizedTemplate, selectedCards));
+      return;
+    }
+    if (path === "/api/land-candidates") {
+      const commander = parseCommander(body["commander"]);
+      if (!commander) { json(response, 400, { error: "invalid_land_candidate_request" }); return; }
+      json(response, 200, await retrieveNonbasicLands(commander));
       return;
     }
     json(response, 404, { error: "not_found" });
