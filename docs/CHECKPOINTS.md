@@ -20,7 +20,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-13 | Runnable local demo | COMPLETE | [Merged PR #14](https://github.com/keldeo0713/commander-agent-v1/pull/14), [CI run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904) |
 | CP-14 | Local demo API integration | COMPLETE | [Merged PR #15](https://github.com/keldeo0713/commander-agent-v1/pull/15), [CI run 94](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592100565) |
 | CP-15 | Authoritative commander resolution | COMPLETE | [Merged PR #16](https://github.com/keldeo0713/commander-agent-v1/pull/16), [CI run 98](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592666600) |
-| CP-16 | Mechanic-aware template allocation | READY_FOR_REVIEW | [Draft PR #17](https://github.com/keldeo0713/commander-agent-v1/pull/17), [CI run 100](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609526025) |
+| CP-16 | Mechanic-aware template allocation | COMPLETE | [Merged PR #17](https://github.com/keldeo0713/commander-agent-v1/pull/17), [CI run 102](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609569991) |
+| CP-17 | Card candidate realization | IN_PROGRESS | Local validation: 70/70 tests plus candidate API integration |
 
 ## CP-00 exit checklist
 
@@ -189,3 +190,14 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] All brackets and cumulative mechanic combinations produce exactly 100 slots.
 - [x] Optional Kenessos examples remain role-aligned and exactly 100 after allocation changes.
 - [x] Feature-branch CI passes ([run 100](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609526025): 67/67 tests plus demo API self-check).
+
+## CP-17 exit checklist
+
+- [x] Candidate inspection remains secondary to the functional template and never auto-selects cards.
+- [x] Every nonland functional role returns its required quantity and a bounded candidate pool.
+- [x] Provider results are rechecked for Commander legality, color identity, uniqueness, and commander exclusion.
+- [x] Every candidate carries role evidence and source provenance.
+- [x] Provider requests use explicit headers, caching, sequential rate limiting, and visible failures.
+- [x] The local API and terminal expose candidate inspection without changing template quantities.
+- [x] Injected tests cover provider filtering, caching, malformed data, and API delivery.
+- [ ] Feature-branch CI passes.
