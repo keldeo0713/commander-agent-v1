@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-26 — Complete player-deck validation |
+| Active checkpoint | CP-27 — Complete-list terminal workflow |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-23 |
 | HLD version | 1.1 |
-| Next checkpoint | Complete-list terminal workflow |
+| Next checkpoint | Arbitrary-commander example realization |
 
 ## Current objective
 
-Validate a player-built list as a complete 100-card deck only when every functional role and land slot is exactly covered and named nonbasic identities remain singleton-safe.
+Connect complete-list validation to every terminal card and land decision, explain remaining gaps, and gate a dedicated importer-safe 100-card export on successful validation.
 
 ## Scope completed
 
@@ -161,6 +161,9 @@ Validate a player-built list as a complete 100-card deck only when every functio
 - CP-25 final [CI run 136](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656046342) passed before merge through pull request #26.
 - CP-26 local validation passes strict typecheck, lint, all 102 tests across 31 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-26 [CI run 138](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656376185) passed the complete check chain.
+- CP-26 final [CI run 139](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656462837) passed before merge through pull request #27.
+- CP-27 local validation passes strict typecheck, lint, all 102 tests across 31 files, JavaScript syntax validation, the terminal-aware demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-27 [CI run 141](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656861184) passed the complete check chain.
 
 ## Assumptions
 
@@ -186,4 +189,4 @@ Validate a player-built list as a complete 100-card deck only when every functio
 
 ## Recommended next action
 
-Publish CP-26, verify CI, then connect complete-list validation and export to the terminal workflow without automatic card choices.
+Publish CP-27, verify CI, then generate an optional legal example realization for arbitrary supported commanders rather than only the Kenessos fixture.
