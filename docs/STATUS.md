@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-23 — Colored-source analysis and nonbasic retrieval |
+| Active checkpoint | CP-24 — Nonbasic selection and source validation |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Player-controlled nonbasic selection and source validation |
+| Next checkpoint | Cast-on-curve source targets and land quality |
 
 ## Current objective
 
-Use included-card mana symbols to refine the basic-land split and retrieve legal named nonbasic fixing and utility options without silently choosing them.
+Let players explicitly assign legal named nonbasics to fixing and utility slots, validate named colored-source presence, and export only chosen lands.
 
 ## Scope completed
 
@@ -102,6 +102,12 @@ Use included-card mana symbols to refine the basic-land split and retrieve legal
 - Basic quantities rebalance proportionally while preserving at least one basic for every commander color and the exact 37-land checksum.
 - A cached Scryfall adapter retrieves legal, nonbasic, in-identity lands with explicit fixing or utility evidence.
 - The terminal refreshes pip demand after every include/exclude choice and displays named nonbasic options as unselected suggestions.
+- CP-23 merged through pull request #24 after final CI run 129.
+- CP-24 adds a versioned player-owned nonbasic selection state with deterministic singleton identity.
+- Fixing and utility choices cannot exceed their respective planned slot capacities.
+- Named colored sources count basic quantities plus selected lands for every demanded commander color.
+- Source results visibly distinguish not-demanded, present, and missing while refusing to claim cast-on-curve sufficiency.
+- Selected nonbasics contribute to named-card coverage and importer-safe partial export; unselected suggestions do not.
 
 ## Validation evidence
 
@@ -146,6 +152,8 @@ Use included-card mana symbols to refine the basic-land split and retrieve legal
 - CP-22 final [CI run 126](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621186925) passed before merge.
 - CP-23 local validation passes strict typecheck, lint, all 92 tests across 28 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-23 [CI run 128](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621715909) passed the complete check chain.
+- CP-23 final [CI run 129](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621759328) passed before merge.
+- CP-24 local validation passes strict typecheck, lint, all 95 tests across 29 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 
 ## Assumptions
 
@@ -166,8 +174,9 @@ Use included-card mana symbols to refine the basic-land split and retrieve legal
 - Candidate pools remain capped at 25 and use only the first Scryfall result page; unusually large or low-recall roles may still need pagination or broader retrieval.
 - Pip demand currently covers player-included nonland candidates but not the commander's printed mana cost or unchosen future cards.
 - Nonbasic classification uses produced-mana and Oracle-text signals; tapped status, budget, land-type synergies, and numeric source sufficiency remain unmodeled.
+- Colored-source validation proves named source presence only; it does not yet calculate the number of untapped sources needed to cast specific spells on curve.
 - Mana-base candidates and complete arbitrary-commander example construction remain deferred.
 
 ## Recommended next action
 
-Publish CP-23, verify CI, then let players assign named nonbasics to fixing/utility slots and validate resulting colored-source counts before export.
+Publish CP-24, verify CI, then calculate turn-aware colored-source targets and rank land quality using tapped status and player budget constraints.
