@@ -157,6 +157,7 @@ Calculate reproducible cast-on-curve colored-source targets and rank legal land 
 - CP-24 [CI run 131](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655175448) passed the complete check chain.
 - CP-24 final [CI run 133](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655231947) passed before merge.
 - CP-25 local validation passes strict typecheck, lint, all 99 tests across 30 files, JavaScript syntax validation, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-25 [CI run 135](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655959837) passed the complete check chain.
 
 ## Assumptions
 
