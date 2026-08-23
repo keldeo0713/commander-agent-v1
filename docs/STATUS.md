@@ -120,6 +120,7 @@ Let players explicitly include or exclude inspected candidates and see exact fun
 - CP-19 [CI run 112](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614133213) passed the complete check chain.
 - CP-19 final [CI run 114](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614171654) passed before merge.
 - CP-20 local validation passes strict typecheck, lint, all 79 tests across 26 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-20 [CI run 116](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615061396) passed the complete check chain.
 
 ## Assumptions
 
