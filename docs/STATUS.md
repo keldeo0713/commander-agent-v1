@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-16 — Mechanic-aware template allocation |
-| Status | READY_FOR_REVIEW |
+| Active checkpoint | CP-17 — Card candidate realization |
+| Status | IN_PROGRESS |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Card-level candidate realization |
+| Next checkpoint | Candidate quality and taxonomy calibration |
 
 ## Current objective
 
-Turn bracket and selected registered mechanics into deterministic, explainable role quantities while preserving a conservative mana foundation and the exact 100-card invariant.
+Let players inspect a bounded legal, commander-color candidate pool for each calculated functional role without turning suggestions into an automatically selected deck.
 
 ## Scope completed
 
@@ -69,6 +69,9 @@ Turn bracket and selected registered mechanics into deterministic, explainable r
 - CP-16 adds versioned bracket baselines, registered-mechanic deltas, bounded role floors/ceilings, deterministic balancing, and visible allocation reasons.
 - Different strategy selections and brackets now produce materially different exact-100 templates without changing the 37-land foundation before card-level curve analysis exists.
 - The Kenessos example fixture dynamically follows the allocated role quantities and remains exactly 100 cards.
+- CP-17 adds rate-limited, cached Scryfall role searches and a versioned candidate-bundle contract.
+- Provider results are independently filtered for Commander legality, commander color identity, Oracle-ID uniqueness, and commander exclusion.
+- The terminal exposes candidate inspection as a secondary action with required quantities and per-card retrieval evidence; no card is silently selected.
 
 ## Validation evidence
 
@@ -93,6 +96,7 @@ Turn bracket and selected registered mechanics into deterministic, explainable r
 - CP-15 [CI run 96](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592588783) passed the complete check chain.
 - CP-16 local validation passes strict typecheck, lint, all 67 tests across 22 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-16 [CI run 100](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609526025) passed the complete check chain.
+- CP-17 local validation passes strict typecheck, lint, all 70 tests across 23 files, the complete demo API self-check, all 12 package boundaries, and `git diff --check`.
 
 ## Assumptions
 
@@ -109,7 +113,9 @@ Turn bracket and selected registered mechanics into deterministic, explainable r
 - CP-15 ranks registered mechanics from commander card text; the next checkpoint makes exact slot quantities respond to selected mechanics and bracket instead of using one fixed role allocation.
 - Mana-base quantity remains fixed at 37 until a card-level candidate pool and mana-curve/source analysis can justify changing it with evidence.
 - Mechanic deltas currently operate on functional roles; card-level realization and simulation-backed calibration remain later checkpoints.
+- Candidate retrieval uses broad role queries and returns a small inspection pool, not a claim that every returned card is optimal or sufficient to fill the role quantity.
+- Mana-base candidates and complete arbitrary-commander example construction remain deferred.
 
 ## Recommended next action
 
-Publish CP-16, verify CI, then realize each functional slot from legal commander-color candidate cards with explicit role evidence.
+Publish CP-17, verify CI, then calibrate role-query precision and mechanic-specific candidate evidence against frozen multi-archetype fixtures.
