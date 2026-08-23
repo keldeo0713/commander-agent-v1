@@ -19,7 +19,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-12 | Live template orchestration | COMPLETE | [Merged PR #13](https://github.com/keldeo0713/commander-agent-v1/pull/13), [CI run 86](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32551837922) |
 | CP-13 | Runnable local demo | COMPLETE | [Merged PR #14](https://github.com/keldeo0713/commander-agent-v1/pull/14), [CI run 88](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32552692904) |
 | CP-14 | Local demo API integration | COMPLETE | [Merged PR #15](https://github.com/keldeo0713/commander-agent-v1/pull/15), [CI run 94](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592100565) |
-| CP-15 | Authoritative commander resolution | READY_FOR_REVIEW | [Draft PR #16](https://github.com/keldeo0713/commander-agent-v1/pull/16), [CI run 96](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592588783) |
+| CP-15 | Authoritative commander resolution | COMPLETE | [Merged PR #16](https://github.com/keldeo0713/commander-agent-v1/pull/16), [CI run 98](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592666600) |
+| CP-16 | Mechanic-aware template allocation | IN_PROGRESS | Local validation: 67/67 tests plus demo API self-check |
 
 ## CP-00 exit checklist
 
@@ -177,3 +178,14 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Provider behavior is cached and covered by injected success, rejection, and not-found tests.
 - [x] Kenessos remains a deterministic offline fixture while arbitrary commanders use the generic provider path.
 - [x] Feature-branch CI passes ([run 96](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592588783): 63/63 tests plus demo API self-check).
+
+## CP-16 exit checklist
+
+- [x] Every bracket has a versioned functional-role baseline totaling 100 with commander and mana base.
+- [x] Every registered mechanic applies explicit zero-sum role adjustments.
+- [x] Role floors, ceilings, and deterministic balancing prevent invalid allocations.
+- [x] Reordering or duplicating selected mechanics cannot change the result.
+- [x] Template selection rules expose bracket baselines and mechanic adjustments.
+- [x] All brackets and cumulative mechanic combinations produce exactly 100 slots.
+- [x] Optional Kenessos examples remain role-aligned and exactly 100 after allocation changes.
+- [ ] Feature-branch CI passes.
