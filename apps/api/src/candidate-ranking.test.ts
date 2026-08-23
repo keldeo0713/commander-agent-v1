@@ -29,5 +29,5 @@ describe("candidate ranking", () => {
 });
 
 function card(oracleId: string, name: string, manaValue: number, typeLine: string, oracleText: string): CardCandidate {
-  return { oracleId, name, manaValue, typeLine, oracleText, colorIdentity: ["U"], roleId: "fixture", evidence: "query fixture", rank: 0, rankScore: 0, rankingEvidence: [], rankingVersion: CANDIDATE_RANKING_VERSION, sourceId: "scryfall-search-api/1" };
+  return { oracleId, name, manaValue, manaCost: "{2}{U}", typeLine, oracleText, colorIdentity: ["U"], roleId: "fixture", evidence: "query fixture", rank: 0, rankScore: 0, rankingEvidence: [], rankingVersion: CANDIDATE_RANKING_VERSION, sourceId: "scryfall-search-api/1" };
 }
