@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-18 — Candidate quality calibration |
+| Active checkpoint | CP-19 — Explainable candidate ranking |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Candidate ranking and card-level template realization |
+| Next checkpoint | Player-controlled card selection and template coverage |
 
 ## Current objective
 
-Make engine and payoff candidate searches respond deterministically to the player's registered mechanics, with visible versioned evidence and six-archetype regression coverage.
+Rank each legal candidate pool with deterministic, inspectable card-level signals without converting the ranked options into an automatically selected deck.
 
 ## Scope completed
 
@@ -77,6 +77,10 @@ Make engine and payoff candidate searches respond deterministically to the playe
 - Query identity is invariant to mechanic order and commander identity; it contains no Kenessos or other commander-name specialization.
 - Six frozen archetypes now prove differentiated top-deck, graveyard, spells, tokens, artifacts, and combat retrieval intent.
 - Candidate groups expose the query-plan ID and reason before showing legal in-color cards.
+- CP-18 merged through pull request #19 after final CI run 110.
+- CP-19 adds a versioned ranking contract with explicit role-text, selected-mechanic, and role-specific mana-value contributions.
+- Ranking is invariant to provider order, selected-mechanic order, and duplicate mechanic IDs, with deterministic name and Oracle-ID tie-breaks.
+- The terminal shows rank, score, every score contribution, and ranking version while leaving all card choices to the player.
 
 ## Validation evidence
 
@@ -106,6 +110,8 @@ Make engine and payoff candidate searches respond deterministically to the playe
 - CP-17 final [CI run 106](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612675217) passed before merge.
 - CP-18 local validation passes strict typecheck, lint, all 73 tests across 24 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-18 [CI run 108](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613094438) passed the complete check chain.
+- CP-18 final [CI run 110](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613141022) passed before merge.
+- CP-19 local validation passes strict typecheck, lint, all 76 tests across 25 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 
 ## Assumptions
 
@@ -122,8 +128,9 @@ Make engine and payoff candidate searches respond deterministically to the playe
 - Mana-base quantity remains fixed at 37 until a card-level candidate pool and mana-curve/source analysis can justify changing it with evidence.
 - Mechanic deltas currently operate on functional roles; card-level realization and simulation-backed calibration remain later checkpoints.
 - Candidate retrieval uses deterministic Scryfall syntax and a small inspection pool; the frozen calibration proves differentiated retrieval intent, not live precision/recall or card optimality.
+- Candidate ranking is a transparent lexical and mana-value heuristic; EDHREC-ordered provider retrieval still bounds the inspected pool, and scores are not simulation-backed optimality claims.
 - Mana-base candidates and complete arbitrary-commander example construction remain deferred.
 
 ## Recommended next action
 
-Publish CP-18, verify CI, then rank candidates within each role using explicit card-level features without silently constructing the player's deck.
+Publish CP-19, verify CI, then add player-controlled include/exclude choices and visible template-role coverage without silently completing the deck.
