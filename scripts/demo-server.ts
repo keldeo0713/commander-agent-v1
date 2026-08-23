@@ -7,6 +7,7 @@ import type { MechanicCandidate, ResolvedCommander } from "../apps/api/src/templ
 import { createCardCandidateRetriever } from "../apps/api/src/card-candidate-retriever.ts";
 import type { CardCandidateBundle } from "../apps/api/src/card-candidate-retriever.ts";
 import type { OptimizedTemplate } from "../apps/api/src/template-orchestrator.ts";
+import { planManaBase } from "../apps/api/src/mana-base-planner.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "apps", "web");
 const routes = new Map([["/", "index.html"], ["/index.html", "index.html"], ["/styles.css", "styles.css"], ["/app.js", "app.js"]]);
@@ -71,6 +72,12 @@ async function handleApi(request: IncomingMessage, path: string, response: Serve
       const template = body["template"];
       if (!template || typeof template !== "object") { json(response, 400, { error: "invalid_candidate_request" }); return; }
       json(response, 200, await retrieveCardCandidates(template as Parameters<typeof retrieveCardCandidates>[0]));
+      return;
+    }
+    if (path === "/api/mana-base") {
+      const template = body["template"];
+      if (!template || typeof template !== "object") { json(response, 400, { error: "invalid_mana_base_request" }); return; }
+      json(response, 200, planManaBase(template as OptimizedTemplate));
       return;
     }
     json(response, 404, { error: "not_found" });
