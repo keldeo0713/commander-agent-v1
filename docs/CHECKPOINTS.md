@@ -21,7 +21,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-14 | Local demo API integration | COMPLETE | [Merged PR #15](https://github.com/keldeo0713/commander-agent-v1/pull/15), [CI run 94](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592100565) |
 | CP-15 | Authoritative commander resolution | COMPLETE | [Merged PR #16](https://github.com/keldeo0713/commander-agent-v1/pull/16), [CI run 98](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592666600) |
 | CP-16 | Mechanic-aware template allocation | COMPLETE | [Merged PR #17](https://github.com/keldeo0713/commander-agent-v1/pull/17), [CI run 102](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609569991) |
-| CP-17 | Card candidate realization | READY_FOR_REVIEW | [Draft PR #18](https://github.com/keldeo0713/commander-agent-v1/pull/18), [CI run 104](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612598317) |
+| CP-17 | Card candidate realization | COMPLETE | [Merged PR #18](https://github.com/keldeo0713/commander-agent-v1/pull/18), [CI run 106](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612675217) |
+| CP-18 | Candidate quality calibration | READY_FOR_REVIEW | Local validation: 73/73 tests; CI pending |
 
 ## CP-00 exit checklist
 
@@ -201,3 +202,14 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] The local API and terminal expose candidate inspection without changing template quantities.
 - [x] Injected tests cover provider filtering, caching, malformed data, and API delivery.
 - [x] Feature-branch CI passes ([run 104](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612598317): 70/70 tests plus candidate API integration).
+
+## CP-18 exit checklist
+
+- [x] Engine and payoff query plans derive only from registered mechanic IDs.
+- [x] Query plans carry a stable schema version, deterministic identity, and visible retrieval evidence.
+- [x] Mechanic reordering and commander identity cannot change an otherwise identical query plan.
+- [x] Frozen tests distinguish top-deck, graveyard, spellslinger, tokens, artifacts, and combat archetypes.
+- [x] Generic ramp, card-advantage, interaction, and protection plans remain available.
+- [x] Candidate inspection exposes plan evidence without auto-selecting cards.
+- [x] Local validation passes 73/73 tests, demo self-check, boundary checks, and offline validation.
+- [ ] Feature-branch CI passes.
