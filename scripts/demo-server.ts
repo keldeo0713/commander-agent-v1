@@ -4,23 +4,28 @@ import { dirname, extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { demoTemplateOrchestrator, isBracket, mechanicById } from "../apps/api/src/demo-template-adapter.ts";
 import type { MechanicCandidate, ResolvedCommander } from "../apps/api/src/template-orchestrator.ts";
+import { createCardCandidateRetriever } from "../apps/api/src/card-candidate-retriever.ts";
+import type { CardCandidateBundle } from "../apps/api/src/card-candidate-retriever.ts";
+import type { OptimizedTemplate } from "../apps/api/src/template-orchestrator.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "apps", "web");
 const routes = new Map([["/", "index.html"], ["/index.html", "index.html"], ["/styles.css", "styles.css"], ["/app.js", "app.js"]]);
 const contentTypes: Record<string, string> = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8" };
+export interface DemoServerOptions { retrieveCardCandidates?: (template: OptimizedTemplate) => Promise<CardCandidateBundle> }
 
-export function createDemoServer(): Server {
-  return createServer((request, response) => { void handleRequest(request, response); });
+export function createDemoServer(options: DemoServerOptions = {}): Server {
+  const retrieveCardCandidates = options.retrieveCardCandidates ?? createCardCandidateRetriever();
+  return createServer((request, response) => { void handleRequest(request, response, retrieveCardCandidates); });
 }
 
-async function handleRequest(request: IncomingMessage, response: ServerResponse): Promise<void> {
+async function handleRequest(request: IncomingMessage, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>): Promise<void> {
     const url = new URL(request.url ?? "/", "http://localhost");
     if (url.pathname === "/health") {
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
       response.end(JSON.stringify({ status: "ok", application: "commander-agent-demo", version: "cp-14" }));
       return;
     }
-    if (url.pathname.startsWith("/api/")) { await handleApi(request, url.pathname, response); return; }
+    if (url.pathname.startsWith("/api/")) { await handleApi(request, url.pathname, response, retrieveCardCandidates); return; }
     const file = routes.get(url.pathname);
     if (!file) { response.writeHead(404, { "content-type": "text/plain; charset=utf-8" }); response.end("Not found"); return; }
     try {
@@ -33,7 +38,7 @@ async function handleRequest(request: IncomingMessage, response: ServerResponse)
     }
 }
 
-async function handleApi(request: IncomingMessage, path: string, response: ServerResponse): Promise<void> {
+async function handleApi(request: IncomingMessage, path: string, response: ServerResponse, retrieveCardCandidates: (template: OptimizedTemplate) => Promise<CardCandidateBundle>): Promise<void> {
   if (request.method !== "POST") { json(response, 405, { error: "method_not_allowed" }); return; }
   try {
     const body = await readJson(request);
@@ -60,6 +65,12 @@ async function handleApi(request: IncomingMessage, path: string, response: Serve
       const template = body["template"];
       if (!template || typeof template !== "object") { json(response, 400, { error: "invalid_example_request" }); return; }
       json(response, 200, { entries: await demoTemplateOrchestrator.example(template as Parameters<typeof demoTemplateOrchestrator.example>[0]) });
+      return;
+    }
+    if (path === "/api/candidates") {
+      const template = body["template"];
+      if (!template || typeof template !== "object") { json(response, 400, { error: "invalid_candidate_request" }); return; }
+      json(response, 200, await retrieveCardCandidates(template as Parameters<typeof retrieveCardCandidates>[0]));
       return;
     }
     json(response, 404, { error: "not_found" });
