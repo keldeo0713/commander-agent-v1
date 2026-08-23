@@ -23,6 +23,13 @@ describe("mana-base planner", () => {
     expect(fixing).not.toHaveProperty("cardName");
     expect(plan.namedCardQuantity).toBe(23);
   });
+
+  it("rebalances basics from selected-card colored symbols", () => {
+    const plan = planManaBase(template(["G", "U"]), [{ manaCost: "{1}{G}{G}" }, { manaCost: "{G/U}{U}" }]);
+    expect(plan.colorDemand).toEqual({ U: 2, G: 3 });
+    expect(plan.entries.find(({ cardName }) => cardName === "Forest")?.quantity).toBeGreaterThan(plan.entries.find(({ cardName }) => cardName === "Island")?.quantity ?? 0);
+    expect(plan.analyzedCardCount).toBe(2);
+  });
 });
 
 function template(colorIdentity: string[]): OptimizedTemplate {
