@@ -22,6 +22,11 @@ describe("local demo server", () => {
       const templateResponse = await post("/api/template", { commander: session.commander, bracket: 3, mechanicIds: [session.mechanics[0]?.id, "big-creatures"] });
       const template = await templateResponse.json() as { slots: Array<{ quantity: number }> };
       expect(template.slots.reduce((sum, slot) => sum + slot.quantity, 0)).toBe(100);
+      const manaResponse = await post("/api/mana-base", { template });
+      const mana = await manaResponse.json() as { totalLands: number; entries: Array<{ quantity: number }> };
+      expect(manaResponse.status).toBe(200);
+      expect(mana.totalLands).toBe(37);
+      expect(mana.entries.reduce((sum, entry) => sum + entry.quantity, 0)).toBe(37);
       const candidateResponse = await post("/api/candidates", { template });
       const candidates = await candidateResponse.json() as { roles: Array<{ candidates: unknown[] }> };
       expect(candidateResponse.status).toBe(200);
