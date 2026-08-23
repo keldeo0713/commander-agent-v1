@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-19 — Explainable candidate ranking |
+| Active checkpoint | CP-20 — Player-controlled candidate selection |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Player-controlled card selection and template coverage |
+| Next checkpoint | Candidate pool expansion and selection export |
 
 ## Current objective
 
-Rank each legal candidate pool with deterministic, inspectable card-level signals without converting the ranked options into an automatically selected deck.
+Let players explicitly include or exclude inspected candidates and see exact functional-role coverage without automatically filling any template slot.
 
 ## Scope completed
 
@@ -81,6 +81,11 @@ Rank each legal candidate pool with deterministic, inspectable card-level signal
 - CP-19 adds a versioned ranking contract with explicit role-text, selected-mechanic, and role-specific mana-value contributions.
 - Ranking is invariant to provider order, selected-mechanic order, and duplicate mechanic IDs, with deterministic name and Oracle-ID tie-breaks.
 - The terminal shows rank, score, every score contribution, and ranking version while leaving all card choices to the player.
+- CP-19 merged through pull request #20 after final CI run 114.
+- CP-20 adds a versioned candidate-selection state with mutually exclusive per-role include/exclude decisions.
+- Exact selected, required, excluded, and remaining quantities are derived from the functional template, with over-selection rejected.
+- Available decisions persist across candidate refreshes while stale provider results are pruned safely.
+- Terminal controls visibly distinguish included and excluded cards and state that no slot is auto-filled.
 
 ## Validation evidence
 
@@ -113,6 +118,8 @@ Rank each legal candidate pool with deterministic, inspectable card-level signal
 - CP-18 final [CI run 110](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613141022) passed before merge.
 - CP-19 local validation passes strict typecheck, lint, all 76 tests across 25 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-19 [CI run 112](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614133213) passed the complete check chain.
+- CP-19 final [CI run 114](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614171654) passed before merge.
+- CP-20 local validation passes strict typecheck, lint, all 79 tests across 26 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 
 ## Assumptions
 
@@ -130,8 +137,9 @@ Rank each legal candidate pool with deterministic, inspectable card-level signal
 - Mechanic deltas currently operate on functional roles; card-level realization and simulation-backed calibration remain later checkpoints.
 - Candidate retrieval uses deterministic Scryfall syntax and a small inspection pool; the frozen calibration proves differentiated retrieval intent, not live precision/recall or card optimality.
 - Candidate ranking is a transparent lexical and mana-value heuristic; EDHREC-ordered provider retrieval still bounds the inspected pool, and scores are not simulation-backed optimality claims.
+- The current candidate pool is capped at five cards per role, so roles requiring more than five selections cannot yet reach covered status; pagination or pool expansion is required next.
 - Mana-base candidates and complete arbitrary-commander example construction remain deferred.
 
 ## Recommended next action
 
-Publish CP-19, verify CI, then add player-controlled include/exclude choices and visible template-role coverage without silently completing the deck.
+Publish CP-20, verify CI, then expand candidate pools and add a portable player-selection export while preserving explicit user choice.
