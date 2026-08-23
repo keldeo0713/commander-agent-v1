@@ -25,7 +25,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-18 | Candidate quality calibration | COMPLETE | [Merged PR #19](https://github.com/keldeo0713/commander-agent-v1/pull/19), [CI run 110](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32613141022) |
 | CP-19 | Explainable candidate ranking | COMPLETE | [Merged PR #20](https://github.com/keldeo0713/commander-agent-v1/pull/20), [CI run 114](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614171654) |
 | CP-20 | Player-controlled candidate selection | COMPLETE | [Merged PR #21](https://github.com/keldeo0713/commander-agent-v1/pull/21), [CI run 118](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615114447) |
-| CP-21 | Candidate pool expansion and selection export | READY_FOR_REVIEW | [Draft PR #22](https://github.com/keldeo0713/commander-agent-v1/pull/22), [CI run 120](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615969447) |
+| CP-21 | Candidate pool expansion and selection export | COMPLETE | [Merged PR #22](https://github.com/keldeo0713/commander-agent-v1/pull/22), [CI run 122](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32616027895) |
+| CP-22 | Mana-base planning and full coverage | READY_FOR_REVIEW | [Draft PR #23](https://github.com/keldeo0713/commander-agent-v1/pull/23), [CI run 124](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621119920) |
 
 ## CP-00 exit checklist
 
@@ -251,3 +252,15 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Documentation distinguishes partial selection export from a complete deck.
 - [x] Local validation passes 81/81 tests, demo self-check, boundary checks, and offline validation.
 - [x] Feature-branch CI passes ([run 120](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615969447): 81/81 tests plus demo API self-check).
+
+## CP-22 exit checklist
+
+- [x] Mana-base planning has a stable versioned contract.
+- [x] Colorless through five-color identities produce exact 37-land plans.
+- [x] Only legal identity basics are named; nonbasic fixing and utility choices remain visible slots.
+- [x] Duplicate or reordered color identities cannot change the plan.
+- [x] Full coverage distinguishes structural slots from named cards.
+- [x] The local API and terminal expose mana assumptions and unresolved quantities.
+- [x] Partial export includes named basics but never fabricates unnamed nonbasics.
+- [x] Local validation passes 88/88 tests, demo self-check, boundary checks, and offline validation.
+- [x] Feature-branch CI passes ([run 124](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621119920): 88/88 tests plus demo API self-check).
