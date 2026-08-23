@@ -28,7 +28,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-21 | Candidate pool expansion and selection export | COMPLETE | [Merged PR #22](https://github.com/keldeo0713/commander-agent-v1/pull/22), [CI run 122](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32616027895) |
 | CP-22 | Mana-base planning and full coverage | COMPLETE | [Merged PR #23](https://github.com/keldeo0713/commander-agent-v1/pull/23), [CI run 126](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621186925) |
 | CP-23 | Colored-source analysis and nonbasic retrieval | COMPLETE | [Merged PR #24](https://github.com/keldeo0713/commander-agent-v1/pull/24), [CI run 129](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621759328) |
-| CP-24 | Nonbasic selection and source validation | READY_FOR_REVIEW | [Draft PR #25](https://github.com/keldeo0713/commander-agent-v1/pull/25), [CI run 131](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655175448) |
+| CP-24 | Nonbasic selection and source validation | COMPLETE | [Merged PR #25](https://github.com/keldeo0713/commander-agent-v1/pull/25), [CI run 133](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655231947) |
+| CP-25 | Turn-aware source targets and land quality | READY_FOR_REVIEW | Local validation: 99/99 tests |
 
 ## CP-00 exit checklist
 
@@ -290,3 +291,14 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Unselected land suggestions never enter coverage or export.
 - [x] Local validation passes 95/95 tests, demo self-check, boundary checks, and offline validation.
 - [x] Feature-branch CI passes ([run 131](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655175448): 95/95 tests plus demo API self-check).
+
+## CP-25 exit checklist
+
+- [x] Colored-source targets have a stable versioned contract.
+- [x] Exact hypergeometric probabilities expose deck, draw, and target assumptions.
+- [x] The hardest selected-card pip requirement is reported per identity color.
+- [x] Available named sources are compared with turn-aware targets.
+- [x] Land options expose deterministic fixing, utility, tapped-text, and color-production evidence.
+- [x] An optional per-card budget filters only known prices above the limit.
+- [x] The terminal exposes target probabilities and land-quality evidence without hiding model exclusions.
+- [x] Local validation passes 99/99 tests, JavaScript syntax validation, demo self-check, boundary checks, and offline validation.

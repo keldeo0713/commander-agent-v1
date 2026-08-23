@@ -2,17 +2,18 @@ import { SCRYFALL_SEARCH_ENDPOINT } from "./card-candidate-retriever.ts";
 import type { ResolvedCommander } from "./template-orchestrator.ts";
 
 export const NONBASIC_LAND_BUNDLE_VERSION = "nonbasic-land-bundle/1" as const;
-export interface NonbasicLandCandidate { oracleId: string; name: string; colorIdentity: string[]; producedMana: string[]; category: "fixing" | "utility"; evidence: string; sourceId: "scryfall-search-api/1" }
-export interface NonbasicLandBundle { schemaVersion: typeof NONBASIC_LAND_BUNDLE_VERSION; commanderOracleId: string; query: string; candidates: NonbasicLandCandidate[] }
+export interface NonbasicLandCandidate { oracleId: string; name: string; colorIdentity: string[]; producedMana: string[]; category: "fixing" | "utility"; entersTapped: boolean; usdPrice: number | null; qualityScore: number; qualityEvidence: string[]; evidence: string; sourceId: "scryfall-search-api/1" }
+export interface NonbasicLandBundle { schemaVersion: typeof NONBASIC_LAND_BUNDLE_VERSION; commanderOracleId: string; query: string; maxPriceUsd: number | null; candidates: NonbasicLandCandidate[] }
 export interface NonbasicLandRetrieverOptions { fetch?: typeof globalThis.fetch; endpoint?: string; limit?: number }
-interface SearchCard { oracle_id?: unknown; name?: unknown; type_line?: unknown; oracle_text?: unknown; color_identity?: unknown; produced_mana?: unknown; legalities?: unknown }
+export interface LandPreferences { maxPriceUsd?: number }
+interface SearchCard { oracle_id?: unknown; name?: unknown; type_line?: unknown; oracle_text?: unknown; color_identity?: unknown; produced_mana?: unknown; legalities?: unknown; prices?: unknown }
 
-export function createNonbasicLandRetriever(options: NonbasicLandRetrieverOptions = {}): (commander: ResolvedCommander) => Promise<NonbasicLandBundle> {
+export function createNonbasicLandRetriever(options: NonbasicLandRetrieverOptions = {}): (commander: ResolvedCommander, preferences?: LandPreferences) => Promise<NonbasicLandBundle> {
   const fetchCards = options.fetch ?? globalThis.fetch;
   const endpoint = options.endpoint ?? SCRYFALL_SEARCH_ENDPOINT;
   const limit = options.limit ?? 15;
   const cache = new Map<string, NonbasicLandCandidate[]>();
-  return async (commander) => {
+  return async (commander, preferences = {}) => {
     const colors = [...commander.colorIdentity].sort().join("").toLowerCase();
     const identity = colors ? `id<=${colors}` : "id:c";
     const query = `t:land -t:basic f:commander ${identity} -is:funny`;
@@ -29,7 +30,9 @@ export function createNonbasicLandRetriever(options: NonbasicLandRetrieverOption
       candidates = parseLands(body.data, commander);
       cache.set(query, candidates);
     }
-    return { schemaVersion: NONBASIC_LAND_BUNDLE_VERSION, commanderOracleId: commander.oracleId, query, candidates: structuredClone(candidates.slice(0, limit)) };
+    const maxPriceUsd = typeof preferences.maxPriceUsd === "number" && preferences.maxPriceUsd >= 0 ? preferences.maxPriceUsd : null;
+    const filtered = candidates.filter(({ usdPrice }) => maxPriceUsd === null || usdPrice === null || usdPrice <= maxPriceUsd);
+    return { schemaVersion: NONBASIC_LAND_BUNDLE_VERSION, commanderOracleId: commander.oracleId, query, maxPriceUsd, candidates: structuredClone(filtered.slice(0, limit)) };
   };
 }
 
@@ -46,9 +49,14 @@ function parseLands(data: unknown[], commander: ResolvedCommander): NonbasicLand
     const rawProducedMana: unknown[] = Array.isArray(card.produced_mana) ? card.produced_mana as unknown[] : [];
     const producedMana = rawProducedMana.filter((color): color is string => typeof color === "string");
     const oracleText = typeof card.oracle_text === "string" ? card.oracle_text : "";
+    const prices = card.prices && typeof card.prices === "object" ? card.prices as Record<string, unknown> : {};
+    const usdPrice = typeof prices["usd"] === "string" && Number.isFinite(Number(prices["usd"])) ? Number(prices["usd"]) : null;
+    const entersTapped = /enters(?: the battlefield)? tapped/i.test(oracleText);
     const usefulColors = producedMana.filter((color) => allowed.has(color)).length;
     const category = usefulColors >= Math.min(2, Math.max(1, allowed.size)) || /mana of any color|choose a color/i.test(oracleText) ? "fixing" : "utility";
-    return [{ oracleId: card.oracle_id, name: card.name, colorIdentity, producedMana, category, evidence: category === "fixing" ? `produces ${producedMana.join("") || "flexible"} mana within commander identity` : "legal nonbasic utility option; verify its effect against colored-source needs", sourceId: "scryfall-search-api/1" }];
-  }).sort((left, right) => (left.category === right.category ? 0 : left.category === "fixing" ? -1 : 1) || right.producedMana.length - left.producedMana.length || compare(left.name, right.name));
+    const qualityEvidence = [category === "fixing" ? "+20 fixing coverage" : "+10 utility role", entersTapped ? "-10 enters tapped" : "+10 no unconditional tapped text", `+${producedMana.length * 2} produced-mana breadth`];
+    const qualityScore = (category === "fixing" ? 20 : 10) + (entersTapped ? -10 : 10) + producedMana.length * 2;
+    return [{ oracleId: card.oracle_id, name: card.name, colorIdentity, producedMana, category, entersTapped, usdPrice, qualityScore, qualityEvidence, evidence: category === "fixing" ? `produces ${producedMana.join("") || "flexible"} mana within commander identity` : "legal nonbasic utility option; verify its effect against colored-source needs", sourceId: "scryfall-search-api/1" }];
+  }).sort((left, right) => right.qualityScore - left.qualityScore || compare(left.name, right.name));
 }
 function compare(left: string, right: string): number { return left < right ? -1 : left > right ? 1 : 0; }
