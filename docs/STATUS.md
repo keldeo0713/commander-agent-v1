@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-21 — Candidate pool expansion and selection export |
+| Active checkpoint | CP-22 — Mana-base planning and full coverage |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Mana-base realization and full template coverage |
+| Next checkpoint | Colored-source analysis and named nonbasic retrieval |
 
 ## Current objective
 
-Make candidate pools large enough to cover normal nonland role targets and let players export their partial selections without violating singleton identity or importer syntax.
+Represent the 37-land foundation generically for every color identity and distinguish structurally allocated template slots from actual named-card coverage.
 
 ## Scope completed
 
@@ -91,6 +91,12 @@ Make candidate pools large enough to cover normal nonland role targets and let p
 - Retrieval caches retain the full ranked provider result so a smaller earlier template cannot truncate later role coverage.
 - The same Oracle identity cannot be included in two roles, preserving Commander singleton semantics before export.
 - Partial selection export contains only `quantity card-name` lines, includes the commander, and omits comments or section headers.
+- CP-21 merged through pull request #22 after final CI run 122.
+- CP-22 adds a versioned color-identity-aware mana-base plan for colorless through five-color commanders.
+- Safe basic lands receive exact quantities while fixing and utility lands remain visible functional slots instead of invented card choices.
+- Every mana plan checksums to the template's authoritative 37-land quantity and records its current pip-demand assumptions.
+- Full coverage separately reports structural allocation, named cards, remaining nonlands, and unresolved mana slots.
+- Partial selection export now includes the plan's named basics without presenting unnamed nonbasic slots as completed cards.
 
 ## Validation evidence
 
@@ -129,6 +135,8 @@ Make candidate pools large enough to cover normal nonland role targets and let p
 - CP-20 final [CI run 118](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615114447) passed before merge.
 - CP-21 local validation passes strict typecheck, lint, all 81 tests across 26 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-21 [CI run 120](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615969447) passed the complete check chain.
+- CP-21 final [CI run 122](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32616027895) passed before merge.
+- CP-22 local validation passes strict typecheck, lint, all 88 tests across 27 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 
 ## Assumptions
 
@@ -147,9 +155,9 @@ Make candidate pools large enough to cover normal nonland role targets and let p
 - Candidate retrieval uses deterministic Scryfall syntax and a small inspection pool; the frozen calibration proves differentiated retrieval intent, not live precision/recall or card optimality.
 - Candidate ranking is a transparent lexical and mana-value heuristic; EDHREC-ordered provider retrieval still bounds the inspected pool, and scores are not simulation-backed optimality claims.
 - Candidate pools remain capped at 25 and use only the first Scryfall result page; unusually large or low-recall roles may still need pagination or broader retrieval.
-- Mana-base realization is still deferred, so partial selection export is not a complete deck and is labeled accordingly in the UI.
+- Mana planning does not yet analyze colored pips from player-selected cards or name the fixing/utility lands; partial selection export remains explicitly incomplete.
 - Mana-base candidates and complete arbitrary-commander example construction remain deferred.
 
 ## Recommended next action
 
-Publish CP-21, verify CI, then realize legal mana-base candidates and measure full 100-slot coverage without replacing player-controlled card choices.
+Publish CP-22, verify CI, then calculate colored-source demand from selected cards and retrieve legal named nonbasic options without silently choosing them.
