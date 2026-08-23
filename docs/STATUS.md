@@ -163,6 +163,7 @@ Connect complete-list validation to every terminal card and land decision, expla
 - CP-26 [CI run 138](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656376185) passed the complete check chain.
 - CP-26 final [CI run 139](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656462837) passed before merge through pull request #27.
 - CP-27 local validation passes strict typecheck, lint, all 102 tests across 31 files, JavaScript syntax validation, the terminal-aware demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-27 [CI run 141](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656861184) passed the complete check chain.
 
 ## Assumptions
 

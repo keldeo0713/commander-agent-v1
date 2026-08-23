@@ -31,7 +31,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-24 | Nonbasic selection and source validation | COMPLETE | [Merged PR #25](https://github.com/keldeo0713/commander-agent-v1/pull/25), [CI run 133](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655231947) |
 | CP-25 | Turn-aware source targets and land quality | COMPLETE | [Merged PR #26](https://github.com/keldeo0713/commander-agent-v1/pull/26), [CI run 136](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656046342) |
 | CP-26 | Complete player-deck validation | COMPLETE | [Merged PR #27](https://github.com/keldeo0713/commander-agent-v1/pull/27), [CI run 139](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656462837) |
-| CP-27 | Complete-list terminal workflow | READY_FOR_REVIEW | Local validation: 102/102 tests |
+| CP-27 | Complete-list terminal workflow | READY_FOR_REVIEW | [Draft PR #28](https://github.com/keldeo0713/commander-agent-v1/pull/28), [CI run 141](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656861184) |
 
 ## CP-00 exit checklist
 
@@ -328,3 +328,4 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Complete and partial exports use distinct filenames.
 - [x] Restart clears stale validation state.
 - [x] Local validation passes 102/102 tests, JavaScript syntax validation, terminal-aware demo self-check, boundary checks, and offline validation.
+- [x] Feature-branch CI passes ([run 141](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656861184): 102/102 tests plus terminal-aware demo self-check).
