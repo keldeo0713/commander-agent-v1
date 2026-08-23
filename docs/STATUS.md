@@ -154,6 +154,7 @@ Let players explicitly assign legal named nonbasics to fixing and utility slots,
 - CP-23 [CI run 128](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621715909) passed the complete check chain.
 - CP-23 final [CI run 129](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621759328) passed before merge.
 - CP-24 local validation passes strict typecheck, lint, all 95 tests across 29 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-24 [CI run 131](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655175448) passed the complete check chain.
 
 ## Assumptions
 
