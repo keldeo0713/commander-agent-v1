@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-20 — Player-controlled candidate selection |
+| Active checkpoint | CP-21 — Candidate pool expansion and selection export |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-22 |
 | HLD version | 1.1 |
-| Next checkpoint | Candidate pool expansion and selection export |
+| Next checkpoint | Mana-base realization and full template coverage |
 
 ## Current objective
 
-Let players explicitly include or exclude inspected candidates and see exact functional-role coverage without automatically filling any template slot.
+Make candidate pools large enough to cover normal nonland role targets and let players export their partial selections without violating singleton identity or importer syntax.
 
 ## Scope completed
 
@@ -86,6 +86,11 @@ Let players explicitly include or exclude inspected candidates and see exact fun
 - Exact selected, required, excluded, and remaining quantities are derived from the functional template, with over-selection rejected.
 - Available decisions persist across candidate refreshes while stale provider results are pruned safely.
 - Terminal controls visibly distinguish included and excluded cards and state that no slot is auto-filled.
+- CP-20 merged through pull request #21 after final CI run 118.
+- CP-21 expands default candidate pools to at least 12 cards or the role requirement, capped at 25.
+- Retrieval caches retain the full ranked provider result so a smaller earlier template cannot truncate later role coverage.
+- The same Oracle identity cannot be included in two roles, preserving Commander singleton semantics before export.
+- Partial selection export contains only `quantity card-name` lines, includes the commander, and omits comments or section headers.
 
 ## Validation evidence
 
@@ -121,6 +126,9 @@ Let players explicitly include or exclude inspected candidates and see exact fun
 - CP-19 final [CI run 114](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32614171654) passed before merge.
 - CP-20 local validation passes strict typecheck, lint, all 79 tests across 26 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-20 [CI run 116](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615061396) passed the complete check chain.
+- CP-20 final [CI run 118](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615114447) passed before merge.
+- CP-21 local validation passes strict typecheck, lint, all 81 tests across 26 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-21 [CI run 120](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32615969447) passed the complete check chain.
 
 ## Assumptions
 
@@ -138,9 +146,10 @@ Let players explicitly include or exclude inspected candidates and see exact fun
 - Mechanic deltas currently operate on functional roles; card-level realization and simulation-backed calibration remain later checkpoints.
 - Candidate retrieval uses deterministic Scryfall syntax and a small inspection pool; the frozen calibration proves differentiated retrieval intent, not live precision/recall or card optimality.
 - Candidate ranking is a transparent lexical and mana-value heuristic; EDHREC-ordered provider retrieval still bounds the inspected pool, and scores are not simulation-backed optimality claims.
-- The current candidate pool is capped at five cards per role, so roles requiring more than five selections cannot yet reach covered status; pagination or pool expansion is required next.
+- Candidate pools remain capped at 25 and use only the first Scryfall result page; unusually large or low-recall roles may still need pagination or broader retrieval.
+- Mana-base realization is still deferred, so partial selection export is not a complete deck and is labeled accordingly in the UI.
 - Mana-base candidates and complete arbitrary-commander example construction remain deferred.
 
 ## Recommended next action
 
-Publish CP-20, verify CI, then expand candidate pools and add a portable player-selection export while preserving explicit user choice.
+Publish CP-21, verify CI, then realize legal mana-base candidates and measure full 100-slot coverage without replacing player-controlled card choices.
