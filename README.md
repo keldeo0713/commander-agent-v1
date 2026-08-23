@@ -37,7 +37,7 @@ To verify the local demo without keeping a server open:
 pnpm demo:check
 ```
 
-The local API also exposes a versioned complete-deck validator. A player-built list is complete only when every nonland role and fixing/utility land slot is exactly covered, named Oracle identities remain singleton-safe, and the commander plus main deck total exactly 100 cards. It reports structured gaps and never fills a missing slot automatically.
+The local API also exposes a versioned complete-deck validator. A player-built list is complete only when every nonland role and fixing/utility land slot is exactly covered, named Oracle identities remain singleton-safe, and the commander plus main deck total exactly 100 cards. The terminal refreshes these structured gaps after each card or land decision. Partial export remains available during construction; the distinct `EXPORT_VALIDATED_100` action stays disabled until every check passes. Neither path fills a missing slot automatically, and both downloads contain only importer-safe quantity/name lines.
 
 ## Architecture
 

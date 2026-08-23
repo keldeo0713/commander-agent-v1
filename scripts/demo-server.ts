@@ -154,7 +154,7 @@ export async function runSelfCheck(): Promise<void> {
     ]);
     if (!health.ok || (await health.json() as { status?: string }).status !== "ok") throw new Error("health check failed");
     if (!page.ok || !(await page.text()).includes("TEMPLATE_ENGINE")) throw new Error("terminal page check failed");
-    if (!script.ok || !(await script.text()).includes("EXPORT_EXAMPLE_DECK")) throw new Error("demo script check failed");
+    if (!script.ok || !((await script.text()).includes("EXPORT_VALIDATED_100"))) throw new Error("demo script check failed");
     const sessionBody = await session.json() as { status?: string; mechanics?: unknown[] };
     if (!session.ok || sessionBody.status !== "ready" || !sessionBody.mechanics?.length) throw new Error("demo API session check failed");
   } finally {

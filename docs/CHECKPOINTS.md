@@ -30,7 +30,8 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-23 | Colored-source analysis and nonbasic retrieval | COMPLETE | [Merged PR #24](https://github.com/keldeo0713/commander-agent-v1/pull/24), [CI run 129](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32621759328) |
 | CP-24 | Nonbasic selection and source validation | COMPLETE | [Merged PR #25](https://github.com/keldeo0713/commander-agent-v1/pull/25), [CI run 133](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655231947) |
 | CP-25 | Turn-aware source targets and land quality | COMPLETE | [Merged PR #26](https://github.com/keldeo0713/commander-agent-v1/pull/26), [CI run 136](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656046342) |
-| CP-26 | Complete player-deck validation | READY_FOR_REVIEW | [Draft PR #27](https://github.com/keldeo0713/commander-agent-v1/pull/27), [CI run 138](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656376185) |
+| CP-26 | Complete player-deck validation | COMPLETE | [Merged PR #27](https://github.com/keldeo0713/commander-agent-v1/pull/27), [CI run 139](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656462837) |
+| CP-27 | Complete-list terminal workflow | READY_FOR_REVIEW | Local validation: 102/102 tests |
 
 ## CP-00 exit checklist
 
@@ -316,3 +317,14 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] The local API exposes validation without selecting or fabricating cards.
 - [x] Local validation passes 102/102 tests, demo self-check, boundary checks, and offline validation.
 - [x] Feature-branch CI passes ([run 138](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656376185): 102/102 tests plus demo API self-check).
+
+## CP-27 exit checklist
+
+- [x] Complete-deck validation refreshes after every card or land selection change.
+- [x] The terminal displays structured role, land, singleton, and deck-size gaps.
+- [x] Partial export remains available while the player is still constructing the list.
+- [x] Validated export remains disabled until the list passes every complete-deck check.
+- [x] Complete export contains only importer-safe `quantity card-name` lines.
+- [x] Complete and partial exports use distinct filenames.
+- [x] Restart clears stale validation state.
+- [x] Local validation passes 102/102 tests, JavaScript syntax validation, terminal-aware demo self-check, boundary checks, and offline validation.
