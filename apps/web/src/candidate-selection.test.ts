@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createCandidateSelection, decideCandidate, exportCandidateSelection, reconcileCandidateSelection, summarizeRoleCoverage, type CandidateBundleView } from "./candidate-selection.js";
+import { createCandidateSelection, decideCandidate, exportCandidateSelection, reconcileCandidateSelection, summarizeFullTemplateCoverage, summarizeRoleCoverage, type CandidateBundleView } from "./candidate-selection.js";
 
 const bundle: CandidateBundleView = { commanderOracleId: "cmd", roles: [
   { roleId: "ramp", requiredQuantity: 2, candidates: [{ oracleId: "a", name: "Alpha" }, { oracleId: "b", name: "Beta" }, { oracleId: "c", name: "Gamma" }] },
@@ -33,5 +33,10 @@ describe("player candidate selection", () => {
     state = decideCandidate(state, bundle, { roleId: "interaction", oracleId: "x" }, "included");
     expect(exportCandidateSelection(state, bundle, "Test Commander")).toBe("1 Test Commander\n1 Alpha\n1 Answer");
     expect(exportCandidateSelection(state, bundle, "Test Commander")).not.toContain("#");
+  });
+
+  it("separates structural mana coverage from named-card coverage", () => {
+    const state = decideCandidate(createCandidateSelection(), bundle, { roleId: "ramp", oracleId: "a" }, "included");
+    expect(summarizeFullTemplateCoverage(state, { totalLands: 37, namedCardQuantity: 23 })).toEqual({ templateQuantity: 100, commanderQuantity: 1, manaBaseQuantity: 37, includedNonlandQuantity: 1, structurallyCoveredQuantity: 39, namedCardQuantity: 25, remainingNonlandQuantity: 61, unresolvedManaQuantity: 14, status: "partial" });
   });
 });
