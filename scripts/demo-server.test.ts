@@ -35,6 +35,10 @@ describe("local demo server", () => {
       const sourceTargets = await sourceResponse.json() as { targets: unknown[] };
       expect(sourceResponse.status).toBe(200);
       expect(sourceTargets.targets).toHaveLength(1);
+      const validationResponse = await post("/api/deck-validation", { commander: { oracleId: "cmd", name: "Commander" }, roles: [], cards: [], manaBase: { totalLands: 99, entries: [{ quantity: 99, category: "basic", cardName: "Island" }] }, lands: [] });
+      const validation = await validationResponse.json() as { complete: boolean; cardQuantity: number };
+      expect(validationResponse.status).toBe(200);
+      expect(validation).toMatchObject({ complete: true, cardQuantity: 100 });
       const candidateResponse = await post("/api/candidates", { template });
       const candidates = await candidateResponse.json() as { roles: Array<{ candidates: unknown[] }> };
       expect(candidateResponse.status).toBe(200);

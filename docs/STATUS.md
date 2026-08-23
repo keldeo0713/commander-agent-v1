@@ -2,15 +2,15 @@
 
 | Field | Value |
 |---|---|
-| Active checkpoint | CP-25 — Turn-aware source targets and land quality |
+| Active checkpoint | CP-26 — Complete player-deck validation |
 | Status | READY_FOR_REVIEW |
 | Last updated | 2026-08-23 |
 | HLD version | 1.1 |
-| Next checkpoint | Complete player-built list and role validation |
+| Next checkpoint | Complete-list terminal workflow |
 
 ## Current objective
 
-Calculate reproducible cast-on-curve colored-source targets and rank legal land options with visible tapped-land and optional per-card budget evidence.
+Validate a player-built list as a complete 100-card deck only when every functional role and land slot is exactly covered and named nonbasic identities remain singleton-safe.
 
 ## Scope completed
 
@@ -158,6 +158,9 @@ Calculate reproducible cast-on-curve colored-source targets and rank legal land 
 - CP-24 final [CI run 133](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655231947) passed before merge.
 - CP-25 local validation passes strict typecheck, lint, all 99 tests across 30 files, JavaScript syntax validation, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
 - CP-25 [CI run 135](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32655959837) passed the complete check chain.
+- CP-25 final [CI run 136](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656046342) passed before merge through pull request #26.
+- CP-26 local validation passes strict typecheck, lint, all 102 tests across 31 files, the demo API self-check, offline validation, all 12 package boundaries, and `git diff --check`.
+- CP-26 [CI run 138](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32656376185) passed the complete check chain.
 
 ## Assumptions
 
@@ -183,4 +186,4 @@ Calculate reproducible cast-on-curve colored-source targets and rank legal land 
 
 ## Recommended next action
 
-Publish CP-25, verify CI, then let the player complete and validate all 99 main-deck slots without automatic card choices.
+Publish CP-26, verify CI, then connect complete-list validation and export to the terminal workflow without automatic card choices.
