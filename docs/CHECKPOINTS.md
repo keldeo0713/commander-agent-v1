@@ -21,7 +21,7 @@ The detailed objectives and exit criteria live in `docs/HLD.md`. This file is th
 | CP-14 | Local demo API integration | COMPLETE | [Merged PR #15](https://github.com/keldeo0713/commander-agent-v1/pull/15), [CI run 94](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592100565) |
 | CP-15 | Authoritative commander resolution | COMPLETE | [Merged PR #16](https://github.com/keldeo0713/commander-agent-v1/pull/16), [CI run 98](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32592666600) |
 | CP-16 | Mechanic-aware template allocation | COMPLETE | [Merged PR #17](https://github.com/keldeo0713/commander-agent-v1/pull/17), [CI run 102](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32609569991) |
-| CP-17 | Card candidate realization | IN_PROGRESS | Local validation: 70/70 tests plus candidate API integration |
+| CP-17 | Card candidate realization | READY_FOR_REVIEW | [Draft PR #18](https://github.com/keldeo0713/commander-agent-v1/pull/18), [CI run 104](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612598317) |
 
 ## CP-00 exit checklist
 
@@ -200,4 +200,4 @@ Do not mark CP-00 complete until every item is checked and review evidence is li
 - [x] Provider requests use explicit headers, caching, sequential rate limiting, and visible failures.
 - [x] The local API and terminal expose candidate inspection without changing template quantities.
 - [x] Injected tests cover provider filtering, caching, malformed data, and API delivery.
-- [ ] Feature-branch CI passes.
+- [x] Feature-branch CI passes ([run 104](https://github.com/keldeo0713/commander-agent-v1/actions/runs/32612598317): 70/70 tests plus candidate API integration).
